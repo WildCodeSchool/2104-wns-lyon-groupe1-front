@@ -1,0 +1,26 @@
+@import '../globalColors';
+
+.Footer {
+  background-color: $colorGrey;
+  padding: 4%;
+  color: $white;
+  font-family: $alef;
+
+  ul {
+    margin-top: 5%;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    flex-wrap: wrap;
+    
+    li {
+      margin: 2%;
+    }
+  }
+
+  img {
+    width: 15%;
+  }
+}
