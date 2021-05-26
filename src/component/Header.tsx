@@ -1,4 +1,3 @@
-import React from 'react';
 import logo from '../assets/logo.svg';
 import burgerMenu from '../assets/burgermenu.svg';
 import './Header.scss';

@@ -1,4 +1,3 @@
-import React from 'react';
 import './App.scss';
 import Header from './component/Header';
 import Home from './component/Home';
