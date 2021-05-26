@@ -1,0 +1,33 @@
+@import '../globalColors';
+.Header {
+    display: flex;
+    border-bottom: 1px solid $colorGrey;
+    align-items: center;
+    justify-content: space-between;
+
+    & img {
+        width: 20%;
+    }
+
+    h3 {
+        font-family: $arvo;
+        font-weight: 400;
+        font-size: 1.5rem;
+        margin: 0;
+        span {
+            font-weight: 800;
+        }
+    }
+
+    button {
+        margin-right: 2%;
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        width: 36px;
+
+        img {
+          width: 100%;
+        }
+    }
+}
