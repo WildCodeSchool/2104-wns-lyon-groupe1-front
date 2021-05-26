@@ -1,16 +1,19 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
-import './App.css';
+import './App.scss';
+import Header from './component/Header';
+import Home from './component/Home';
+import Footer from './component/Footer';
 import ProfessorAccount from './components/professorAccout/ProfessorAccount';
-
+{
+  /* <Route path="/useraccount" component={ProfessorAccount} /> */
+}
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/useraccount" component={ProfessorAccount} />
-      </Switch>
-    </BrowserRouter>
+    <div className="App">
+      <Header />
+      <Home />
+      <Footer />
+    </div>
   );
 }
 
