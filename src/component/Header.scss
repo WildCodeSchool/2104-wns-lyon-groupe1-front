@@ -1,12 +1,15 @@
 @import '../globalColors';
+
 .Header {
     display: flex;
     border-bottom: 1px solid $colorGrey;
     align-items: center;
     justify-content: space-between;
+    max-height: 10vh;
 
     & img {
         width: 20%;
+        max-width: 10vh;
     }
 
     h3 {
@@ -19,15 +22,32 @@
         }
     }
 
-    button {
-        margin-right: 2%;
-        padding: 0;
-        background-color: transparent;
-        border: none;
-        width: 36px;
+    .button-burger-menu {
+        display: flex;
+        justify-content: center;
+        width: 20%;
+        padding: 2%;
+        button {
+            padding: 0;
+            background-color: transparent;
+            border: none;
+            width: 36px;
+    
+            img {
+              width: 100%;
+            }
+        }
+    }
 
-        img {
-          width: 100%;
+    @media (min-width: 768px) {
+        // height: 154px;
+
+        // & img {
+        //     max-width: 154px;
+        // }
+
+        h3 {
+            font-size: 2rem;
         }
     }
 }
