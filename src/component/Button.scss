@@ -1,18 +1,18 @@
 @import '../globalColors';
 
 .button {
-  display : flex;
+  display: flex;
   flex-direction: row;
   justify-content: center;
-  width : 90%;
+  align-items: center;
+  width: 90%;
   border: 3px solid transparent;
   border-radius: 5px;
   margin-bottom: 8%;
   padding: 5%;
 
-
   & img {
-    margin-left : 5%;
+    margin-left: 5%;
   }
 
   &:hover {
@@ -20,30 +20,33 @@
     background-color: $white;
   }
 
-
+  @media (min-width: 768px) {
+    width: 50%;
+    padding: 2%;
+    margin-bottom: 2%;
+  }
 }
 
 .blue-btn {
-    background-color: $colorBlue;
-    
+  background-color: $colorBlue;
 
-    &:hover {
-        border-color: $colorBlue;
-    }
+  &:hover {
+    border-color: $colorBlue;
+  }
 }
 
 .yellow-btn {
-    background-color: $colorYellow;
+  background-color: $colorYellow;
 
-    &:hover {
-        border-color: $colorYellow;
-    }
+  &:hover {
+    border-color: $colorYellow;
+  }
 }
 
 .green-btn {
-    background-color: $colorGreen;
+  background-color: $colorGreen;
 
-    &:hover {
-        border-color: $colorGreen;
-    }
+  &:hover {
+    border-color: $colorGreen;
+  }
 }
