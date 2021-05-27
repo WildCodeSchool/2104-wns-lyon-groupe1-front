@@ -1,12 +1,18 @@
 import { StrictMode } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import ReactDOM from 'react-dom';
+import UserContext from './utils/userContext';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <StrictMode>
-    <App />
+    <Router>
+      <UserContext.Provider value=>
+        <App />
+      </UserContext.Provider>
+    </Router>
   </StrictMode>,
   document.getElementById('root'),
 );
