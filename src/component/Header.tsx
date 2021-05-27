@@ -9,9 +9,11 @@ export default function Header() {
       <h3>
         <span>Study</span>Notes
       </h3>
-      <button type="button">
-        <img src={burgerMenu} alt="burgermenu" />
-      </button>
+      <div className="button-burger-menu">
+        <button type="button">
+          <img src={burgerMenu} alt="burgermenu" />
+        </button>
+      </div>
     </div>
   );
 }
