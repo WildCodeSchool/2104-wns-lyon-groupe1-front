@@ -36,3 +36,40 @@
         transform: rotate(360deg);
     }
 }
+
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+button {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    border: 2px solid;
+}
+
+button:focus {
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:focus {
+    outline: none;
+}
+
+a:hover {
+    outline: none;
+}
+
+input,
+textarea :focus {
+    outline: none;
+    font-family: inherit;
+    font-weight: inherit;
+}
+
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */

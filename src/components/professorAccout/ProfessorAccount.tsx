@@ -1,7 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Overlay from '../overLay/OverLay';
-import PageTitle from '../pageTitle/PageTitle';
 import styles from './professorAccount.module.scss';
 
 // Dummy data
@@ -20,8 +19,6 @@ export default function ProfessorAccount() {
   const [isOpenOverlay, setIsOpenOverlay] = useState(false);
   const [password, handlePasswordChange] = useState('');
   const [confirmedPassword, handleConfirmedPasswordChange] = useState('');
-  // get the reference of form
-  const resetPasswordFormRef = useRef<HTMLFormElement>(null);
 
   // change isOpenOverlay state
   const passwordModifierOverlay = () => {
@@ -33,28 +30,31 @@ export default function ProfessorAccount() {
     }
   };
 
+  const resetFormInputs = () => {
+    handlePasswordChange('');
+    handleConfirmedPasswordChange('');
+  };
+
   const submitForm = (event: any) => {
     // close the overlay
     setIsOpenOverlay(false);
     event.preventDefault();
-    const form = resetPasswordFormRef.current;
-    // if form is not null then reset it
-    if (form !== null) {
-      form.reset();
-    }
+    resetFormInputs();
+    // TODO delete console log
     console.log({ password, confirmedPassword });
+  };
+
+  const getIsOpenCallback = (data: any) => {
+    setIsOpenOverlay(data);
+    resetFormInputs();
   };
 
   return (
     <main>
-      <Overlay isOpen={isOpenOverlay}>
+      <Overlay isOpen={isOpenOverlay} getIsOpen={getIsOpenCallback}>
         <div className={styles.overlayElements}>
           <h3 className={styles.title}>Modifier mon mot de passe</h3>
-          <form
-            ref={resetPasswordFormRef}
-            className={styles.formContainer}
-            onSubmit={submitForm}
-          >
+          <form className={styles.formContainer} onSubmit={submitForm}>
             <input
               type="password"
               className={styles.overlayInput}
@@ -77,15 +77,11 @@ export default function ProfessorAccount() {
           </form>
         </div>
       </Overlay>
-      <div className={`${styles.title} ${styles.greetings}`}>
-        <PageTitle content="Mon Espace" textColor="#8FC89A" />
-      </div>
+      <h2 className={`${styles.title} ${styles.greetings}`}>Mon Espace</h2>
       <div className={styles.greetings}>Bienvenue {userData.firstname} !</div>
       <div className={styles.greetings}>{userData.classroom.name}</div>
 
-      <div className={`${styles.buttons} ${styles.readOnly}`}>
-        {userData.email}
-      </div>
+      <div className={styles.readOnlyButton}>{userData.email}</div>
 
       <div
         role="button"

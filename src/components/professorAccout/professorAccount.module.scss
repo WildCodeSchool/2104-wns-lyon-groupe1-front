@@ -34,7 +34,20 @@
     }
 }
 
-.readOnly {
+.readOnlyButton {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    background-color: $colorGreen;
+    max-width: 279px;
+    height: 36px;
+    margin-top: 20px;
+    padding: 0 10px 0 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
     background-color: rgba(143, 200, 154, 0.5);
     &:hover {
         background-color: rgba(143, 200, 154, 0.5);
