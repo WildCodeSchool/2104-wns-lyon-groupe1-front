@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Switch></Switch>
+      <Switch>
         <Route path="/mes-fiches-de-revisions" component={File} />
         <Route path="/nous-contacter" render={() => <h2>Nous contacter</h2>} />
         <Route path="/notre-équipe" render={() => <h2>Notre équipe</h2>} />

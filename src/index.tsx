@@ -1,15 +1,23 @@
 import { StrictMode } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import UserContext from './utils/userContext';
+import UserContext from './utils/UserContext';
+import { IUser } from './utils/interface';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const userFromApi: IUser = {
+  id: '1',
+  firstname: 'John',
+  lastname: 'Doe',
+  isTeacher: true,
+};
+
 ReactDOM.render(
   <StrictMode>
     <Router>
-      <UserContext.Provider value=>
+      <UserContext.Provider value={userFromApi}>
         <App />
       </UserContext.Provider>
     </Router>

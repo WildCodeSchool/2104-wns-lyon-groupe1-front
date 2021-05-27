@@ -1,49 +1,40 @@
+import { useContext } from 'react';
+import { IUser } from '../utils/interface';
 import bubbleMessage from '../assets/bubblemessage.svg';
 import newspaper from '../assets/newspaper.svg';
 import Button from '../component/Button';
 import SearchBar from '../component/SearchBar';
 import './Home.scss';
-
-export interface IUser {
-  id: string;
-  firstname: string;
-  lastname: string;
-  isTeacher: boolean;
-}
-
-const userFromApi: IUser = {
-  id: '1',
-  firstname: 'John',
-  lastname: 'Doe',
-  isTeacher: true,
-};
-
-const buttons = [
-  {
-    title: userFromApi.isTeacher ? 'Mes fiches de révision' : 'Mes matières',
-    icon: newspaper,
-    classname: 'yellow-btn',
-    slug: userFromApi.isTeacher ? '/mes-fiches-de-revisions' : '/mes-matières',
-  },
-  {
-    title: 'Forums',
-    icon: bubbleMessage,
-    classname: 'blue-btn',
-    slug: '/forum',
-  },
-  {
-    title: 'Mon espace',
-    icon: null,
-    classname: 'green-btn',
-    slug: '/mon-espace',
-  },
-];
+import UserContext from '../utils/UserContext';
 
 export default function Home() {
+  const user: IUser = useContext(UserContext);
+
+  const buttons = [
+    {
+      title: user.isTeacher ? 'Mes fiches de révision' : 'Mes matières',
+      icon: newspaper,
+      classname: 'yellow-btn',
+      slug: user.isTeacher ? '/mes-fiches-de-revisions' : '/mes-matières',
+    },
+    {
+      title: 'Forums',
+      icon: bubbleMessage,
+      classname: 'blue-btn',
+      slug: '/forum',
+    },
+    {
+      title: 'Mon espace',
+      icon: null,
+      classname: 'green-btn',
+      slug: '/mon-espace',
+    },
+  ];
+
   return (
     <div className="Home">
       <SearchBar />
-      <h2>Bonjour {userFromApi.firstname} !</h2>
+      <h2>Bonjour {user.firstname} !</h2>
       {buttons.map((button) => (
         <Button
           key={button.title}
