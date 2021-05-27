@@ -1,0 +1,85 @@
+@import "../../globalColors.scss";
+.greetings {
+    color: $colorGrey;
+    margin: auto;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.title {
+    color: $colorGreen;
+    margin-top: 10px;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    background-color: $colorGreen;
+    max-width: 279px;
+    height: 36px;
+    margin-top: 20px;
+    padding: 0 10px 0 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border: 1px solid $colorGreen;
+    cursor: pointer;
+    &:hover {
+        background-color: $colorWhite;
+    }
+}
+
+.readOnly {
+    background-color: rgba(143, 200, 154, 0.5);
+    &:hover {
+        background-color: rgba(143, 200, 154, 0.5);
+    }
+}
+
+//Overlay
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+.overlayElements {
+    text-align: center;
+}
+
+.overlayInput {
+    display: block;
+    background-color: $colorGreen;
+    border: none;
+    cursor: pointer;
+    margin: 10px auto;
+    padding: 4px 12px;
+    width: 210px;
+}
+
+.formContainer {
+    margin-top: 15px;
+}
+
+.overlaySubmitButton {
+    border: 2px solid $colorGreen;
+    background-color: $colorWhite;
+    padding: 5px 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    &:hover {
+        background-color: $colorGreen;
+    }
+}
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@media screen and (min-width: 768) {
+    .title {
+        color: red;
+    }
+}
