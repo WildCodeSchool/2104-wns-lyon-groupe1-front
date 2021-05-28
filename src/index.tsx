@@ -11,7 +11,7 @@ const userFromApi: IUser = {
   id: '1',
   firstname: 'John',
   lastname: 'Doe',
-  isTeacher: true,
+  isTeacher: false,
   email: 'nicolas.legrand@aze.com',
   classroom: {
     name: 'Wild Code School',
