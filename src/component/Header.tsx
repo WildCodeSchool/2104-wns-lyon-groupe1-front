@@ -6,9 +6,9 @@ export default function Header() {
   return (
     <div className="Header">
       <img src={logo} alt="logo Study Notes" />
-      <h3>
+      <h1>
         <span>Study</span>Notes
-      </h3>
+      </h1>
       <div className="button-burger-menu">
         <button type="button">
           <img src={burgerMenu} alt="burgermenu" />

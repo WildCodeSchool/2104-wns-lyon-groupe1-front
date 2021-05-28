@@ -1,20 +1,11 @@
-import React, { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import Overlay from '../overLay/OverLay';
+import UserContext from '../utils/UserContext';
+import Overlay from '../component/OverLay';
 import styles from './professorAccount.module.scss';
 
-// Dummy data
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 export default function ProfessorAccount() {
-  const userData = {
-    firstname: 'Nicolas',
-    lastname: 'Le Grand',
-    email: 'nicolas.legrand@aze.com',
-    classroom: {
-      name: 'Wild Code School',
-    },
-  };
-  // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  const userData = useContext(UserContext);
 
   const [isOpenOverlay, setIsOpenOverlay] = useState(false);
   const [password, handlePasswordChange] = useState('');
@@ -79,7 +70,7 @@ export default function ProfessorAccount() {
       </Overlay>
       <h2 className={`${styles.title} ${styles.greetings}`}>Mon Espace</h2>
       <div className={styles.greetings}>Bienvenue {userData.firstname} !</div>
-      <div className={styles.greetings}>{userData.classroom.name}</div>
+      <div className={styles.greetings}>{userData.classroom?.name}</div>
 
       <div className={styles.readOnlyButton}>{userData.email}</div>
 

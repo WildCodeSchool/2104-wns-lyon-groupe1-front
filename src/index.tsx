@@ -12,6 +12,10 @@ const userFromApi: IUser = {
   firstname: 'John',
   lastname: 'Doe',
   isTeacher: true,
+  email: 'nicolas.legrand@aze.com',
+  classroom: {
+    name: 'Wild Code School',
+  },
 };
 
 ReactDOM.render(
