@@ -1,14 +1,32 @@
-import React from 'react';
+import { StrictMode } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import './index.css';
+import UserContext from './utils/UserContext';
+import { IUser } from './utils/interface';
+import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const userFromApi: IUser = {
+  id: '1',
+  firstname: 'John',
+  lastname: 'Doe',
+  isTeacher: false,
+  email: 'nicolas.legrand@aze.com',
+  classroom: {
+    name: 'Wild Code School',
+  },
+};
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <StrictMode>
+    <Router>
+      <UserContext.Provider value={userFromApi}>
+        <App />
+      </UserContext.Provider>
+    </Router>
+  </StrictMode>,
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

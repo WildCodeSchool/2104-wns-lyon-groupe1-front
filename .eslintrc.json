@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "jest": true
     },
     "extends": [
         "plugin:react/recommended",
@@ -25,6 +26,7 @@
         "no-debugger": "warn",
         "react/jsx-filename-extension" : "off",
         "no-use-before-define": "warn",
+        "react/react-in-jsx-scope": "off",
         "import/extensions": [
             "error",
             "ignorePackages",

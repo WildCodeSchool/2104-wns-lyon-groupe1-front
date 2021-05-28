@@ -1,0 +1,10 @@
+.Home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Alef';
+
+  button:nth-child(3) {
+    margin-top: 5%;
+  }
+}

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './overlay.module.scss';
-import closeIcon from '../../assets/close.svg';
+import closeIcon from '../assets/close.svg';
 
 export default function Overlay({ getIsOpen, isOpen, children }: any) {
   const [visible, setVisible] = useState(isOpen);
