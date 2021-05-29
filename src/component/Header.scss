@@ -1,11 +1,16 @@
 @import '../globalColors';
 
+.header-offline {
+    width: 100vw;
+    height: 10vh;
+}
+
 .Header {
     display: flex;
     border-bottom: 1px solid $colorGrey;
     align-items: center;
     justify-content: space-between;
-    max-height: 10vh;
+    height: 10vh;
 
     & img {
         width: 20%;
