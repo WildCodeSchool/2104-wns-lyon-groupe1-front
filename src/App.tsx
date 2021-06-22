@@ -14,7 +14,20 @@ import ProfessorAccount from './route/ProfessorAccount';
 import Connect from './route/Connect';
 
 function App() {
-  const [user, setUser] = useState<IUser>({});
+  // PROD
+  // const [user, setUser] = useState<IUser>({});
+
+  // DEV
+  const [user, setUser] = useState<IUser>({
+    id: '1',
+    firstname: 'John',
+    lastname: 'Doe',
+    isTeacher: false,
+    email: 'nicolas.legrand@aze.com',
+    classroom: {
+      name: 'Wild Code School',
+    },
+  });
 
   return (
     <Router>
