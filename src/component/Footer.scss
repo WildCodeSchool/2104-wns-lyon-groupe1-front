@@ -2,19 +2,26 @@
 
 .Footer {
   background-color: $colorGrey;
-  padding: 4%;
   color: $colorWhite;
   font-family: $alef;
-  max-height: 20vh;
+  height: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 
   ul {
-    margin-top: 5%;
+    width: 100%;
     padding: 0;
     list-style-type: none;
     display: flex;
     justify-content: space-around;
-    align-content: center;
     flex-wrap: wrap;
+
+    li {
+      margin : 1%;
+    }
+
   }
 
   img {
@@ -24,11 +31,7 @@
 
   @media (min-width: 766px) {
     ul {
-      margin-top: 2%;
-      margin: 1% auto;
       max-width: 70vh;
     }
-    padding: 1%;
-    margin-top: 5%;
   }
 }

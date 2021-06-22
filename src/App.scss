@@ -1,3 +1,5 @@
+@import './globalColors.scss';
+
 .App {
   text-align: center;
 }
@@ -36,5 +38,62 @@ textarea :focus {
   font-weight: inherit;
 }
 
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: inherit;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: inherit;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: inherit;
+}
 
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+.connection-block {
+  padding-top : 2%;
+
+  form {
+    padding-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    p {
+      color: red;
+      font-size: 0.8rem;
+    }
+
+    input,button {
+      width: 70%;
+      margin-top : 1rem;
+      border-radius: 5px;
+      color: black;
+      font-weight: bold;
+      background-color: $colorGreen;
+      border: none;
+      padding: 2%;
+      border: 3px solid transparent;
+
+      &:hover, &:focus {
+        background-color: $colorWhite;
+        border-color: $colorGreen;
+        color: $colorGreen;
+      }
+    }
+
+    button {
+      margin-top: 20%;
+      cursor: pointer;
+    }
+  }
+
+  img {
+    width : 50%;
+    max-width : 200px;
+  }
+}

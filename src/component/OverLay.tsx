@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './overlay.module.scss';
+import './overlay.scss';
 import closeIcon from '../assets/close.svg';
 
 export default function Overlay({ getIsOpen, isOpen, children }: any) {
@@ -11,18 +11,15 @@ export default function Overlay({ getIsOpen, isOpen, children }: any) {
   };
 
   return (
-    <div
-      className={styles.wrapper}
-      style={{ display: isOpen ? 'block' : 'none' }}
-    >
-      <div className={styles.container}>
-        <div className={styles.closeIconContainer}>
+    <div className="wrapper" style={{ display: isOpen ? 'block' : 'none' }}>
+      <div className="container">
+        <div className="closeIconContainer">
           <img
             // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
             role="button"
             tabIndex={0}
             onClick={closeOverlay}
-            className={styles.closeIcon}
+            className="closeIcon"
             src={closeIcon}
             alt="Close icon"
             onKeyPress={closeOverlay}

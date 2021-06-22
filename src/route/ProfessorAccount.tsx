@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import UserContext from '../utils/UserContext';
 import Overlay from '../component/OverLay';
-import styles from './professorAccount.module.scss';
+import './professorAccount.scss';
 
 export default function ProfessorAccount() {
   const userData = useContext(UserContext);
@@ -43,47 +43,47 @@ export default function ProfessorAccount() {
   return (
     <main>
       <Overlay isOpen={isOpenOverlay} getIsOpen={getIsOpenCallback}>
-        <div className={styles.overlayElements}>
-          <h3 className={styles.title}>Modifier mon mot de passe</h3>
-          <form className={styles.formContainer} onSubmit={submitForm}>
+        <div className="overlayElements">
+          <h3 className="title">Modifier mon mot de passe</h3>
+          <form className="formContainer" onSubmit={submitForm}>
             <input
               type="password"
-              className={styles.overlayInput}
+              className="overlayInput"
               placeholder="Modifier mon mot de passe"
               value={password}
               onChange={(e) => handlePasswordChange(e.target.value)}
             />
             <input
               type="password"
-              className={styles.overlayInput}
+              className="overlayInput"
               placeholder="Confirmer mon mot de passe"
               value={confirmedPassword}
               onChange={(e) => handleConfirmedPasswordChange(e.target.value)}
             />
             <input
-              className={styles.overlaySubmitButton}
+              className="overlaySubmitButton"
               type="submit"
               value="Valider"
             />
           </form>
         </div>
       </Overlay>
-      <h2 className={`${styles.title} ${styles.greetings}`}>Mon Espace</h2>
-      <div className={styles.greetings}>Bienvenue {userData.firstname} !</div>
-      <div className={styles.greetings}>{userData.classroom?.name}</div>
+      <h2 className="title greetings">Mon Espace</h2>
+      <div className="greetings">Bienvenue {userData.firstname} !</div>
+      <div className="greetings">{userData.classroom?.name}</div>
 
-      <div className={styles.readOnlyButton}>{userData.email}</div>
+      <div className="readOnlyButton">{userData.email}</div>
 
       <div
         role="button"
         tabIndex={0}
         onClick={passwordModifierOverlay}
         onKeyDown={passwordModifierOverlay}
-        className={styles.buttons}
+        className="buttons"
       >
         Modifier mon mot de passe
       </div>
-      <div className={styles.buttons}>
+      <div className="buttons">
         <Link to="/mes-promotions">Mes promotions</Link>
       </div>
     </main>
