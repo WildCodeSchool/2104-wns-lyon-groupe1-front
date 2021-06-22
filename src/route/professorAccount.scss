@@ -60,6 +60,11 @@
     text-align: center;
 }
 
+.passwordError {
+    color: $colorRedError;
+    font: bold;
+}
+
 .overlayInput {
     display: block;
     background-color: $colorGreen;

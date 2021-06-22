@@ -10,6 +10,7 @@ export default function ProfessorAccount() {
   const [isOpenOverlay, setIsOpenOverlay] = useState(false);
   const [password, handlePasswordChange] = useState('');
   const [confirmedPassword, handleConfirmedPasswordChange] = useState('');
+  const [passwordErrored, setPasswordErrored] = useState(false);
 
   // change isOpenOverlay state
   const passwordModifierOverlay = () => {
@@ -26,13 +27,45 @@ export default function ProfessorAccount() {
     handleConfirmedPasswordChange('');
   };
 
+  // get both passwords, compare them, if they are identical and not null return true, otherwise return false
+  const verifyPassword = (
+    passwordText: string,
+    repeatedPasswordText: string,
+  ): boolean => {
+    if (passwordText !== repeatedPasswordText) {
+      return false;
+    }
+    if (passwordText.length === 0 || repeatedPasswordText.length === 0) {
+      return false;
+    }
+    if (passwordText !== repeatedPasswordText) {
+      return false;
+    }
+    if (
+      passwordText === repeatedPasswordText &&
+      passwordText.length !== 0 &&
+      repeatedPasswordText.length !== 0
+    ) {
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$/;
+      if (regex.test(password) === false) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const submitForm = (event: any) => {
     // close the overlay
-    setIsOpenOverlay(false);
+    const isVerified = verifyPassword(password, confirmedPassword);
+    if (isVerified === true) {
+      setPasswordErrored(false);
+      setIsOpenOverlay(false);
+      resetFormInputs();
+    }
+    if (isVerified === false) {
+      setPasswordErrored(true);
+    }
     event.preventDefault();
-    resetFormInputs();
-    // TODO delete console log
-    console.log({ password, confirmedPassword });
   };
 
   const getIsOpenCallback = (data: any) => {
@@ -45,6 +78,9 @@ export default function ProfessorAccount() {
       <Overlay isOpen={isOpenOverlay} getIsOpen={getIsOpenCallback}>
         <div className="overlayElements">
           <h3 className="title">Modifier mon mot de passe</h3>
+          <span className="passwordError">
+            {passwordErrored ? 'Les mots de passe ne sont pas identiques' : ''}
+          </span>
           <form className="formContainer" onSubmit={submitForm}>
             <input
               type="password"
