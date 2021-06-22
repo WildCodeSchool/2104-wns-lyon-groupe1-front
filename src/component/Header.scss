@@ -22,6 +22,7 @@
         font-weight: 400;
         font-size: 1.5rem;
         margin: 0;
+
         span {
             font-weight: 800;
         }
@@ -39,9 +40,9 @@
             background-color: transparent;
             border: none;
             width: 36px;
-    
+
             img {
-              width: 100%;
+                width: 100%;
             }
         }
     }
@@ -57,4 +58,77 @@
             font-size: 2rem;
         }
     }
+}
+
+.menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem 2rem;
+    text-align: left;
+
+    div:nth-child(1) {
+        text-align: right;
+    }
+
+    h2:nth-of-type(2) {
+        margin-bottom: 2.5rem;
+        margin-top: 2.5rem;
+    }
+
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    h2 {
+        margin: 0 0 0.5rem 2rem;
+        text-transform: uppercase;
+        font-size: 1.4rem;
+    }
+
+    .menu-section {
+        margin-top: 2.5rem;
+        border-left: 3px solid;
+        padding-left: 2rem;
+        display: flex;
+        flex-direction: column;
+
+        h2 {
+            margin-left: 0;
+        }
+
+        a {
+            font-size: 1.2rem;
+        }
+    }
+
+    .yellow-border-color {
+        border-color: $colorYellow;
+
+        a:hover {
+            color: $colorYellow;
+        }
+    }
+
+    .blue-border-color {
+        border-color: $colorBlue;
+
+        a:hover {
+            color: $colorBlue;
+        }
+    }
+
+    .green-border-color {
+        border-color: $colorGreen;
+
+        a:hover {
+            color: $colorGreen;
+        }
+    }
+
 }
