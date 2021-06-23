@@ -7,6 +7,7 @@ import Home from './route/Home';
 import Forum from './route/Forum';
 import Study from './route/Study';
 import File from './route/File';
+import MyClassroom from './route/MyClassroom';
 import Footer from './component/Footer';
 import UserContext from './utils/UserContext';
 import { IUser } from './utils/interface';
@@ -15,21 +16,21 @@ import Connect from './route/Connect';
 
 function App() {
   // PROD
-  const [user, setUser] = useState<IUser>({});
+  // const [user, setUser] = useState<IUser>({});
 
   // DEV
-  // const [user, setUser] = useState<IUser>({
-  //   id: '1',
-  //   firstname: 'John',
-  //   lastname: 'Doe',
-  //   isTeacher: false,
-  //   email: 'nicolas.legrand@aze.com',
-  //   classroom: {
-  //     name: 'Wild Code School',
-  //     year: '2021/2022',
-  //     id: '1',
-  //   },
-  // });
+  const [user, setUser] = useState<IUser>({
+    id: '1',
+    firstname: 'John',
+    lastname: 'Doe',
+    isTeacher: false,
+    email: 'nicolas.legrand@aze.com',
+    classroom: {
+      name: 'Wild Code School',
+      year: '2021/2022',
+      id: '1',
+    },
+  });
 
   return (
     <Router>
@@ -57,6 +58,7 @@ function App() {
                 path="/me-connecter"
                 render={() => <Connect setUser={setUser} />}
               />
+              <Route path="/ma-promotion" component={MyClassroom} />
               <Route path="/mon-espace" component={ProfessorAccount} />
               <Route exact path="/" component={Home} />
             </Switch>

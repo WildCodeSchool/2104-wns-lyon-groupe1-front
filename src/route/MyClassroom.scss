@@ -1,0 +1,38 @@
+@import "../globalColors.scss";
+
+.student-block {
+    height: 3rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0.5rem;
+    align-items: center;
+    width : 80vw;
+    max-width: 376px;
+    background-color: $colorGreen;
+    border-radius: 5px;
+    margin: 3em auto 1em auto;
+
+    button {
+        background-color: inherit;
+        border : inherit;
+        cursor: pointer;
+        
+        &:hover, &:focus {
+            transform: scale(1.2);
+        }
+    }
+}
+
+.classroom-student {
+    font-weight: 700;
+    font-size: 0.9rem;
+
+    .buttons {
+        width: 60vw;
+        justify-content: center;
+    }
+
+    & > .student-block ~ .student-block{
+        margin: 1em auto;
+    }
+}
