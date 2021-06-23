@@ -15,19 +15,21 @@ import Connect from './route/Connect';
 
 function App() {
   // PROD
-  // const [user, setUser] = useState<IUser>({});
+  const [user, setUser] = useState<IUser>({});
 
   // DEV
-  const [user, setUser] = useState<IUser>({
-    id: '1',
-    firstname: 'John',
-    lastname: 'Doe',
-    isTeacher: false,
-    email: 'nicolas.legrand@aze.com',
-    classroom: {
-      name: 'Wild Code School',
-    },
-  });
+  // const [user, setUser] = useState<IUser>({
+  //   id: '1',
+  //   firstname: 'John',
+  //   lastname: 'Doe',
+  //   isTeacher: false,
+  //   email: 'nicolas.legrand@aze.com',
+  //   classroom: {
+  //     name: 'Wild Code School',
+  //     year: '2021/2022',
+  //     id: '1',
+  //   },
+  // });
 
   return (
     <Router>

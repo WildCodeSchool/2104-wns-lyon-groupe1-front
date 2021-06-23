@@ -1,7 +1,8 @@
 import { Dispatch, useState, SetStateAction } from 'react';
 import { useHistory } from 'react-router-dom';
-import { IUser } from '../utils/interface';
+import { IUser, IClassroom } from '../utils/interface';
 import logo from '../assets/logo.svg';
+import './Connect.scss';
 
 type ConnectProps = {
   setUser: Dispatch<SetStateAction<IUser>>;
@@ -10,6 +11,9 @@ type ConnectProps = {
 export default function Connect({ setUser }: ConnectProps) {
   const [formInput, setFormInput] = useState({ email: '', password: '' });
   const [error, setError] = useState(false);
+  const [addClassroom, setAddClassroom] = useState(false);
+  const [classrooms, setClassrooms] = useState<Array<IClassroom>>([]);
+  const [data, setData] = useState<IUser>({});
   const history = useHistory();
 
   const handleForm = (e: any) => {
@@ -17,19 +21,67 @@ export default function Connect({ setUser }: ConnectProps) {
     if (!formInput.email.length || !formInput.password.length) {
       setError(true);
     } else {
-      setUser({
+      setData({
         id: '1',
         firstname: 'John',
         lastname: 'Doe',
         isTeacher: false,
         email: 'nicolas.legrand@aze.com',
-        classroom: {
-          name: 'Wild Code School',
-        },
       });
-      history.push('/');
+      setClassrooms([
+        {
+          name: 'Wild Code School',
+          year: '2021/2022',
+          id: '1',
+        },
+        {
+          name: 'Oclock',
+          year: '2021/2022',
+          id: '2',
+        },
+      ]);
     }
   };
+
+  const handleChoice = (e: any, classroom: IClassroom) => {
+    e.preventDefault();
+    setUser({
+      ...data,
+      classroom,
+    });
+    history.push('/');
+  };
+
+  if (addClassroom) {
+    return <h2>Ajout promotion</h2>;
+  }
+
+  if (classrooms.length) {
+    return (
+      <>
+        <h2 className="title greetings">Mes promotions</h2>
+        <div className="list-classrooms">
+          {classrooms.map((c) => (
+            <button
+              onClick={(e) => handleChoice(e, c)}
+              key={`${c.name}${c.id}`}
+              type="button"
+              className="buttons"
+            >
+              {c.name} {c.year}
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={() => setAddClassroom(true)}
+            className="buttons"
+          >
+            Ajouter une promotion
+          </button>
+        </div>
+      </>
+    );
+  }
 
   return (
     <div className="connection-block">

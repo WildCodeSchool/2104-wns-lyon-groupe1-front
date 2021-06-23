@@ -26,6 +26,7 @@
         "no-debugger": "warn",
         "react/jsx-filename-extension" : "off",
         "no-use-before-define": "warn",
+        "no-unused-vars": "warn",
         "react/react-in-jsx-scope": "off",
         "import/extensions": [
             "error",

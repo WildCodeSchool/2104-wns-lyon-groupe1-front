@@ -1,5 +1,7 @@
 export interface IClassroom {
   name: string;
+  year: string;
+  id: string;
 }
 export interface IUser {
   id?: string;

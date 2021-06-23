@@ -84,7 +84,7 @@ export default function ProfessorAccount() {
         Modifier mon mot de passe
       </div>
       <div className="buttons">
-        <Link to="/mes-promotions">Mes promotions</Link>
+        <Link to="/ma-promotion">Ma promotion</Link>
       </div>
     </main>
   );
