@@ -56,7 +56,7 @@ function App() {
                 render={() => <Connect setUser={setUser} />}
               />
               <Route
-                path="/mes-promotions"
+                path="/ma-promotion"
                 render={() => <h2>Mes promotions</h2>}
               />
               <Route

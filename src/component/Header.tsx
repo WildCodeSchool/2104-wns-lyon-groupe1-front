@@ -63,8 +63,8 @@ const Menu = ({ teacher, menuOpen }: PropsMenu) => {
           Mes informations
         </Link>
         {teacher && (
-          <Link to={{ pathname: '/mes-promotions', state: { hide: true } }}>
-            Mes promotions
+          <Link to={{ pathname: '/ma-promotion', state: { hide: true } }}>
+            Ma promotion
           </Link>
         )}
       </div>
