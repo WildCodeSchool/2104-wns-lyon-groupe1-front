@@ -8,7 +8,7 @@ import pencil from '../assets/pencil.svg';
 
 export default function MyClassroom() {
   const user = useContext(UserContext);
-  const [modal, openModal] = useState(true);
+  const [modal, openModal] = useState(false);
   const history = useHistory();
   const [classroom, setClassroom] = useState<IClassroomStudent>({
     id: '1',

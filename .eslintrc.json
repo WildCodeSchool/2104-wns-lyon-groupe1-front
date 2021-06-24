@@ -28,6 +28,7 @@
         "no-use-before-define": "warn",
         "no-unused-vars": "warn",
         "react/react-in-jsx-scope": "off",
+        "no-control-regex": "off",
         "import/extensions": [
             "error",
             "ignorePackages",

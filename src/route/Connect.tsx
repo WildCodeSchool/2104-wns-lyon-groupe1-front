@@ -30,12 +30,12 @@ export default function Connect({ setUser }: ConnectProps) {
       });
       setClassrooms([
         {
-          name: 'Wild Code School',
+          name: 'Développement web Lyon',
           year: '2021/2022',
           id: '1',
         },
         {
-          name: 'Oclock',
+          name: 'Développement web Marseille',
           year: '2021/2022',
           id: '2',
         },
@@ -60,6 +60,7 @@ export default function Connect({ setUser }: ConnectProps) {
     return (
       <>
         <h2 className="title greetings">Mes promotions</h2>
+        <div className="greetings">Wild Code School</div>
         <div className="list-classrooms">
           {classrooms.map((c) => (
             <button

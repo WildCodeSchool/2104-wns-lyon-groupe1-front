@@ -70,7 +70,7 @@ export default function ProfessorAccount() {
       </Overlay>
       <h2 className="title greetings">Mon Espace</h2>
       <div className="greetings">Bienvenue {userData.firstname} !</div>
-      <div className="greetings">{userData.classroom?.name}</div>
+      <div className="greetings">Wild Code School</div>
 
       <div className="readOnlyButton">{userData.email}</div>
 

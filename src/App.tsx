@@ -12,6 +12,7 @@ import Footer from './component/Footer';
 import UserContext from './utils/UserContext';
 import { IUser } from './utils/interface';
 import ProfessorAccount from './route/ProfessorAccount';
+import AddStudent from './route/AddStudent';
 import Connect from './route/Connect';
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
     isTeacher: false,
     email: 'nicolas.legrand@aze.com',
     classroom: {
-      name: 'Wild Code School',
+      name: 'Développement web Lyon',
       year: '2021/2022',
       id: '1',
     },
@@ -59,6 +60,7 @@ function App() {
                 render={() => <Connect setUser={setUser} />}
               />
               <Route path="/ma-promotion" component={MyClassroom} />
+              <Route path="/ajouter-un-élève" component={AddStudent} />
               <Route path="/mon-espace" component={ProfessorAccount} />
               <Route exact path="/" component={Home} />
             </Switch>
