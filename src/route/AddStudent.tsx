@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import UserContext from '../utils/UserContext';
 import './AddStudent.scss';
 
@@ -6,6 +7,7 @@ export default function AddStudent() {
   const user = useContext(UserContext);
   const [error, setError] = useState(false);
   const [mail, setMail] = useState('');
+  const history = useHistory();
 
   const handleSumbit = (e: any) => {
     e.preventDefault();
@@ -20,7 +22,8 @@ export default function AddStudent() {
       setError(true);
       return;
     }
-
+    // ajout en bdd
+    history.push('/ma-promotion');
     setMail('');
   };
 
@@ -32,13 +35,17 @@ export default function AddStudent() {
         {user.classroom?.name} {user.classroom?.year}
       </div>
       <form onSubmit={handleSumbit}>
-        <input
-          className={error ? 'error' : ''}
-          name="mail"
-          placeholder="Email académique"
-          value={mail}
-          onChange={(e) => setMail(e.target.value)}
-        />
+        <label htmlFor="mail">
+          {error && "Veuillez vérifier l'adresse mail"}
+          <input
+            className={error ? 'error' : ''}
+            name="mail"
+            id="mail"
+            placeholder="Email académique"
+            value={mail}
+            onChange={(e) => setMail(e.target.value)}
+          />
+        </label>
         <button type="submit" className="buttons">
           Ajouter
         </button>
