@@ -21,6 +21,7 @@ export default function addPromotion() {
     }
     return false;
   };
+
   // Je vérifie Les adresses mails des étudiants
   const verifyEmail = (studentEmailAdress: string): boolean => {
     const regex =
@@ -43,6 +44,7 @@ export default function addPromotion() {
     return false;
   };
 
+  // Je crée les dates de mes années scolaire en partant de l'année actuelle + 20 ans
   const buildOptions = () => {
     const arr = [];
     const actualYear = new Date().getFullYear();
@@ -59,6 +61,7 @@ export default function addPromotion() {
     return arr;
   };
 
+  // Lorsque je soumets mon formulaire, je vérifie mes champs un par un
   const submitForm = (event: any) => {
     event.preventDefault();
 
