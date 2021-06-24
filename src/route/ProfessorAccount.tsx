@@ -50,7 +50,7 @@ export default function ProfessorAccount() {
     setPasswordErrored(true);
     // close the overlay
     const isVerified = verifyPassword(password, confirmedPassword);
-    if (isVerified === true) {
+    if (isVerified) {
       setIsOpenOverlay(false);
       resetFormInputs();
     }
