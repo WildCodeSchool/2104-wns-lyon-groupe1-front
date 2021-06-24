@@ -19,6 +19,8 @@ export default function ProfessorAccount() {
     }
     if (isOpenOverlay === false) {
       setIsOpenOverlay(true);
+      // set to false again when it is closed, because even when user does not want to change password any more no error will be shown
+      setPasswordErrored(false);
     }
   };
 
@@ -32,38 +34,25 @@ export default function ProfessorAccount() {
     passwordText: string,
     repeatedPasswordText: string,
   ): boolean => {
-    if (passwordText !== repeatedPasswordText) {
-      return false;
-    }
-    if (passwordText.length === 0 || repeatedPasswordText.length === 0) {
-      return false;
-    }
-    if (passwordText !== repeatedPasswordText) {
-      return false;
-    }
-    if (
-      passwordText === repeatedPasswordText &&
-      passwordText.length !== 0 &&
-      repeatedPasswordText.length !== 0
-    ) {
-      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$/;
-      if (regex.test(password) === false) {
-        return true;
-      }
+    // create a new regex
+    const regex = new RegExp(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+    );
+
+    // if regex is tester true and passwords are identical
+    if (regex.test(passwordText) && passwordText === repeatedPasswordText) {
+      return true;
     }
     return false;
   };
 
   const submitForm = (event: any) => {
+    setPasswordErrored(true);
     // close the overlay
     const isVerified = verifyPassword(password, confirmedPassword);
     if (isVerified === true) {
-      setPasswordErrored(false);
       setIsOpenOverlay(false);
       resetFormInputs();
-    }
-    if (isVerified === false) {
-      setPasswordErrored(true);
     }
     event.preventDefault();
   };
