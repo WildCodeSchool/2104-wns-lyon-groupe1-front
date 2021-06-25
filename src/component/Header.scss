@@ -1,5 +1,4 @@
 @import '../globalColors';
-
 .header-offline {
     width: 100vw;
     height: 10vh;
@@ -11,12 +10,10 @@
     align-items: center;
     justify-content: space-between;
     height: 10vh;
-
     & img {
         width: 20%;
         max-width: 10vh;
     }
-
     h1 {
         font-family: $arvo;
         font-weight: 400;
@@ -27,14 +24,12 @@
             font-weight: 800;
         }
     }
-
     .button-burger-menu {
         display: flex;
         justify-content: center;
         width: 20%;
         padding: 2%;
         max-width: 10vh;
-
         button {
             padding: 0;
             background-color: transparent;
@@ -46,14 +41,11 @@
             }
         }
     }
-
     @media (min-width: 768px) {
         // height: 154px;
-
         // & img {
         //     max-width: 154px;
         // }
-
         h3 {
             font-size: 2rem;
         }
