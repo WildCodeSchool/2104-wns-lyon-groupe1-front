@@ -7,10 +7,12 @@ import Home from './route/Home';
 import Forum from './route/Forum';
 import Study from './route/Study';
 import File from './route/File';
+import MyClassroom from './route/MyClassroom';
 import Footer from './component/Footer';
 import UserContext from './utils/UserContext';
 import { IUser } from './utils/interface';
 import ProfessorAccount from './route/ProfessorAccount';
+import AddStudent from './route/AddStudent';
 import Connect from './route/Connect';
 import addPromotion from './route/addPromotion';
 
@@ -26,7 +28,9 @@ function App() {
     isTeacher: false,
     email: 'nicolas.legrand@aze.com',
     classroom: {
-      name: 'Wild Code School',
+      name: 'Développement web Lyon',
+      year: '2021/2022',
+      id: '1',
     },
   });
 
@@ -56,6 +60,8 @@ function App() {
                 path="/me-connecter"
                 render={() => <Connect setUser={setUser} />}
               />
+              <Route path="/ma-promotion" component={MyClassroom} />
+              <Route path="/ajouter-un-élève" component={AddStudent} />
               <Route
                 path="/ma-promotion"
                 render={() => <h2>Mes promotions</h2>}
