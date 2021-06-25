@@ -56,6 +56,19 @@ function App() {
                 path="/me-connecter"
                 render={() => <Connect setUser={setUser} />}
               />
+              <Route
+                path="/ma-promotion"
+                render={() => <h2>Mes promotions</h2>}
+              />
+              <Route
+                path="/ajouter-une-fiche"
+                render={() => <h2>Ajouter une fiche</h2>}
+              />
+              <Route
+                path="/me-deconnecter"
+                render={() => <h2>Deconnecter</h2>}
+              />
+              <Route path="/rechercher" render={() => <h2>Rechercher</h2>} />
               <Route path="/mon-espace" component={ProfessorAccount} />
               <Route path="/ajouter-une-promotion" component={addPromotion} />
               <Route exact path="/" component={Home} />

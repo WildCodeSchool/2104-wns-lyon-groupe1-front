@@ -10,6 +10,7 @@ export default function ProfessorAccount() {
   const [isOpenOverlay, setIsOpenOverlay] = useState(false);
   const [password, handlePasswordChange] = useState('');
   const [confirmedPassword, handleConfirmedPasswordChange] = useState('');
+  const [passwordErrored, setPasswordErrored] = useState(false);
 
   // change isOpenOverlay state
   const passwordModifierOverlay = () => {
@@ -18,6 +19,8 @@ export default function ProfessorAccount() {
     }
     if (isOpenOverlay === false) {
       setIsOpenOverlay(true);
+      // set to false again when it is closed, because even when user does not want to change password any more no error will be shown
+      setPasswordErrored(false);
     }
   };
 
@@ -26,13 +29,32 @@ export default function ProfessorAccount() {
     handleConfirmedPasswordChange('');
   };
 
+  // get both passwords, compare them, if they are identical and not null return true, otherwise return false
+  const verifyPassword = (
+    passwordText: string,
+    repeatedPasswordText: string,
+  ): boolean => {
+    // create a new regex
+    const regex = new RegExp(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+    );
+
+    // if regex is tester true and passwords are identical
+    if (regex.test(passwordText) && passwordText === repeatedPasswordText) {
+      return true;
+    }
+    return false;
+  };
+
   const submitForm = (event: any) => {
+    setPasswordErrored(true);
     // close the overlay
-    setIsOpenOverlay(false);
+    const isVerified = verifyPassword(password, confirmedPassword);
+    if (isVerified) {
+      setIsOpenOverlay(false);
+      resetFormInputs();
+    }
     event.preventDefault();
-    resetFormInputs();
-    // TODO delete console log
-    console.log({ password, confirmedPassword });
   };
 
   const getIsOpenCallback = (data: any) => {
@@ -45,6 +67,9 @@ export default function ProfessorAccount() {
       <Overlay isOpen={isOpenOverlay} getIsOpen={getIsOpenCallback}>
         <div className="overlayElements">
           <h3 className="title">Modifier mon mot de passe</h3>
+          <span className="passwordError">
+            {passwordErrored ? 'Les mots de passe ne sont pas identiques' : ''}
+          </span>
           <form className="formContainer" onSubmit={submitForm}>
             <input
               type="password"
@@ -84,7 +109,7 @@ export default function ProfessorAccount() {
         Modifier mon mot de passe
       </div>
       <div className="buttons">
-        <Link to="/mes-promotions">Mes promotions</Link>
+        <Link to="/ma-promotion">Ma promotion</Link>
       </div>
     </main>
   );
