@@ -9,7 +9,9 @@ export default function addPromotion() {
   const [promotionNameError, setPromotionNameError] = useState(false);
   const [beginningYearError, setBeginningYearError] = useState(false);
   const [finishingYearError, setFinishingYearError] = useState(false);
-  const [emailAdressesError, setEmailAdressesError] = useState(false);
+  const [emailAdressesError, setEmailAdressesError] = useState<Array<number>>(
+    [],
+  );
   const [emailAdresses, setEmailAdresses] = useState<Array<string>>([]);
 
   // Je vérifie le nom de la promo
@@ -64,49 +66,40 @@ export default function addPromotion() {
   // Lorsque je soumets mon formulaire, je vérifie mes champs un par un
   const submitForm = (event: any) => {
     event.preventDefault();
-
-    const promotionNameIsVerified = verifyTextAndNumbersOnly(promotionName);
-    if (promotionNameIsVerified) {
-      setPromotionNameError(false);
-    } else {
+    let error: boolean = false;
+    if (!verifyTextAndNumbersOnly(promotionName)) {
       setPromotionNameError(true);
+      error = true;
     }
 
-    const beginningYearIsVerified = verifyScholarYearInput(beginningYear);
-    if (beginningYearIsVerified) {
-      setBeginningYearError(false);
-    } else {
+    if (!verifyScholarYearInput(beginningYear)) {
       setBeginningYearError(true);
+      error = true;
     }
 
-    const finishingYearIsVerified = verifyScholarYearInput(finishingYear);
-    if (finishingYearIsVerified) {
-      setFinishingYearError(false);
-    } else {
+    if (!verifyScholarYearInput(finishingYear)) {
       setFinishingYearError(true);
+      error = true;
     }
 
     if (emailAdresses.length > 0) {
-      emailAdresses.map((element) => {
-        const studentEmailIsVerified = verifyEmail(element);
-        if (studentEmailIsVerified) {
-          return setEmailAdressesError(false);
+      const errorEmail: number[] | null = [];
+      emailAdresses.forEach((element, index) => {
+        if (!verifyEmail(element)) {
+          errorEmail.push(index);
         }
-        return setEmailAdressesError(true);
       });
+      setEmailAdressesError(errorEmail);
+      error = true;
     }
-    if (
-      finishingYearIsVerified &&
-      beginningYearIsVerified &&
-      promotionNameIsVerified
-    ) {
-      console.log({
-        promotionName,
-        beginningYear,
-        finishingYear,
-        emailAdresses,
-      });
-    }
+    if (error) return false;
+
+    console.log({
+      name: promotionName,
+      year: `${beginningYear}/${finishingYear}`,
+      mail: emailAdresses,
+    });
+    return true;
   };
 
   const handleCsv = (data: any) => {
@@ -165,20 +158,28 @@ export default function addPromotion() {
 
         <div className="student-emails">
           {emailAdresses.map((element, index) => (
-            <input
-              key={element}
-              id="student-email"
-              type="text"
-              className="overlayInput promotion-name"
-              placeholder="Nom de la promotion"
-              value={element}
-              onChange={(e) => handleChange(e, index)}
-            />
+            <>
+              <input
+                key={element}
+                id="student-email"
+                type="text"
+                className="overlayInput promotion-name"
+                placeholder="Nom de la promotion"
+                value={element}
+                onChange={(e) => handleChange(e, index)}
+              />
+
+              {emailAdressesError.includes(index) ? (
+                <span key={`${element}-${element}`} className="form-error">
+                  Ce champ n&apos;est pas valide
+                </span>
+              ) : (
+                ''
+              )}
+            </>
           ))}
         </div>
-        <span className="form-error">
-          {emailAdressesError ? "Ce champ n'est pas valide" : ''}
-        </span>
+
         <input className="overlaySubmitButton" type="submit" value="Ajouter" />
       </form>
     </div>
