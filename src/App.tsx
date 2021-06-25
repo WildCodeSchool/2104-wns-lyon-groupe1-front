@@ -12,6 +12,7 @@ import UserContext from './utils/UserContext';
 import { IUser } from './utils/interface';
 import ProfessorAccount from './route/ProfessorAccount';
 import Connect from './route/Connect';
+import addPromotion from './route/addPromotion';
 
 function App() {
   // PROD
@@ -69,6 +70,7 @@ function App() {
               />
               <Route path="/rechercher" render={() => <h2>Rechercher</h2>} />
               <Route path="/mon-espace" component={ProfessorAccount} />
+              <Route path="/ajouter-une-promotion" component={addPromotion} />
               <Route exact path="/" component={Home} />
             </Switch>
           </Body>
