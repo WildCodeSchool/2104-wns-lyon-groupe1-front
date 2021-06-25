@@ -16,7 +16,6 @@ export default function Button({ title, icon, classname, slug }: PropsButton) {
       type="button"
       onClick={() => history.push(slug)}
       className={`button ${classname}`}
-      data-testid={classname}
     >
       <h3>{title}</h3>
       {icon && <img src={icon} alt={title} />}
