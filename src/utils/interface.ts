@@ -8,7 +8,7 @@ export interface IStudent {
 export interface IClassroom {
   name: string;
   year: string;
-  id: string;
+  classroomId: string;
 }
 
 export interface IClassroomStudent extends IClassroom {

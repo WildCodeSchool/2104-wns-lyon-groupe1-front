@@ -11,7 +11,7 @@ export default function MyClassroom() {
   const [modal, openModal] = useState(false);
   const history = useHistory();
   const [classroom, setClassroom] = useState<IClassroomStudent>({
-    id: '1',
+    classroomId: '1',
     name: 'Oclck',
     year: '2021/2022',
     student: [
