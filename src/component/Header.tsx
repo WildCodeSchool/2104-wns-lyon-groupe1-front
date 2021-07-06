@@ -90,11 +90,12 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    if (user.id) history.push('/');
     if (!user.id) history.push('/me-connecter');
     if (state?.hide) {
       setOpen(false);
     }
-  }, [pathname, state]);
+  }, [pathname, state, user]);
 
   if (!user.id) return <div className="header-offline" />;
 

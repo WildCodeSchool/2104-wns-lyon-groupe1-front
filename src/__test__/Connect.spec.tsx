@@ -63,7 +63,7 @@ describe('Connexion', () => {
 
   test('Je peux me connecter à mon compte utilisateur et être redirigé sur le choix des promotions', async () => {
     let testLocation = { pathname: '' };
-    render(
+    const { rerender } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter initialEntries={['/']}>
           <UserContext.Provider value={{ user, addUser, removeUser }}>
@@ -99,6 +99,25 @@ describe('Connexion', () => {
     fireEvent.click(screen.getByTestId('btn-promo-1'));
 
     expect(user).not.toBe({});
+
+    rerender(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <MemoryRouter initialEntries={['/']}>
+          <UserContext.Provider value={{ user, addUser, removeUser }}>
+            <App />
+            <Route
+              path="*"
+              render={({ location }) => {
+                testLocation = location;
+                return null;
+              }}
+            />
+          </UserContext.Provider>
+        </MemoryRouter>
+      </MockedProvider>,
+    );
+
+    expect(testLocation.pathname).toBe('/');
   });
 
   test('En oubliant de remplir un champ, un text me signale mon erreur', () => {
