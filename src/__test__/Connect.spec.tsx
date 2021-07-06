@@ -1,12 +1,24 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { MemoryRouter, Route } from 'react-router-dom';
+import { UserContext } from '../utils/UserContext';
+import { IUser } from '../utils/interface';
 import App from '../App';
 import { LOGIN } from '../utils/graphqlRequest';
 
 const validUser = {
   email: 'student@student.fr',
   password: 'Password13!',
+};
+
+let user: IUser = {};
+
+const addUser = (inputUser: any) => {
+  user = { ...inputUser };
+};
+
+const removeUser = () => {
+  user = {};
 };
 
 const mocks = [
@@ -45,20 +57,25 @@ const mocks = [
 ];
 
 describe('Connexion', () => {
+  beforeEach(() => {
+    removeUser();
+  });
+
   test('Je peux me connecter à mon compte utilisateur et être redirigé sur le choix des promotions', async () => {
     let testLocation = { pathname: '' };
-
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter initialEntries={['/']}>
-          <App />
-          <Route
-            path="*"
-            render={({ location }) => {
-              testLocation = location;
-              return null;
-            }}
-          />
+          <UserContext.Provider value={{ user, addUser, removeUser }}>
+            <App />
+            <Route
+              path="*"
+              render={({ location }) => {
+                testLocation = location;
+                return null;
+              }}
+            />
+          </UserContext.Provider>
         </MemoryRouter>
       </MockedProvider>,
     );
@@ -81,14 +98,16 @@ describe('Connexion', () => {
 
     fireEvent.click(screen.getByTestId('btn-promo-1'));
 
-    expect(testLocation.pathname).toBe('/');
+    expect(user).not.toBe({});
   });
 
   test('En oubliant de remplir un champ, un text me signale mon erreur', () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter initialEntries={['/']}>
-          <App />
+          <UserContext.Provider value={{ user, addUser, removeUser }}>
+            <App />
+          </UserContext.Provider>
         </MemoryRouter>
       </MockedProvider>,
     );
@@ -108,7 +127,9 @@ describe('Connexion', () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter initialEntries={['/']}>
-          <App />
+          <UserContext.Provider value={{ user, addUser, removeUser }}>
+            <App />
+          </UserContext.Provider>
         </MemoryRouter>
       </MockedProvider>,
     );

@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export interface IStudent {
   userId: string;
   firstname?: string;
@@ -21,4 +23,10 @@ export interface IUser {
   isTeacher?: boolean;
   email?: string;
   classroom?: IClassroom;
+}
+
+export interface IUserContext {
+  user: IUser;
+  addUser: (user: IUser) => void;
+  removeUser: () => void;
 }

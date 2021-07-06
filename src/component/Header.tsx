@@ -10,7 +10,7 @@ import logo from '../assets/logo.svg';
 import burgerMenu from '../assets/burgermenu.svg';
 import cross from '../assets/cross.svg';
 import './Header.scss';
-import UserContext from '../utils/UserContext';
+import { UserContext } from '../utils/UserContext';
 
 type PropsMenu = {
   teacher: boolean | undefined;
@@ -83,7 +83,7 @@ const Menu = ({ teacher, menuOpen }: PropsMenu) => {
 };
 
 export default function Header() {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const history = useHistory();
   const { pathname, state }: TLocation = useLocation();
 

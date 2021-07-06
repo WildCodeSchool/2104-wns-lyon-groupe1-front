@@ -1,13 +1,13 @@
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import UserContext from '../utils/UserContext';
+import { UserContext } from '../utils/UserContext';
 import OverLay from '../component/OverLay';
 import { IClassroomStudent } from '../utils/interface';
 import './MyClassroom.scss';
 import pencil from '../assets/pencil.svg';
 
 export default function MyClassroom() {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [modal, openModal] = useState(false);
   const history = useHistory();
   const [classroom, setClassroom] = useState<IClassroomStudent>({

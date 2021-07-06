@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { UserContext, useUserContext } from './utils/UserContext';
 
 import './index.scss';
 import App from './App';
@@ -12,11 +13,36 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const CtxProvider = ({ children }: any) => {
+  // PROD
+  const [user, addUser, removeUser] = useUserContext();
+  // DEV
+  // const [user, setUser, removeUser] = useUserContext({
+  //   id: '1',
+  //   firstname: 'John',
+  //   lastname: 'Doe',
+  //   isTeacher: false,
+  //   email: 'nicolas.legrand@aze.com',
+  //   classroom: {
+  //     name: 'Développement web Lyon',
+  //     year: '2021/2022',
+  //     classroomId: '1',
+  //   },
+  // });
+  return (
+    <UserContext.Provider value={{ user, addUser, removeUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
 ReactDOM.render(
   <StrictMode>
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <App />
+        <CtxProvider>
+          <App />
+        </CtxProvider>
       </BrowserRouter>
     </ApolloProvider>
   </StrictMode>,

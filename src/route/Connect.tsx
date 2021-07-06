@@ -1,4 +1,4 @@
-import { Dispatch, useState, SetStateAction } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../utils/graphqlRequest';
@@ -7,7 +7,7 @@ import logo from '../assets/logo.svg';
 import './Connect.scss';
 
 type ConnectProps = {
-  setUser: Dispatch<SetStateAction<IUser>>;
+  setUser: (user: IUser) => void;
 };
 
 export default function Connect({ setUser }: ConnectProps) {
