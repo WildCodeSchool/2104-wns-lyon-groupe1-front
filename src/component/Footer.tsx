@@ -8,13 +8,19 @@ export default function Footer() {
       <img src={logo} alt="logo Notes" />
       <ul>
         <li>
-          <Link to="/nous-contacter">Nous Contacter</Link>
+          <Link to="/nous-contacter" data-testid="contact">
+            Nous Contacter
+          </Link>
         </li>
         <li>
-          <Link to="/notre-équipe">Notre équipe</Link>
+          <Link to="/notre-équipe" data-testid="team">
+            Notre équipe
+          </Link>
         </li>
         <li>
-          <Link to="/mentions-legales">Mentions légales</Link>
+          <Link to="/mentions-legales" data-testid="mention">
+            Mentions légales
+          </Link>
         </li>
       </ul>
     </div>

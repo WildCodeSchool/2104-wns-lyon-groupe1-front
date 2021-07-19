@@ -41,7 +41,7 @@ function App() {
           />
           <Route path="/ma-promotion" component={MyClassroom} />
           <Route path="/ajouter-un-élève" component={AddStudent} />
-          <Route path="/ma-promotion" render={() => <h2>Mes promotions</h2>} />
+          {/* <Route path="/ma-promotion" render={() => <h2>Mes promotions</h2>} /> */}
           <Route
             path="/ajouter-une-fiche"
             render={() => <h2>Ajouter une fiche</h2>}

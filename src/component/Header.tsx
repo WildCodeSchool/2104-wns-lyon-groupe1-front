@@ -90,8 +90,10 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (user.id) history.push('/');
     if (!user.id) history.push('/me-connecter');
+    // Pour les tests quand on rentre un contexte avec un user existant
+    // Pourras être utile si le user est enregistrer dans le localStorage
+    if (pathname === '/me-connecter' && user.id) history.push('/');
     if (state?.hide) {
       setOpen(false);
     }
