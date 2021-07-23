@@ -18,3 +18,13 @@ export const LOGIN = gql`
 `;
 
 export const SIGNIN = '';
+
+export const CREATE_CLASSROOM = gql`
+  mutation CreateClassroom($name: String!, $year: String!) {
+    classroom(name: $name, year: $year) {
+      classroomId
+      name
+      year
+    }
+  }
+`;

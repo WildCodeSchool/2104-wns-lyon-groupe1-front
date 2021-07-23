@@ -5,7 +5,7 @@ export const connectUserStudent: IUser = {
   firstname: 'John',
   lastname: 'Doe',
   isTeacher: false,
-  email: 'nicolas.legrand@aze.com',
+  mail: 'nicolas.legrand@aze.com',
   classroom: {
     name: 'Développement web Lyon',
     year: '2021/2022',
@@ -18,7 +18,7 @@ export const connectUserTeacher: IUser = {
   firstname: 'John',
   lastname: 'Doe',
   isTeacher: true,
-  email: 'nicolas.legrand@aze.com',
+  mail: 'nicolas.legrand@aze.com',
   classroom: {
     name: 'Développement web Lyon',
     year: '2021/2022',

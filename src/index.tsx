@@ -22,7 +22,7 @@ const CtxProvider = ({ children }: any) => {
   //   firstname: 'John',
   //   lastname: 'Doe',
   //   isTeacher: false,
-  //   email: 'nicolas.legrand@aze.com',
+  //   mail: 'nicolas.legrand@aze.com',
   //   classroom: {
   //     name: 'Développement web Lyon',
   //     year: '2021/2022',

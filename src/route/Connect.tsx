@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../utils/graphqlRequest';
 import { IUser, IClassroom } from '../utils/interface';
+import AddPromotion from './AddPromotion';
 import logo from '../assets/logo.svg';
 import './Connect.scss';
 
@@ -11,7 +12,7 @@ type ConnectProps = {
 };
 
 export default function Connect({ setUser }: ConnectProps) {
-  const [formInput, setFormInput] = useState({ email: '', password: '' });
+  const [formInput, setFormInput] = useState({ mail: '', password: '' });
   const [error, setError] = useState(false);
   const [classrooms, setClassrooms] = useState<Array<IClassroom>>([]);
   const [user, setUserConnect] = useState<IUser>({});
@@ -29,36 +30,16 @@ export default function Connect({ setUser }: ConnectProps) {
 
   const handleForm = (e: any) => {
     e.preventDefault();
-    if (!formInput.email.length || !formInput.password.length) {
+    if (!formInput.mail.length || !formInput.password.length) {
       setError(true);
     } else {
       connect({
-        variables: { mail: formInput.email, password: formInput.password },
+        variables: { mail: formInput.mail, password: formInput.password },
       });
-      // setUserConnect({
-      //   id: '1',
-      //   firstname: 'John',
-      //   lastname: 'Doe',
-      //   isTeacher: false,
-      //   email: 'nicolas.legrand@aze.com',
-      // });
-      // setClassrooms([
-      //   {
-      //     name: 'Développement web Lyon',
-      //     year: '2021/2022',
-      //     id: '1',
-      //   },
-      //   {
-      //     name: 'Développement web Marseille',
-      //     year: '2021/2022',
-      //     id: '2',
-      //   },
-      // ]);
     }
   };
 
-  const handleChoice = (e: any, classroom: IClassroom) => {
-    e.preventDefault();
+  const handleChoice = (classroom: IClassroom) => {
     setUser({
       ...user,
       classroom,
@@ -67,7 +48,7 @@ export default function Connect({ setUser }: ConnectProps) {
   };
 
   if (addClassroom) {
-    return <h2>Ajout promotion</h2>;
+    return <AddPromotion handleClassroom={handleChoice} />;
   }
 
   if (classrooms.length) {
@@ -78,13 +59,18 @@ export default function Connect({ setUser }: ConnectProps) {
         <div className="list-classrooms">
           {classrooms.map((c) => (
             <button
-              onClick={(e) => handleChoice(e, c)}
+              onClick={(e) => {
+                e.preventDefault();
+                handleChoice(c);
+              }}
               key={`${c.name}${c.classroomId}`}
               type="button"
-              className="buttons"
+              className="buttons buttons-promotion"
               data-testid={`btn-promo-${c.classroomId}`}
             >
-              {c.name} {c.year}
+              <span>
+                {c.name} {c.year}
+              </span>
             </button>
           ))}
           <button
@@ -110,8 +96,8 @@ export default function Connect({ setUser }: ConnectProps) {
           required
           type="email"
           placeholder="Email"
-          name="email"
-          value={formInput.email}
+          name="mail"
+          value={formInput.mail}
           data-testid="input-mail"
           onChange={(e) =>
             setFormInput({ ...formInput, [e.target.name]: e.target.value })

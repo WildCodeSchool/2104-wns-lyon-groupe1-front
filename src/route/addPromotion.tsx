@@ -1,8 +1,15 @@
 import { useState } from 'react';
+import { useMutation } from '@apollo/client';
 import CSVReader from 'react-csv-reader';
-import './addPromotion.scss';
+import { CREATE_CLASSROOM } from '../utils/graphqlRequest';
+import './AddPromotion.scss';
+import { IClassroom } from '../utils/interface';
 
-export default function addPromotion() {
+type AddPromotionProps = {
+  handleClassroom: (classroom: IClassroom) => void;
+};
+
+export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
   const [promotionName, setPromotionName] = useState('');
   const [beginningYear, setBeginningYear] = useState('');
   const [finishingYear, setFinishingYear] = useState('');
@@ -12,6 +19,15 @@ export default function addPromotion() {
   const [emailAdressesError, setEmailAdressesError] = useState<Array<number>>(
     [],
   );
+  const [createClassroom] = useMutation(CREATE_CLASSROOM, {
+    onCompleted: (value) => {
+      handleClassroom(value.classroom);
+    },
+    onError: (error) => {
+      console.log(error);
+      // setError(true);
+    },
+  });
   const [emailAdresses, setEmailAdresses] = useState<Array<string>>([]);
 
   // Je vérifie le nom de la promo
@@ -65,6 +81,10 @@ export default function addPromotion() {
 
   // Lorsque je soumets mon formulaire, je vérifie mes champs un par un
   const submitForm = (event: any) => {
+    setPromotionNameError(false);
+    setBeginningYearError(false);
+    setFinishingYearError(false);
+    setEmailAdressesError([]);
     event.preventDefault();
     let error: boolean = false;
     if (!verifyTextAndNumbersOnly(promotionName)) {
@@ -93,7 +113,12 @@ export default function addPromotion() {
       error = true;
     }
     if (error) return false;
-
+    createClassroom({
+      variables: {
+        name: promotionName,
+        year: `${beginningYear}/${finishingYear}`,
+      },
+    });
     console.log({
       name: promotionName,
       year: `${beginningYear}/${finishingYear}`,

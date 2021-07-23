@@ -21,7 +21,7 @@ export interface IUser {
   firstname?: string;
   lastname?: string;
   isTeacher?: boolean;
-  email?: string;
+  mail?: string;
   classroom?: IClassroom;
 }
 

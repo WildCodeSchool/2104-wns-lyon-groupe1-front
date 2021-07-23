@@ -13,7 +13,7 @@ import { UserContext } from './utils/UserContext';
 import ProfessorAccount from './route/ProfessorAccount';
 import AddStudent from './route/AddStudent';
 import Connect from './route/Connect';
-import addPromotion from './route/addPromotion';
+import AddPromotion from './route/AddPromotion';
 
 function App() {
   const { addUser } = useContext(UserContext);
@@ -49,7 +49,7 @@ function App() {
           <Route path="/me-deconnecter" render={() => <h2>Deconnecter</h2>} />
           <Route path="/rechercher" render={() => <h2>Rechercher</h2>} />
           <Route path="/mon-espace" component={ProfessorAccount} />
-          <Route path="/ajouter-une-promotion" component={addPromotion} />
+          <Route path="/ajouter-une-promotion" component={AddPromotion} />
           <Route exact path="/" component={Home} />
         </Switch>
       </Body>

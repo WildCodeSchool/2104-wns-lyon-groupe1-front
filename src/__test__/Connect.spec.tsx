@@ -7,7 +7,7 @@ import App from '../App';
 import { LOGIN } from '../utils/graphqlRequest';
 
 const validUser = {
-  email: 'student@student.fr',
+  mail: 'student@student.fr',
   password: 'Password13!',
 };
 
@@ -26,7 +26,7 @@ const mocks = [
     request: {
       query: LOGIN,
       variables: {
-        mail: validUser.email,
+        mail: validUser.mail,
         password: validUser.password,
       },
     },
@@ -37,7 +37,7 @@ const mocks = [
           firstname: 'John',
           lastname: 'Doe',
           isTeacher: false,
-          mail: validUser.email,
+          mail: validUser.mail,
           classroom: [
             {
               name: 'Développement web Lyon',
@@ -61,7 +61,7 @@ describe('Connexion', () => {
     removeUser();
   });
 
-  test('Je peux me connecter à mon compte utilisateur et être redirigé sur le choix des promotions', async () => {
+  test("Je peux me connecter à mon compte utilisateur et être redirigé sur le choix des promotions, en cliquant sur une je vais sur la page d'Accueil", async () => {
     let testLocation = { pathname: '' };
     const { rerender } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
@@ -81,7 +81,7 @@ describe('Connexion', () => {
     );
 
     fireEvent.change(screen.getByTestId('input-mail'), {
-      target: { value: validUser.email },
+      target: { value: validUser.mail },
     });
 
     fireEvent.change(screen.getByTestId('input-password'), {
@@ -132,7 +132,7 @@ describe('Connexion', () => {
     );
 
     fireEvent.change(screen.getByTestId('input-mail'), {
-      target: { value: validUser.email },
+      target: { value: validUser.mail },
     });
 
     fireEvent.click(screen.getByTestId('btn-connect'));
@@ -154,7 +154,7 @@ describe('Connexion', () => {
     );
 
     fireEvent.change(screen.getByTestId('input-mail'), {
-      target: { value: validUser.email },
+      target: { value: validUser.mail },
     });
 
     fireEvent.change(screen.getByTestId('input-password'), {

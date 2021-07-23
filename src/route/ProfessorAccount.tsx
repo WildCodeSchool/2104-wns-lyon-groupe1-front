@@ -97,7 +97,7 @@ export default function ProfessorAccount() {
       <div className="greetings">Bienvenue {user.firstname} !</div>
       <div className="greetings">Wild Code School</div>
 
-      <div className="readOnlyButton">{user.email}</div>
+      <div className="readOnlyButton">{user.mail}</div>
 
       <div
         role="button"
