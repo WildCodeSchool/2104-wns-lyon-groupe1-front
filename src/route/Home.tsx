@@ -1,14 +1,13 @@
 import { useContext } from 'react';
-import { IUser } from '../utils/interface';
 import bubbleMessage from '../assets/bubblemessage.svg';
 import newspaper from '../assets/newspaper.svg';
 import Button from '../component/Button';
 import SearchBar from '../component/SearchBar';
 import './Home.scss';
-import UserContext from '../utils/UserContext';
+import { UserContext } from '../utils/UserContext';
 
 export default function Home() {
-  const user: IUser = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const buttons = [
     {

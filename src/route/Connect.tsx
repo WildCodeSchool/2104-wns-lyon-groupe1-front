@@ -1,59 +1,54 @@
-import { Dispatch, useState, SetStateAction } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { LOGIN } from '../utils/graphqlRequest';
 import { IUser, IClassroom } from '../utils/interface';
+import AddPromotion from './AddPromotion';
 import logo from '../assets/logo.svg';
 import './Connect.scss';
 
 type ConnectProps = {
-  setUser: Dispatch<SetStateAction<IUser>>;
+  setUser: (user: IUser) => void;
 };
 
 export default function Connect({ setUser }: ConnectProps) {
-  const [formInput, setFormInput] = useState({ email: '', password: '' });
+  const [formInput, setFormInput] = useState({ mail: '', password: '' });
   const [error, setError] = useState(false);
-  const [addClassroom, setAddClassroom] = useState(false);
   const [classrooms, setClassrooms] = useState<Array<IClassroom>>([]);
-  const [data, setData] = useState<IUser>({});
+  const [user, setUserConnect] = useState<IUser>({});
+  const [connect] = useMutation(LOGIN, {
+    onCompleted: (value) => {
+      setClassrooms(value.user.classroom);
+      setUserConnect({ ...value.user, classroom: {} });
+    },
+    onError: () => {
+      setError(true);
+    },
+  });
+  const [addClassroom, setAddClassroom] = useState(false);
   const history = useHistory();
 
   const handleForm = (e: any) => {
     e.preventDefault();
-    if (!formInput.email.length || !formInput.password.length) {
+    if (!formInput.mail.length || !formInput.password.length) {
       setError(true);
     } else {
-      setData({
-        id: '1',
-        firstname: 'John',
-        lastname: 'Doe',
-        isTeacher: false,
-        email: 'nicolas.legrand@aze.com',
+      connect({
+        variables: { mail: formInput.mail, password: formInput.password },
       });
-      setClassrooms([
-        {
-          name: 'Développement web Lyon',
-          year: '2021/2022',
-          id: '1',
-        },
-        {
-          name: 'Développement web Marseille',
-          year: '2021/2022',
-          id: '2',
-        },
-      ]);
     }
   };
 
-  const handleChoice = (e: any, classroom: IClassroom) => {
-    e.preventDefault();
+  const handleChoice = (classroom: IClassroom) => {
     setUser({
-      ...data,
+      ...user,
       classroom,
     });
     history.push('/');
   };
 
   if (addClassroom) {
-    return <h2>Ajout promotion</h2>;
+    return <AddPromotion handleClassroom={handleChoice} />;
   }
 
   if (classrooms.length) {
@@ -64,12 +59,18 @@ export default function Connect({ setUser }: ConnectProps) {
         <div className="list-classrooms">
           {classrooms.map((c) => (
             <button
-              onClick={(e) => handleChoice(e, c)}
-              key={`${c.name}${c.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                handleChoice(c);
+              }}
+              key={`${c.name}${c.classroomId}`}
               type="button"
-              className="buttons"
+              className="buttons buttons-promotion"
+              data-testid={`btn-promo-${c.classroomId}`}
             >
-              {c.name} {c.year}
+              <span>
+                {c.name} {c.year}
+              </span>
             </button>
           ))}
           <button
@@ -88,13 +89,16 @@ export default function Connect({ setUser }: ConnectProps) {
     <div className="connection-block">
       <img src={logo} alt="logo" />
       <form onSubmit={handleForm}>
-        {error && <p>Un des champs n’est pas valide.</p>}
+        {error && (
+          <p data-testid="info-form">Les identifiants ne sont pas reconnus.</p>
+        )}
         <input
           required
           type="email"
           placeholder="Email"
-          name="email"
-          value={formInput.email}
+          name="mail"
+          value={formInput.mail}
+          data-testid="input-mail"
           onChange={(e) =>
             setFormInput({ ...formInput, [e.target.name]: e.target.value })
           }
@@ -104,12 +108,15 @@ export default function Connect({ setUser }: ConnectProps) {
           type="text"
           placeholder="Mot de passe"
           name="password"
+          data-testid="input-password"
           value={formInput.password}
           onChange={(e) =>
             setFormInput({ ...formInput, [e.target.name]: e.target.value })
           }
         />
-        <button type="submit">Se Connecter</button>
+        <button type="submit" data-testid="btn-connect">
+          Se Connecter
+        </button>
       </form>
     </div>
   );

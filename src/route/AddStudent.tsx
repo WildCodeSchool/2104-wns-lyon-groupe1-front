@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import UserContext from '../utils/UserContext';
+import { UserContext } from '../utils/UserContext';
 import './AddStudent.scss';
 
 export default function AddStudent() {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [error, setError] = useState(false);
   const [mail, setMail] = useState('');
   const history = useHistory();

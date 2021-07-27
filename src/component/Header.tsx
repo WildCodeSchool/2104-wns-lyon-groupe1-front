@@ -10,7 +10,7 @@ import logo from '../assets/logo.svg';
 import burgerMenu from '../assets/burgermenu.svg';
 import cross from '../assets/cross.svg';
 import './Header.scss';
-import UserContext from '../utils/UserContext';
+import { UserContext } from '../utils/UserContext';
 
 type PropsMenu = {
   teacher: boolean | undefined;
@@ -83,7 +83,7 @@ const Menu = ({ teacher, menuOpen }: PropsMenu) => {
 };
 
 export default function Header() {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const history = useHistory();
   const { pathname, state }: TLocation = useLocation();
 
@@ -91,10 +91,13 @@ export default function Header() {
 
   useEffect(() => {
     if (!user.id) history.push('/me-connecter');
+    // Pour les tests quand on rentre un contexte avec un user existant
+    // Pourras être utile si le user est enregistrer dans le localStorage
+    if (pathname === '/me-connecter' && user.id) history.push('/');
     if (state?.hide) {
       setOpen(false);
     }
-  }, [pathname, state]);
+  }, [pathname, state, user]);
 
   if (!user.id) return <div className="header-offline" />;
 

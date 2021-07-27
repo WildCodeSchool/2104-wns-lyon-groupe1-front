@@ -58,5 +58,10 @@
 
     .buttons {
         width: 80vw;
+        justify-content: center;
+        &.buttons-promotion {
+          padding: 1em 10px;
+          font-size: 13px;
+        }
     }
 }
