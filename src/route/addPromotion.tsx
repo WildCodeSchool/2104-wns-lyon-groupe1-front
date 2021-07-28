@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import CSVReader from 'react-csv-reader';
 import { CREATE_CLASSROOM } from '../utils/graphqlRequest';
-import './addPromotion.scss';
+import './AddPromotion.scss';
 import { IClassroom } from '../utils/interface';
 
 type AddPromotionProps = {
