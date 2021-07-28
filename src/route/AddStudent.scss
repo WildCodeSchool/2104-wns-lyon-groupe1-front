@@ -1,0 +1,28 @@
+@import '../globalColors.scss';
+
+.add-student {
+    font-weight: 700;
+
+    form {
+        margin-top: 2em;
+
+        label {
+            color: #cb3737;
+        }
+        
+        input {
+            display: block;
+            background-color: $colorGreen;
+            border: none;
+            padding: 1em 12px;
+            width: 80vw;
+            margin : 1em auto;
+            max-width: 370px;
+            border-radius: 5px;
+        }
+
+        .error {
+            border : 2px solid #cb3737;
+        }
+    }
+}
