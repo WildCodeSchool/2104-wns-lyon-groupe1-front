@@ -8,7 +8,7 @@ import logo from '../assets/logo.svg';
 import './Connect.scss';
 
 type ConnectProps = {
-  setUser: (user: IUser) => void;
+  setUser: Function;
 };
 
 export default function Connect({ setUser }: ConnectProps) {

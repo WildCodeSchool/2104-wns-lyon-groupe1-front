@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../utils/UserContext';
 import OverLay from '../component/OverLay';
@@ -10,71 +10,75 @@ export default function MyClassroom() {
   const { user } = useContext(UserContext);
   const [modal, openModal] = useState(false);
   const history = useHistory();
-  const [classroom, setClassroom] = useState<IClassroomStudent>({
-    classroomId: '1',
-    name: 'Oclck',
-    year: '2021/2022',
-    student: [
-      {
-        firstname: 'John',
-        lastname: 'Francois',
-        mail: 'irf@fi',
-        userId: '5',
-      },
-      {
-        firstname: 'fezfezfezfzefzf',
-        lastname: 'Francois',
-        mail: 'irf@fi',
-        userId: '5',
-      },
-      {
-        firstname: 'John',
-        lastname: 'Francois',
-        mail: 'irf@fi',
-        userId: '5',
-      },
-      {
-        firstname: 'John',
-        lastname: 'Francdzezefzefezefois',
-        mail: 'irf@fi',
-        userId: '5',
-      },
-      {
-        mail: 'irf@fi',
-        userId: '5',
-      },
-      {
-        firstname: 'John',
-        lastname: 'Francois',
-        mail: 'irf@fi',
-        userId: '5',
-      },
-      {
-        firstname: 'John',
-        lastname: 'Francois',
-        mail: 'irf@fi',
-        userId: '5',
-      },
-      {
-        firstname: 'John',
-        lastname: 'Francois',
-        mail: 'irf@fi',
-        userId: '5',
-      },
-      {
-        firstname: 'John',
-        lastname: 'Francois',
-        mail: 'irf@fi',
-        userId: '5',
-      },
-      {
-        firstname: 'John',
-        lastname: 'Francois',
-        mail: 'irf@fi',
-        userId: '5',
-      },
-    ],
-  });
+  const [classroom, setClassroom] = useState<IClassroomStudent>();
+
+  useEffect(() => {
+    setClassroom({
+      classroomId: '1',
+      name: 'Oclck',
+      year: '2021/2022',
+      student: [
+        {
+          firstname: 'John',
+          lastname: 'Francois',
+          mail: 'irf@fi',
+          userId: '5',
+        },
+        {
+          firstname: 'fezfezfezfzefzf',
+          lastname: 'Francois',
+          mail: 'irf@fi',
+          userId: '5',
+        },
+        {
+          firstname: 'John',
+          lastname: 'Francois',
+          mail: 'irf@fi',
+          userId: '5',
+        },
+        {
+          firstname: 'John',
+          lastname: 'Francdzezefzefezefois',
+          mail: 'irf@fi',
+          userId: '5',
+        },
+        {
+          mail: 'irf@fi',
+          userId: '5',
+        },
+        {
+          firstname: 'John',
+          lastname: 'Francois',
+          mail: 'irf@fi',
+          userId: '5',
+        },
+        {
+          firstname: 'John',
+          lastname: 'Francois',
+          mail: 'irf@fi',
+          userId: '5',
+        },
+        {
+          firstname: 'John',
+          lastname: 'Francois',
+          mail: 'irf@fi',
+          userId: '5',
+        },
+        {
+          firstname: 'John',
+          lastname: 'Francois',
+          mail: 'irf@fi',
+          userId: '5',
+        },
+        {
+          firstname: 'John',
+          lastname: 'Francois',
+          mail: 'irf@fi',
+          userId: '5',
+        },
+      ],
+    });
+  }, []);
 
   return (
     <div className="classroom-student">
