@@ -16,6 +16,10 @@ export interface IClassroom {
 export interface IClassroomStudent extends IClassroom {
   student: IStudent[];
 }
+export interface IClassroomSubject extends IClassroom {
+  subject: ISubject[];
+}
+
 export interface IUser {
   id?: string;
   firstname?: string;
@@ -29,4 +33,10 @@ export interface IUserContext {
   user: IUser;
   addUser: (user: IUser) => void;
   removeUser: () => void;
+}
+
+export interface ISubject {
+  id?: string;
+  imageUrl?: string;
+  name?: string;
 }
