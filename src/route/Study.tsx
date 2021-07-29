@@ -1,12 +1,8 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { IClassroomSubject } from '../utils/interface';
 import './Study.scss';
 import { useQuery } from '@apollo/client';
 import { ALL_SUBJECTS } from '../utils/graphqlRequest';
 
 export default function Study() {
-  const history = useHistory();
   const { loading, error, data } = useQuery(ALL_SUBJECTS);
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
