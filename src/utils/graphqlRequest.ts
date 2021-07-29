@@ -28,3 +28,11 @@ export const CREATE_CLASSROOM = gql`
     }
   }
 `;
+
+export const ALL_SUBJECTS = gql`
+  query getSubjects {
+    subjects {
+      id
+    }
+  }
+`;
