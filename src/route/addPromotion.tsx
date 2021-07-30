@@ -23,7 +23,8 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
       handleClassroom(value.classroom);
     },
     onError: (error) => {
-      window.alert(error.message);
+      // a changer, gerer les erreurs de retours créations classroom
+      setPromotionNameError(true);
     },
   });
   const [emailAdresses, setEmailAdresses] = useState<Array<string>>([]);
