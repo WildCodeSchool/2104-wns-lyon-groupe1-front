@@ -32,7 +32,7 @@ const mocks = [
     },
     result: {
       data: {
-        user: {
+        login: {
           id: '1',
           firstname: 'John',
           lastname: 'Doe',

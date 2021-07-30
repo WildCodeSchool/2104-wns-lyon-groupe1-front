@@ -2,8 +2,9 @@ import { gql } from '@apollo/client';
 
 export const LOGIN = gql`
   mutation Connection($mail: String!, $password: String!) {
-    user(mail: $mail, password: $password) {
+    login(mail: $mail, password: $password) {
       id
+      token
       firstname
       lastname
       isTeacher
@@ -17,12 +18,28 @@ export const LOGIN = gql`
   }
 `;
 
-export const SIGNIN = '';
+export const CHECK_LOGIN = gql`
+  mutation VerifConnection($token: String!) {
+    checklogin(token: $token) {
+      id
+      token
+      firstname
+      lastname
+      isTeacher
+      mail
+      classroom {
+        classroomId
+        name
+        year
+      }
+    }
+  }
+`;
 
 export const CREATE_CLASSROOM = gql`
-  mutation CreateClassroom($name: String!, $year: String!) {
-    classroom(name: $name, year: $year) {
-      classroomId
+  mutation CreateClassroom($name: String!, $year: String!, $mails: [String!]!) {
+    addClassroom(name: $name, year: $year, mails: $mails) {
+      id
       name
       year
     }

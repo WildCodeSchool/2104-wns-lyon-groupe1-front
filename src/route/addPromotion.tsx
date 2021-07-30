@@ -2,11 +2,10 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import CSVReader from 'react-csv-reader';
 import { CREATE_CLASSROOM } from '../utils/graphqlRequest';
-import './AddPromotion.scss';
-import { IClassroom } from '../utils/interface';
+import './addPromotion.scss';
 
 type AddPromotionProps = {
-  handleClassroom: (classroom: IClassroom) => void;
+  handleClassroom: Function;
 };
 
 export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
@@ -23,9 +22,9 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
     onCompleted: (value) => {
       handleClassroom(value.classroom);
     },
-    onError: (error) => {
-      console.log(error);
-      // setError(true);
+    onError: () => {
+      // a changer, gerer les erreurs de retours créations classroom
+      setPromotionNameError(true);
     },
   });
   const [emailAdresses, setEmailAdresses] = useState<Array<string>>([]);
@@ -117,12 +116,8 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
       variables: {
         name: promotionName,
         year: `${beginningYear}/${finishingYear}`,
+        mails: emailAdresses || ['lolo'],
       },
-    });
-    console.log({
-      name: promotionName,
-      year: `${beginningYear}/${finishingYear}`,
-      mail: emailAdresses,
     });
     return true;
   };

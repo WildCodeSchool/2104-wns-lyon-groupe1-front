@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { LOGIN } from '../utils/graphqlRequest';
+import { LOGIN, CHECK_LOGIN } from '../utils/graphqlRequest';
 import { IUser, IClassroom } from '../utils/interface';
-import AddPromotion from './AddPromotion';
+import AddPromotion from './addPromotion';
 import logo from '../assets/logo.svg';
 import './Connect.scss';
 
 type ConnectProps = {
-  setUser: (user: IUser) => void;
+  setUser: Function;
 };
 
 export default function Connect({ setUser }: ConnectProps) {
@@ -18,13 +18,32 @@ export default function Connect({ setUser }: ConnectProps) {
   const [user, setUserConnect] = useState<IUser>({});
   const [connect] = useMutation(LOGIN, {
     onCompleted: (value) => {
-      setClassrooms(value.user.classroom);
-      setUserConnect({ ...value.user, classroom: {} });
+      localStorage.setItem('wikitoken', value.login.token);
+      setClassrooms(value.login.classroom);
+      setUserConnect({ ...value.login, classroom: {} });
     },
     onError: () => {
       setError(true);
     },
   });
+
+  const [checkUser] = useMutation(CHECK_LOGIN, {
+    onCompleted: (value) => {
+      localStorage.setItem('wikitoken', value.checklogin.token);
+      setClassrooms(value.checklogin.classroom);
+      setUserConnect({ ...value.checklogin, classroom: {} });
+    },
+    onError: () => {
+      setUserConnect({});
+      setClassrooms([]);
+    },
+  });
+
+  useEffect(() => {
+    const token = localStorage.getItem('wikitoken');
+    checkUser({ variables: { token } });
+  }, []);
+
   const [addClassroom, setAddClassroom] = useState(false);
   const history = useHistory();
 
@@ -51,7 +70,7 @@ export default function Connect({ setUser }: ConnectProps) {
     return <AddPromotion handleClassroom={handleChoice} />;
   }
 
-  if (classrooms.length) {
+  if (user.id) {
     return (
       <>
         <h2 className="title greetings">Mes promotions</h2>
@@ -105,7 +124,7 @@ export default function Connect({ setUser }: ConnectProps) {
         />
         <input
           required
-          type="text"
+          type="password"
           placeholder="Mot de passe"
           name="password"
           data-testid="input-password"

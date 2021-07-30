@@ -13,7 +13,7 @@ import { UserContext } from './utils/UserContext';
 import ProfessorAccount from './route/ProfessorAccount';
 import AddStudent from './route/AddStudent';
 import Connect from './route/Connect';
-import AddPromotion from './route/AddPromotion';
+import AddPromotion from './route/addPromotion';
 
 function App() {
   const { addUser } = useContext(UserContext);

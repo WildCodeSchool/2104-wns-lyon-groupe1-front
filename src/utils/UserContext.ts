@@ -1,9 +1,7 @@
-import { createContext, useState, Dispatch, SetStateAction } from 'react';
+import { createContext, useState } from 'react';
 import { IUser, IUserContext } from './interface';
 
-export function useUserContext(
-  data: IUser = {},
-): [IUser, (user: IUser) => void, () => void] {
+export function useUserContext(data: IUser = {}): [IUser, any, any] {
   const [user, setUser] = useState<IUser>(data || {});
 
   const addUser = (inputUser: IUser) => {
