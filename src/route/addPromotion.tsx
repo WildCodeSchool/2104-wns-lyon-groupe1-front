@@ -22,6 +22,9 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
     onCompleted: (value) => {
       handleClassroom(value.classroom);
     },
+    onError: (error) => {
+      window.alert(error.message);
+    },
   });
   const [emailAdresses, setEmailAdresses] = useState<Array<string>>([]);
 
@@ -112,6 +115,7 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
       variables: {
         name: promotionName,
         year: `${beginningYear}/${finishingYear}`,
+        mails: emailAdresses || ['lolo'],
       },
     });
     return true;

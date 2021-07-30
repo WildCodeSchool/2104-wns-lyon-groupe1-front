@@ -1,15 +1,34 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  concat,
+  HttpLink,
+  ApolloLink,
+} from '@apollo/client';
 import { UserContext, useUserContext } from './utils/UserContext';
 
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const httpLink = new HttpLink({ uri: process.env.REACT_APP_API_URL });
+
+const authMidlw = new ApolloLink((operation, next) => {
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      authorization: localStorage.getItem('wikitoken') || '',
+    },
+  }));
+  return next(operation);
+});
+
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_API_URL,
+  link: concat(authMidlw, httpLink),
   cache: new InMemoryCache(),
 });
 
