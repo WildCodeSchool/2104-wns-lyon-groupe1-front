@@ -33,7 +33,9 @@ function App() {
             path="/mentions-legales"
             render={() => <h2>Mentions légales</h2>}
           />
-          <Route path="/mes-matières" component={Study} />
+          <Route path="/mes-matières">
+            <Study />
+          </Route>
           <Route path="/forum" component={Forum} />
           <Route
             path="/me-connecter"

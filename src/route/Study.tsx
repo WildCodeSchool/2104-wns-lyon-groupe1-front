@@ -4,8 +4,8 @@ import { ALL_SUBJECTS } from '../utils/graphqlRequest';
 
 export default function Study() {
   const { loading, error, data } = useQuery(ALL_SUBJECTS);
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>Error! {error.message}</div>;
 
   return (
     <>
