@@ -20,7 +20,7 @@ export default function Study() {
     classroomId: '1',
     name: 'Développement Web Lyon',
     year: '2021/2022',
-    subjects: [
+    subject: [
       {
         id: '1',
         imageUrl: '/images/Node.js_logo.svg',
@@ -63,7 +63,7 @@ export default function Study() {
     <>
       <h1>Mes matières</h1>
       <div className="subject-list">
-        {mockData?.subjects.map((element: any) => (
+        {mockData?.subject.map((element: any) => (
           <div
             data-testid={element.id}
             className="subject-element"

@@ -1,0 +1,25 @@
+@import '../globalColors.scss';
+
+.flashcard-list {
+    .flashcard-element {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .flashcard-buttons {
+            background-color: $colorYellow;
+            border-color: $colorYellow;
+            font-weight: bold;
+            padding: 50px 10px;
+            margin: 15px 0;
+            width: 100%;
+            justify-content: center;
+            max-height: 30px;
+
+            &:hover {
+                background-color: $colorWhite;
+                color: $colorYellow;
+            }
+        }
+    }
+}

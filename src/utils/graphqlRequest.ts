@@ -33,16 +33,18 @@ export const ALL_SUBJECTS = gql`
   query getSubjects {
     subject {
       id
-      title
+      name
+      imageURL
     }
   }
 `;
 
 export const ALL_FLASHCARDS_BY_SUBJECTS = gql`
-  mutation getAllFlashcardsBySubject($subjectTitle: String!) {
+  query getAllFlashcardsBySubject($subjectTitle: String!) {
     subject(title: $subjectTitle) {
       id
-      title
+      name
+      imageURL
       flashcard {
         id
         title
