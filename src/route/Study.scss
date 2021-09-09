@@ -29,6 +29,10 @@
         margin-bottom: 10%;
     }
 
+    .link-button {
+        display: contents
+    }
+
     .subject-buttons {
         background-color: $colorYellow;
         border-color: $colorYellow;
@@ -54,6 +58,7 @@
 @media only screen and (min-width: 768px) {
     .subject-list {
         padding: 0;
+        display: inline-grid;
         grid-template-columns: repeat(4, 1fr);
     }
 }

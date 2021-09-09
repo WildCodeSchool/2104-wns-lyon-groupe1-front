@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useParams } from 'react-router-dom';
 import './App.scss';
 import { useContext } from 'react';
 import Header from './component/Header';
@@ -14,6 +14,7 @@ import ProfessorAccount from './route/ProfessorAccount';
 import AddStudent from './route/AddStudent';
 import Connect from './route/Connect';
 import AddPromotion from './route/addPromotion';
+import Flashcards from './route/FlashCards';
 
 function App() {
   const { addUser } = useContext(UserContext);
@@ -35,6 +36,9 @@ function App() {
           />
           <Route path="/mes-matières">
             <Study />
+          </Route>
+          <Route path="/:matiere">
+            <Flashcards />
           </Route>
           <Route path="/forum" component={Forum} />
           <Route

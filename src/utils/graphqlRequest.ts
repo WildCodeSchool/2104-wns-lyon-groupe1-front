@@ -31,8 +31,22 @@ export const CREATE_CLASSROOM = gql`
 
 export const ALL_SUBJECTS = gql`
   query getSubjects {
-    subjects {
+    subject {
       id
+      title
+    }
+  }
+`;
+
+export const ALL_FLASHCARDS_BY_SUBJECTS = gql`
+  mutation getAllFlashcardsBySubject($subjectTitle: String!) {
+    subject(title: $subjectTitle) {
+      id
+      title
+      flashcard {
+        id
+        title
+      }
     }
   }
 `;
