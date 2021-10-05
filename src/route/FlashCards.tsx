@@ -1,11 +1,25 @@
 import './FlashCards.scss';
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { ALL_FLASHCARDS_BY_SUBJECTS } from '../utils/graphqlRequest';
 
 export default function FlashCards() {
   const { matiere }: { matiere: string } = useParams();
+  const [error, setError] = useState(false);
+  const [subject, setSubject] = useState('');
+  // setSubject(matiere);
+
+  const flashcardsSubject = useMutation(ALL_FLASHCARDS_BY_SUBJECTS, {
+    onCompleted: (value) => {
+      setSubject(value.subject.flashcard);
+    },
+    onError: () => {
+      setError(true);
+    },
+  });
+  console.log(flashcardsSubject);
+
   // const { loading, error, data } = useQuery(ALL_FLASHCARDS_BY_SUBJECTS);
   // if (loading) return <div>Loading...</div>;
   // if (error) return <div>Error! {error.message}</div>;

@@ -40,7 +40,7 @@ export const ALL_SUBJECTS = gql`
 `;
 
 export const ALL_FLASHCARDS_BY_SUBJECTS = gql`
-  query getAllFlashcardsBySubject($subjectTitle: String!) {
+  mutation getAllFlashcardsBySubject($subjectTitle: String!) {
     subject(title: $subjectTitle) {
       id
       name
