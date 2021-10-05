@@ -1,0 +1,41 @@
+version: "3"
+services:
+    server:
+        build: ./2104-wns-lyon-groupe1-back
+        command: sh -c "npm run build && npm run prod"
+        expose: 
+            - 5000
+        environment:
+            - NODE_ENV=production
+        depends_on:
+          - mongodb
+        links:
+          - mongodb
+    mongodb:
+        image: mongo:4.4.9
+        ports:
+            - 27017:27017
+        volumes: 
+            - data:/data/db
+    client:
+        build: ./2104-wns-lyon-groupe1-front
+        command: sh -c "npm run build"
+        volumes:
+            - web-client-build:/client/build
+        environment:
+            - NODE_ENV=production
+            - REACT_APP_API_URL=http://localhost:8000/graphql
+    nginx:
+        image: nginx:1.21.3
+        depends_on:
+            - server
+            - client
+        restart: always
+        ports:
+            - ${GATEWAY_PORT}:80
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf
+            - web-client-build:/web-client-build
+volumes:
+    web-client-build:
+    data:

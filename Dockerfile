@@ -1,10 +1,10 @@
 FROM node:15.14.0
 
-RUN mkdir /app
-WORKDIR /app
+RUN mkdir /client
+WORKDIR /client
 COPY package*.json ./
+COPY tsconfig.json ./
 RUN npm i
-COPY src src 
-COPY public public
+COPY . .
 
 CMD npm run start
