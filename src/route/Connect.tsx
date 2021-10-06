@@ -40,8 +40,7 @@ export default function Connect({ setUser }: ConnectProps) {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem('wikitoken');
-    checkUser({ variables: { token } });
+    checkUser();
   }, []);
 
   const [addClassroom, setAddClassroom] = useState(false);

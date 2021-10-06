@@ -19,8 +19,8 @@ export const LOGIN = gql`
 `;
 
 export const CHECK_LOGIN = gql`
-  mutation VerifConnection($token: String!) {
-    checklogin(token: $token) {
+  mutation VerifConnection {
+    checklogin {
       id
       token
       firstname
