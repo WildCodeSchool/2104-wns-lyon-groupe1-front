@@ -59,8 +59,8 @@ export default function Study() {
         name: 'HTML5',
       },
     ],
-  }; */
-
+  };
+*/
   return (
     <>
       <h1>Mes matières</h1>

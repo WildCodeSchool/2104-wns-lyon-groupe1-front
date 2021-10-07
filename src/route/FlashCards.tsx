@@ -58,9 +58,9 @@ export default function FlashCards() {
       <div className="flashcard-list">
         {data?.subject.map((element: any) => (
           <div
-            data-testid={element.id}
+            data-testid={element.subjectId}
             className="flashcard-element"
-            key={element.id}
+            key={element.subjectId}
           >
             {element.flashcard.map((flashcard: any) => (
               <button
