@@ -1,5 +1,5 @@
 import './FlashCards.scss';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { ALL_FLASHCARDS_BY_SUBJECTS } from '../utils/graphqlRequest';

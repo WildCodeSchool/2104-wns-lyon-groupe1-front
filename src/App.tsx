@@ -1,4 +1,4 @@
-import { Switch, Route, useParams } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import './App.scss';
 import { useContext } from 'react';
 import Header from './component/Header';
