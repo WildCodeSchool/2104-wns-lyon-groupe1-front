@@ -9,6 +9,10 @@
     max-height: 40px;
     transition: max-height 250ms ease-in;
 
+    @media (min-width: 1200px) {
+        max-height: max-content;
+    }
+
     button {
         background: none;
         border: none;
@@ -22,6 +26,12 @@
         background-color: $colorBrightGrey;
         padding: 0.5em;
         height: 40px;
+
+        @media (min-width: 1200px) {
+            img {
+                display: none;
+            }
+        }
     }
 
     .block-paragraph {
@@ -29,6 +39,16 @@
         font-size: 12px;
         line-height: 16px;
         padding: 1em;
+
+        @media (min-width: 1200px) {
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        @media (min-width: 768px) {
+            font-size: 16px;
+            line-height: 24px;
+        }
 
         img {
             margin-right: 5px;
@@ -43,5 +63,5 @@
 
 .anim-paragraph {
     max-height: 900px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }

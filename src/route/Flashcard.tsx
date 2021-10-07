@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import Switch from 'react-switch';
 import Block from '../component/Block';
 import bubbleMessage from '../assets/bubblemessage.svg';
 import './Flashcard.scss';
 import { IFlashcard } from '../utils/interface';
+import { UserContext } from '../utils/UserContext';
 
 const flashcard: IFlashcard = {
   id: '51541',
@@ -59,6 +60,7 @@ const flashcard: IFlashcard = {
 };
 
 export default function Flashcard() {
+  const { user } = useContext(UserContext);
   const params = useParams();
   const history = useHistory();
   const [mode, setMode] = useState(false);
@@ -75,14 +77,18 @@ export default function Flashcard() {
         </p>
         <h2>{flashcard.title}</h2>
         <div className="flashcard-header-action">
-          <Switch
-            onColor="#FCC300"
-            onChange={() => setMode((prev) => !prev)}
-            checked={mode}
-            width={32}
-            height={20}
-          />
-          <span>{mode ? 'Ecriture' : 'Lecture'}</span>
+          {user.isTeacher && (
+            <>
+              <Switch
+                onColor="#FCC300"
+                onChange={() => setMode((prev) => !prev)}
+                checked={mode}
+                width={32}
+                height={20}
+              />
+              <span>{mode ? 'Ecriture' : 'Lecture'}</span>
+            </>
+          )}
           <button
             className="btn"
             type="button"
