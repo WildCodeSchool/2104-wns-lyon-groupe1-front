@@ -1,6 +1,6 @@
 import './FlashCards.scss';
 import React, { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { ALL_FLASHCARDS_BY_SUBJECTS } from '../utils/graphqlRequest';
 import { UserContext } from '../utils/UserContext';
@@ -8,11 +8,12 @@ import { UserContext } from '../utils/UserContext';
 export default function FlashCards() {
   const { user } = useContext(UserContext);
   const { matiere }: { matiere: string } = useParams();
+  const { state }: { state: { subjectId: string } } = useLocation();
 
   const { loading, error, data } = useQuery(ALL_FLASHCARDS_BY_SUBJECTS, {
     variables: {
       classroomId: user.classroom?.classroomId,
-      subjectName: matiere,
+      subjectId: state.subjectId,
     },
   });
   if (loading) return <div>On recherche les fiches {matiere}...</div>;

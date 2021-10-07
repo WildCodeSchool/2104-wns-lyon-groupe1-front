@@ -63,8 +63,8 @@ export const ALL_SUBJECTS_BY_CLASSROOM = gql`
 `;
 
 export const ALL_FLASHCARDS_BY_SUBJECTS = gql`
-  query getAllFlashcardsBySubject($classroomId: ID!, $subjectName: String!) {
-    classroom(classroomId: $classroomId, subjectName: $subjectName) {
+  query getAllFlashcardsBySubject($classroomId: ID!, $subjecId: ID!) {
+    classroom(classroomId: $classroomId, subjectId: $subjecId) {
       classroomId
       subject {
         subjectId
