@@ -54,7 +54,7 @@ export const ALL_SUBJECTS_BY_CLASSROOM = gql`
     classroom(classroomId: $classroomId) {
       classroomId
       subject {
-        id
+        subjectId
         name
         imageUrl
       }
@@ -67,7 +67,7 @@ export const ALL_FLASHCARDS_BY_SUBJECTS = gql`
     classroom(classroomId: $classroomId, subjectName: $subjectName) {
       classroomId
       subject {
-        id
+        subjectId
         name
         imageUrl
       }

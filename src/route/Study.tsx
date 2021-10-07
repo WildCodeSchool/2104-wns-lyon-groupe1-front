@@ -24,37 +24,37 @@ export default function Study() {
     year: '2021/2022',
     subject: [
       {
-        id: '1',
+        subjectId: '1',
         imageUrl: '/images/Node.js_logo.svg',
         name: 'NodeJS',
       },
       {
-        id: '2',
+        subjectId: '2',
         imageUrl: '/images/logo-react-blue-1.svg',
         name: 'React',
       },
       {
-        id: '3',
+        subjectId: '3',
         imageUrl: '/images/GraphQL_Logo.svg',
         name: 'GraphQL',
       },
       {
-        id: '4',
+        subjectId: '4',
         imageUrl: '/images/javascript-logo.svg',
         name: 'Javascript',
       },
       {
-        id: '5',
+        subjectId: '5',
         imageUrl: '/images/Angular_full_color_logo.svg',
         name: 'Angular',
       },
       {
-        id: '6',
+        subjectId: '6',
         imageUrl: '/images/PHP-logo.svg',
         name: 'PHP',
       },
       {
-        id: '7',
+        subjectId: '7',
         imageUrl: '/images/HTML5_logo_and_wordmark.svg',
         name: 'HTML5',
       },
@@ -68,9 +68,9 @@ export default function Study() {
       <div className="subject-list">
         {data?.subject.map((element: any) => (
           <div
-            data-testid={element.id}
+            data-testid={element.subjectId}
             className="subject-element"
-            key={element.id}
+            key={element.subjectId}
           >
             <img src={element.imageUrl} alt={element.name} />
             <Link to={slugify(`${element.name}`)} className="link-button">

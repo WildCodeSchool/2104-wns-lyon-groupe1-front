@@ -25,7 +25,7 @@ export default function FlashCards() {
     year: '2021/2022',
     subject: [
       {
-        id: '1',
+        subjectId: '1',
         imageUrl: '/images/Node.js_logo.svg',
         name: 'NodeJS',
 
