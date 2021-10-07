@@ -6,6 +6,7 @@ import Body from './component/Body';
 import Home from './route/Home';
 import Forum from './route/Forum';
 import Study from './route/Study';
+import Flashcard from './route/Flashcard';
 import File from './route/File';
 import MyClassroom from './route/MyClassroom';
 import Footer from './component/Footer';
@@ -40,6 +41,11 @@ function App() {
           <Route path="/mes-matieres/:matiere">
             <Flashcards />
           </Route>
+          <Route
+            exact
+            path="/mes-matières/:subject/:flashcardSlug"
+            component={Flashcard}
+          />
           <Route path="/forum" component={Forum} />
           <Route
             path="/me-connecter"

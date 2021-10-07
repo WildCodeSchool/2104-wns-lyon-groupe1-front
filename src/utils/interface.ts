@@ -40,3 +40,29 @@ export interface ISubject {
   imageUrl?: string;
   name?: string;
 }
+interface IParagraph {
+  text: string;
+  isValidate: boolean;
+  isPublic: boolean;
+  author: string;
+  date: string;
+}
+
+interface ISubtitle {
+  title: string;
+  position: number;
+  paragraph?: IParagraph[];
+}
+
+interface IRessource {
+  name: string;
+  url: string;
+}
+
+export interface IFlashcard {
+  id: string;
+  title: string;
+  tag?: string[];
+  subtitle?: ISubtitle[];
+  ressource?: IRessource[];
+}

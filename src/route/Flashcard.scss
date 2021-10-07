@@ -1,0 +1,47 @@
+@import '../globalColors.scss';
+
+.flashcard {
+    
+    width: 95%;
+    margin: 0 auto;
+
+    button {
+        background: none;
+        border: none;
+    }
+
+    .flashcard-tags {
+        font-weight: bold;
+        font-size: 0.8em;
+        display: flex;
+        flex-wrap: wrap;
+        span {
+            padding: 0 0.2em;
+        }
+    }
+    .flashcard-header {
+        padding-left: 0.8em;
+    }
+
+    h2 {
+        padding-left: 0.5em;
+        text-align: left;
+        margin : 0.3em 0;
+        color: $colorYellow
+    }
+
+    .flashcard-header-action {
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+
+        span {
+            padding-left: 0.5em;
+        }
+
+        button:last-child {
+            margin-left: 3em;
+        }
+        font-size: 12px;
+    }
+}

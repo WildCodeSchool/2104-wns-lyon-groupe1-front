@@ -1,0 +1,47 @@
+@import '../globalColors.scss';
+
+.block {
+    border: 1px solid $colorBrightGrey;
+    border-radius: 5px;
+    margin-top: 5%;
+    height: auto;
+    overflow-y: hidden;
+    max-height: 40px;
+    transition: max-height 250ms ease-in;
+
+    button {
+        background: none;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .block-header {
+        background-color: $colorBrightGrey;
+        padding: 0.5em;
+        height: 40px;
+    }
+
+    .block-paragraph {
+        text-align: justify;
+        font-size: 12px;
+        line-height: 16px;
+        padding: 1em;
+
+        img {
+            margin-right: 5px;
+        }
+
+        a {
+            margin-left: 1em;
+            text-decoration: underline;
+        }
+    }
+}
+
+.anim-paragraph {
+    max-height: 900px;
+    overflow-y: scroll;
+}

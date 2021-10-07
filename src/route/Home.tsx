@@ -44,6 +44,12 @@ export default function Home() {
           data-testid={button.classname}
         />
       ))}
+      <Button
+        title="Fiche"
+        classname="yellow-btn"
+        icon={newspaper}
+        slug="/mes-matières/math/ma-premiere-fiche"
+      />
     </div>
   );
 }
