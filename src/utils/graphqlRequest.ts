@@ -29,25 +29,47 @@ export const CREATE_CLASSROOM = gql`
   }
 `;
 
+export const GET_CLASSROOM_BY_ID = gql`
+  query getClassroomById($classroomId: ID!) {
+    classroom(classroomId: $classroomId) {
+      classroomId
+      name
+      year
+    }
+  }
+`;
+
 export const ALL_SUBJECTS = gql`
   query getSubjects {
     subject {
       id
       name
-      imageURL
+      imageUrl
+    }
+  }
+`;
+
+export const ALL_SUBJECTS_BY_CLASSROOM = gql`
+  query getAllSubjectsByClassroom($classroomId: ID!) {
+    classroom(classroomId: $classroomId) {
+      classroomId
+      subject {
+        id
+        name
+        imageUrl
+      }
     }
   }
 `;
 
 export const ALL_FLASHCARDS_BY_SUBJECTS = gql`
-  mutation getAllFlashcardsBySubject($subjectTitle: String!) {
-    subject(title: $subjectTitle) {
-      id
-      name
-      imageURL
-      flashcard {
+  query getAllFlashcardsBySubject($classroomId: ID!, $subjectName: String!) {
+    classroom(classroomId: $classroomId, subjectName: $subjectName) {
+      classroomId
+      subject {
         id
-        title
+        name
+        imageUrl
       }
     }
   }

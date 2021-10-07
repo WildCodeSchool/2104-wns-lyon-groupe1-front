@@ -25,10 +25,11 @@ type Flashcard {
 }
 
 type Classroom {
-  id: ID
+  classroomId: ID
   name: String @fake(type: words)
   year: Int @fake(type: date)
   student: [Student]
+  subject: [Subject]
 }
 
 type Student {
@@ -41,6 +42,9 @@ type Student {
 
 type Query {
   allSubjects:[Subject] @listLength(min:5, max: 20)
+  allSubjectsByClassroom(classroomId: ID):Classroom @listLength(min:5, max: 20)
   allFlashcards:[Flashcard] @listLength(min:5, max: 20)
-  allFlashcardsBySubject: [Subject]@listLength(min:5, max: 20)
+  allFlashcardsBySubject(classroomId: ID, subjectName: String): Classroom @listLength(min:5, max: 20)
+  allClassrooms: [Classroom] @listLength(min:2, max: 3)
+  classroomById(classroomId: ID): Classroom
 }
