@@ -1,30 +1,25 @@
 import './FlashCards.scss';
-import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/client';
+import React, { useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import { ALL_FLASHCARDS_BY_SUBJECTS } from '../utils/graphqlRequest';
+import { UserContext } from '../utils/UserContext';
 
 export default function FlashCards() {
+  const { user } = useContext(UserContext);
   const { matiere }: { matiere: string } = useParams();
 
-  const [subject, setSubject] = useState('');
-  // setSubject(matiere);
+  const { loading, error, data } = useQuery(ALL_FLASHCARDS_BY_SUBJECTS, {
+    variables: {
+      classroomId: user.classroom?.classroomId,
+      subjectName: matiere,
+    },
+  });
+  if (loading) return <div>On recherche les fiches {matiere}...</div>;
+  if (error)
+    return <div>Oups! Une erreur s&apos;est produite {error.message}</div>;
 
-  // const flashcardsSubject = useMutation(ALL_FLASHCARDS_BY_SUBJECTS, {
-  //  onCompleted: (value) => {
-  //    setSubject(value.subject.flashcard);
-  // },
-  // onError: () => {
-  // setError(true);
-  // },
-  // });
-  // console.log(flashcardsSubject);
-
-  const { loading, error, data } = useQuery(ALL_FLASHCARDS_BY_SUBJECTS);
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error! </div>;
-
-  const flashCardsBySubjectData = {
+  /* const flashCardsBySubjectData = {
     classroomId: '1',
     name: 'Développement Web Lyon',
     year: '2021/2022',
@@ -54,13 +49,13 @@ export default function FlashCards() {
         ],
       },
     ],
-  };
+  }; */
 
   return (
     <>
       <h1>{matiere}</h1>
       <div className="flashcard-list">
-        {flashCardsBySubjectData?.subject.map((element: any) => (
+        {data?.subject.map((element: any) => (
           <div
             data-testid={element.id}
             className="flashcard-element"

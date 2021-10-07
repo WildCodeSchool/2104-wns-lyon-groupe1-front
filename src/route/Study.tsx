@@ -1,22 +1,24 @@
 import './Study.scss';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Link,
-  Route,
-  useParams,
-  BrowserRouter,
-} from 'react-router-dom';
-
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { ALL_SUBJECTS } from '../utils/graphqlRequest';
+import { useContext } from 'react';
+import slugify from 'react-slugify';
+import { ALL_SUBJECTS_BY_CLASSROOM } from '../utils/graphqlRequest';
 import Flashcards from './FlashCards';
+import { UserContext } from '../utils/UserContext';
 
 export default function Study() {
-  // const { loading, error, data } = useQuery(ALL_SUBJECTS);
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error! {error.message}</div>;
-  const mockData = {
+  const { user } = useContext(UserContext);
+  const { loading, error, data } = useQuery(ALL_SUBJECTS_BY_CLASSROOM, {
+    variables: {
+      classroomId: user.classroom?.classroomId,
+    },
+  });
+  if (loading) return <div>On recherche les matières de votre promo...</div>;
+  if (error)
+    return <div>Oups! Une erreur s&apos;est produite {error.message}</div>;
+
+  /* const mockData = {
     classroomId: '1',
     name: 'Développement Web Lyon',
     year: '2021/2022',
@@ -58,19 +60,20 @@ export default function Study() {
       },
     ],
   };
+  */
 
   return (
     <>
       <h1>Mes matières</h1>
       <div className="subject-list">
-        {mockData?.subject.map((element: any) => (
+        {data?.subject.map((element: any) => (
           <div
             data-testid={element.id}
             className="subject-element"
             key={element.id}
           >
             <img src={element.imageUrl} alt={element.name} />
-            <Link to={`${element.name}`} className="link-button">
+            <Link to={slugify(`${element.name}`)} className="link-button">
               <button type="button" className="buttons subject-buttons">
                 {element.name}
               </button>
