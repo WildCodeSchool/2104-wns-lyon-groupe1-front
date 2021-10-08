@@ -9,16 +9,17 @@ import { UserContext } from '../utils/UserContext';
 export default function Study() {
   const { user } = useContext(UserContext);
 
-  const { loading, error, data } = useQuery(ALL_SUBJECTS_BY_CLASSROOM, {
-    variables: {
-      classroomId: user.classroom?.classroomId,
-    },
-  });
-  if (loading) return <div>On recherche les matières de votre promo...</div>;
-  if (error)
-    return <div>Oups! Une erreur s&apos;est produite {error.message}</div>;
+  // const { loading, error, data } = useQuery(ALL_SUBJECTS_BY_CLASSROOM, {
+  //   variables: {
+  //     classroomId: user.classroom?.classroomId,
+  //   },
+  // });
+  // if (loading) return <div>On recherche les matières de votre promo...</div>;
+  // if (error)
+  //   return <div>Oups! Une erreur s&apos;est produite {error.message}</div>;
 
-  /* const mockData = {
+  // POur les tests provisoires
+  const mockData = {
     classroomId: '1',
     name: 'Développement Web Lyon',
     year: '2021/2022',
@@ -60,12 +61,12 @@ export default function Study() {
       },
     ],
   };
-*/
+
   return (
     <>
       <h1>Mes matières</h1>
       <div className="subject-list">
-        {data?.subject.map((element: any) => (
+        {mockData?.subject.map((element: any) => (
           <div
             data-testid={element.subjectId}
             className="subject-element"

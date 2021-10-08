@@ -37,7 +37,7 @@ function App() {
           <Route path="/mes-matières">
             <Study />
           </Route>
-          <Route path="/:matiere">
+          <Route path="/mes-matieres/:matiere">
             <Flashcards />
           </Route>
           <Route path="/forum" component={Forum} />

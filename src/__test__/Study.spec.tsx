@@ -63,7 +63,7 @@ const mocks = [
   },
 ];
 
-test.only('Il y a bien des matières affichées', async () => {
+test('Il y a bien des matières affichées', async () => {
   let testLocation = { pathname: '/mes-matières' };
   render(
     <MockedProvider mocks={mocks} addTypename={false}>
@@ -99,7 +99,7 @@ test.only('Il y a bien des matières affichées', async () => {
   });
 });
 
-test.only('Si pas connecté alors pas de matière affichée', async () => {
+test('Si pas connecté alors pas de matière affichée', async () => {
   let testLocation = { pathname: '/mes-matières' };
   render(
     <MockedProvider mocks={mocks} addTypename={false}>

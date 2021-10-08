@@ -13,7 +13,7 @@ export default function FlashCards() {
   const { loading, error, data } = useQuery(ALL_FLASHCARDS_BY_SUBJECTS, {
     variables: {
       classroomId: user.classroom?.classroomId,
-      subjectId: state.subjectId,
+      subjectId: state?.subjectId,
     },
   });
   if (loading) return <div>On recherche les fiches {matiere}...</div>;
