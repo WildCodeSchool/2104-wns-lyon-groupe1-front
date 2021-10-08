@@ -42,8 +42,8 @@ export default function Block({ title, paragraph, ressource }: PropsBlock) {
           <img src={show ? up : down} alt="Déplier le menu" />
         </button>
       </div>
-      {paragraph?.map((p) => (
-        <div key={`${title}-${p.text}`} className="block-paragraph">
+      {paragraph?.map((p, idx) => (
+        <div key={`${idx}-${title}-${p.text}`} className="block-paragraph">
           {!p.isPublic && <img src={lock} alt="Visible que par moi" />}
           {p.text}
         </div>

@@ -61,6 +61,8 @@ const flashcard: IFlashcard = {
 
 export default function Flashcard() {
   const { user } = useContext(UserContext);
+  // const { state } = useLocation();
+  // console.log(state);
   const history = useHistory();
   const [mode, setMode] = useState(false);
 

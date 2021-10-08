@@ -35,15 +35,15 @@ function App() {
             path="/mentions-legales"
             render={() => <h2>Mentions légales</h2>}
           />
-          <Route path="/mes-matières">
+          <Route exact path="/mes-matières">
             <Study />
           </Route>
-          <Route path="/mes-matieres/:matiere">
+          <Route exact path="/mes-matières/:matiere">
             <Flashcards />
           </Route>
           <Route
             exact
-            path="/mes-matières/:subject/:flashcardSlug"
+            path="/mes-matières/:matiere/:flashcardSlug"
             component={Flashcard}
           />
           <Route path="/forum" component={Forum} />
