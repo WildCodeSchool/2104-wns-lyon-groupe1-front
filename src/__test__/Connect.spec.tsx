@@ -4,7 +4,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { UserContext } from '../utils/UserContext';
 import { IUser } from '../utils/interface';
 import App from '../App';
-import { LOGIN } from '../utils/graphqlRequest';
+import { LOGIN, CHECK_LOGIN } from '../utils/graphqlRequest';
 
 const validUser = {
   mail: 'student@student.fr',
@@ -53,6 +53,12 @@ const mocks = [
         },
       },
     },
+  },
+  {
+    request: {
+      query: CHECK_LOGIN,
+    },
+    error: new Error('No login known'),
   },
 ];
 

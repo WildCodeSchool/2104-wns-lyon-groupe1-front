@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { useParams, useHistory, Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import Switch from 'react-switch';
 import Block from '../component/Block';
 import bubbleMessage from '../assets/bubblemessage.svg';
@@ -61,10 +61,9 @@ const flashcard: IFlashcard = {
 
 export default function Flashcard() {
   const { user } = useContext(UserContext);
-  const params = useParams();
   const history = useHistory();
   const [mode, setMode] = useState(false);
-  console.log(params);
+
   return (
     <div className="flashcard">
       <div className="flashcard-header">

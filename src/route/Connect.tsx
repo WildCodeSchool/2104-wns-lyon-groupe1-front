@@ -33,10 +33,7 @@ export default function Connect({ setUser }: ConnectProps) {
       setClassrooms(value.checklogin.classroom);
       setUserConnect({ ...value.checklogin, classroom: {} });
     },
-    onError: () => {
-      setUserConnect({});
-      setClassrooms([]);
-    },
+    onError: () => {},
   });
 
   useEffect(() => {
