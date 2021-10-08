@@ -4,7 +4,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { UserContext } from '../utils/UserContext';
 import { IUser } from '../utils/interface';
 import App from '../App';
-import { ALL_SUBJECTS } from '../utils/graphqlRequest';
+import { ALL_SUBJECTS_BY_CLASSROOM } from '../utils/graphqlRequest';
 import Study from '../route/Study';
 import { connectUserStudent } from './utils';
 
@@ -12,41 +12,41 @@ const mockData = {
   classroomId: '1',
   name: 'Développement Web Lyon',
   year: '2021/2022',
-  subjects: [
+  subject: [
     {
-      id: '1',
+      subjectId: '1',
       imageUrl: '/images/Node.js_logo.svg',
       name: 'NodeJS',
     },
     {
-      id: '2',
+      subjectId: '2',
       imageUrl: '/images/logo-react-blue-1.svg',
       name: 'React',
     },
     {
-      id: '3',
+      subjectId: '3',
       imageUrl: '/images/GraphQL_Logo.svg',
       name: 'GraphQL',
     },
     {
-      id: '4',
+      subjectId: '4',
       imageUrl: '/images/javascript-logo.svg',
       name: 'Javascript',
     },
     {
-      id: '5',
+      subjectId: '5',
       imageUrl: '/images/Angular_full_color_logo.svg',
       name: 'Angular',
     },
     {
-      id: '6',
+      subjectId: '6',
       imageUrl: '/images/PHP-logo.svg',
       name: 'PHP',
     },
     {
-      id: '7',
+      subjectId: '7',
       imageUrl: '/images/HTML5_logo_and_wordmark.svg',
-      name: 'HTML 5',
+      name: 'HTML5',
     },
   ],
 };
@@ -54,8 +54,10 @@ const mockData = {
 const mocks = [
   {
     request: {
-      query: ALL_SUBJECTS,
-      variables: {},
+      query: ALL_SUBJECTS_BY_CLASSROOM,
+      variables: {
+        classroomId: mockData.classroomId,
+      },
     },
     result: {
       data: mockData,
@@ -92,9 +94,11 @@ test('Il y a bien des matières affichées', async () => {
     fireEvent.click(screen.getByTestId('yellow-btn'));
     await new Promise((resolve) => setTimeout(resolve, 0));
   });
+  console.log(testLocation);
+  await new Promise((resolve) => setTimeout(resolve, 0));
 
-  mockData.subjects.forEach((subject) => {
-    const element = screen.getByTestId(subject.id);
+  mockData.subject.forEach((subject) => {
+    const element = screen.getByTestId(subject.subjectId);
     expect(element).toBeInTheDocument();
   });
 });
@@ -129,8 +133,8 @@ test('Si pas connecté alors pas de matière affichée', async () => {
   });
 
   // eslint-disable-next-line no-restricted-syntax
-  for (const subject of mockData.subjects) {
-    const element = screen.queryByTestId(subject.id);
+  for (const subject of mockData.subject) {
+    const element = screen.queryByTestId(subject.subjectId);
     expect(element).not.toBeInTheDocument();
   }
 });
