@@ -75,7 +75,8 @@ export default function Study() {
             <img src={element.imageUrl} alt={element.name} />
             <Link
               to={{
-                pathname: slugify(`${element.name}`),
+                // pathname: slugify(`${element.name}`),
+                pathname: `mes-matieres/${slugify(`${element.name}`)}`,
                 state: { subjectId: element.subjectId },
               }}
               className="link-button"
