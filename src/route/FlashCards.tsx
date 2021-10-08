@@ -1,16 +1,17 @@
 import './FlashCards.scss';
-import { useContext } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { ALL_FLASHCARDS_BY_SUBJECTS } from '../utils/graphqlRequest';
-import { UserContext } from '../utils/UserContext';
+// import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
+// import { useQuery } from '@apollo/client';
+// import { ALL_FLASHCARDS_BY_SUBJECTS } from '../utils/graphqlRequest';
+// import { UserContext } from '../utils/UserContext';
 
 export default function FlashCards() {
-  const { user } = useContext(UserContext);
+  //   const { user } = useContext(UserContext);
   const { matiere }: { matiere: string } = useParams();
-  const { state }: { state: { subjectId: string } } = useLocation();
+  //  const { state }: { state: { subjectId: string } } = useLocation();
 
-  const { loading, error, data } = useQuery(ALL_FLASHCARDS_BY_SUBJECTS, {
+  /* const { loading, error, data } = useQuery(ALL_FLASHCARDS_BY_SUBJECTS, {
     variables: {
       classroomId: user.classroom?.classroomId,
       subjectId: state?.subjectId,
@@ -18,9 +19,9 @@ export default function FlashCards() {
   });
   if (loading) return <div>On recherche les fiches {matiere}...</div>;
   if (error)
-    return <div>Oups! Une erreur s&apos;est produite {error.message}</div>;
+    return <div>Oups! Une erreur s&apos;est produite {error.message}</div>; */
 
-  /* const flashCardsBySubjectData = {
+  const flashCardsBySubjectData = {
     classroomId: '1',
     name: 'Développement Web Lyon',
     year: '2021/2022',
@@ -50,13 +51,13 @@ export default function FlashCards() {
         ],
       },
     ],
-  }; */
+  };
 
   return (
     <>
       <h1>{matiere}</h1>
       <div className="flashcard-list">
-        {data?.subject.map((element: any) => (
+        {flashCardsBySubjectData?.subject.map((element: any) => (
           <div
             data-testid={element.subjectId}
             className="flashcard-element"

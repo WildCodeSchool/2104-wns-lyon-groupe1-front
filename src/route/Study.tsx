@@ -1,13 +1,13 @@
 import './Study.scss';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { useContext } from 'react';
+// import { useQuery } from '@apollo/client';
+// import { useContext } from 'react';
 import slugify from 'react-slugify';
-import { ALL_SUBJECTS_BY_CLASSROOM } from '../utils/graphqlRequest';
-import { UserContext } from '../utils/UserContext';
+// import { ALL_SUBJECTS_BY_CLASSROOM } from '../utils/graphqlRequest';
+// import { UserContext } from '../utils/UserContext';
 
 export default function Study() {
-  const { user } = useContext(UserContext);
+  //  const { user } = useContext(UserContext);
 
   /* const { loading, error, data } = useQuery(ALL_SUBJECTS_BY_CLASSROOM, {
     variables: {
