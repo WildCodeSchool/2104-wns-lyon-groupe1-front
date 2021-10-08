@@ -41,6 +41,7 @@ export default function Home() {
           classname={button.classname}
           icon={button.icon}
           slug={button.slug}
+          data-testid={button.classname}
         />
       ))}
     </div>

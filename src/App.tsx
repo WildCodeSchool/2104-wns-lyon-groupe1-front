@@ -14,6 +14,7 @@ import ProfessorAccount from './route/ProfessorAccount';
 import AddStudent from './route/AddStudent';
 import Connect from './route/Connect';
 import AddPromotion from './route/addPromotion';
+import Flashcards from './route/FlashCards';
 
 function App() {
   const { addUser } = useContext(UserContext);
@@ -33,7 +34,12 @@ function App() {
             path="/mentions-legales"
             render={() => <h2>Mentions légales</h2>}
           />
-          <Route path="/mes-matières" component={Study} />
+          <Route path="/mes-matières">
+            <Study />
+          </Route>
+          <Route path="/mes-matieres/:matiere">
+            <Flashcards />
+          </Route>
           <Route path="/forum" component={Forum} />
           <Route
             path="/me-connecter"

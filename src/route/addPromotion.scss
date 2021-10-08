@@ -1,10 +1,12 @@
 @import '../globalColors.scss';
+
 .add-promotion {
   h1 {
     color: $colorGreen;
     margin-bottom: 40px;
   }
 }
+
 .promotion-year {
   display: flex;
   justify-content: center;

@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
 import { UserContext } from '../utils/UserContext';
 import { connectUserStudent, connectUserTeacher } from './utils';
 import App from '../App';
@@ -43,24 +44,26 @@ describe('Les différentes route du site sont accessible étant connecté comme 
     test(r.uri, async () => {
       let testLocation = { pathname: '' };
       render(
-        <MemoryRouter>
-          <UserContext.Provider
-            value={{
-              user: connectUserTeacher,
-              addUser: () => {},
-              removeUser: () => {},
-            }}
-          >
-            <App />
-            <Route
-              path="*"
-              render={({ location }) => {
-                testLocation = location;
-                return null;
+        <MockedProvider mocks={[]} addTypename={false}>
+          <MemoryRouter>
+            <UserContext.Provider
+              value={{
+                user: connectUserTeacher,
+                addUser: () => {},
+                removeUser: () => {},
               }}
-            />
-          </UserContext.Provider>
-        </MemoryRouter>,
+            >
+              <App />
+              <Route
+                path="*"
+                render={({ location }) => {
+                  testLocation = location;
+                  return null;
+                }}
+              />
+            </UserContext.Provider>
+          </MemoryRouter>
+        </MockedProvider>,
       );
 
       fireEvent.click(screen.getByTestId(r.testid));
@@ -80,24 +83,26 @@ describe('Les différentes route du site sont accessible étant connecté comme 
     test(r.uri, async () => {
       let testLocation = { pathname: '' };
       render(
-        <MemoryRouter>
-          <UserContext.Provider
-            value={{
-              user: connectUserStudent,
-              addUser: () => {},
-              removeUser: () => {},
-            }}
-          >
-            <App />
-            <Route
-              path="*"
-              render={({ location }) => {
-                testLocation = location;
-                return null;
+        <MockedProvider mocks={[]} addTypename={false}>
+          <MemoryRouter>
+            <UserContext.Provider
+              value={{
+                user: connectUserStudent,
+                addUser: () => {},
+                removeUser: () => {},
               }}
-            />
-          </UserContext.Provider>
-        </MemoryRouter>,
+            >
+              <App />
+              <Route
+                path="*"
+                render={({ location }) => {
+                  testLocation = location;
+                  return null;
+                }}
+              />
+            </UserContext.Provider>
+          </MemoryRouter>
+        </MockedProvider>,
       );
 
       fireEvent.click(screen.getByTestId(r.testid));

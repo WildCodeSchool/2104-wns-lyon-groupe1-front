@@ -1,0 +1,69 @@
+@import '../globalColors.scss';
+
+h1 {
+    color: $colorYellow;
+    font-weight: bold;
+    font-size: 50px;
+}
+
+.subject-list {
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 6%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5%;
+    justify-items: center;
+
+    .subject-element {
+        width: 100%;
+        margin: 10% 0%;
+        display: flex;
+        flex-direction: column;
+        padding: 5%;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    img {
+        width: 100%;
+        max-width: 15vh;
+        margin-bottom: 10%;
+    }
+
+    .link-button {
+        display: contents
+    }
+
+    .subject-buttons {
+        background-color: $colorYellow;
+        border-color: $colorYellow;
+        font-weight: bold;
+        padding: 1% 3%;
+        margin: 0;
+        width: 100%;
+        justify-content: center;
+
+        &:hover {
+            background-color: $colorWhite;
+            color: $colorYellow;
+        }
+    }
+}
+
+@media only screen and (min-width: 480px) {
+    .subject-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .subject-list {
+        padding: 0;
+        display: inline-grid;
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
