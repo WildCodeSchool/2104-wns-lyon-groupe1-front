@@ -6,6 +6,7 @@ import Body from './component/Body';
 import Home from './route/Home';
 import Forum from './route/Forum';
 import Study from './route/Study';
+import Flashcard from './route/Flashcard';
 import File from './route/File';
 import MyClassroom from './route/MyClassroom';
 import Footer from './component/Footer';
@@ -34,12 +35,17 @@ function App() {
             path="/mentions-legales"
             render={() => <h2>Mentions légales</h2>}
           />
-          <Route path="/mes-matières">
+          <Route exact path="/mes-matières">
             <Study />
           </Route>
-          <Route path="/mes-matieres/:matiere">
+          <Route exact path="/mes-matières/:matiere">
             <Flashcards />
           </Route>
+          <Route
+            exact
+            path="/mes-matières/:matiere/:flashcardSlug"
+            component={Flashcard}
+          />
           <Route path="/forum" component={Forum} />
           <Route
             path="/me-connecter"

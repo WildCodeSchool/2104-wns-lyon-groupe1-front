@@ -76,7 +76,7 @@ export default function Study() {
             <Link
               to={{
                 // pathname: slugify(`${element.name}`),
-                pathname: `mes-matieres/${slugify(`${element.name}`)}`,
+                pathname: `/mes-matières/${slugify(`${element.name}`)}`,
                 state: { subjectId: element.subjectId },
               }}
               className="link-button"

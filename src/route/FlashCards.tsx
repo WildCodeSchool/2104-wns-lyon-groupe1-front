@@ -1,6 +1,7 @@
 import './FlashCards.scss';
+import slugify from 'react-slugify';
 // import { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 // import { useLocation } from 'react-router-dom';
 // import { useQuery } from '@apollo/client';
 // import { ALL_FLASHCARDS_BY_SUBJECTS } from '../utils/graphqlRequest';
@@ -9,6 +10,7 @@ import { useParams } from 'react-router-dom';
 export default function FlashCards() {
   //   const { user } = useContext(UserContext);
   const { matiere }: { matiere: string } = useParams();
+  const history = useHistory();
   //  const { state }: { state: { subjectId: string } } = useLocation();
 
   /* const { loading, error, data } = useQuery(ALL_FLASHCARDS_BY_SUBJECTS, {
@@ -68,6 +70,14 @@ export default function FlashCards() {
                 key={flashcard.id}
                 type="button"
                 className="buttons flashcard-buttons"
+                onClick={() => {
+                  history.push({
+                    pathname: `/mes-matières/matiere/${slugify(
+                      flashcard.title,
+                    )}}`,
+                    state: { flashcardId: flashcard.id },
+                  });
+                }}
               >
                 {flashcard.title}
               </button>

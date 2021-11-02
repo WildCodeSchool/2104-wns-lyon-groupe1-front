@@ -33,15 +33,11 @@ export default function Connect({ setUser }: ConnectProps) {
       setClassrooms(value.checklogin.classroom);
       setUserConnect({ ...value.checklogin, classroom: {} });
     },
-    onError: () => {
-      setUserConnect({});
-      setClassrooms([]);
-    },
+    onError: () => {},
   });
 
   useEffect(() => {
-    const token = localStorage.getItem('wikitoken');
-    checkUser({ variables: { token } });
+    checkUser();
   }, []);
 
   const [addClassroom, setAddClassroom] = useState(false);
