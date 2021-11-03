@@ -78,10 +78,13 @@ export default function Flashcard() {
         </p>
         <h2>{flashcard.title}</h2>
         <div className="flashcard-header-action">
-          {user.isTeacher && (
+          {!user.isTeacher && (
             <>
               <Switch
                 onColor="#FCC300"
+                offColor="#000000"
+                uncheckedIcon={false}
+                checkedIcon={false}
                 onChange={() => setMode((prev) => !prev)}
                 checked={mode}
                 width={32}
