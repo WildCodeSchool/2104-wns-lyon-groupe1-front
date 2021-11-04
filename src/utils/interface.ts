@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 export interface IStudent {
   userId: string;
   firstname?: string;
@@ -11,6 +9,12 @@ export interface IClassroom {
   name: string;
   year: string;
   classroomId: string;
+}
+
+export interface ISubject {
+  id?: string;
+  imageUrl?: string;
+  name?: string;
 }
 
 export interface IClassroomStudent extends IClassroom {
@@ -34,13 +38,8 @@ export interface IUserContext {
   addUser: (user: IUser) => void;
   removeUser: () => void;
 }
-
-export interface ISubject {
-  id?: string;
-  imageUrl?: string;
-  name?: string;
-}
-interface IParagraph {
+export interface IParagraph {
+  id: string;
   text: string;
   isValidate: boolean;
   isPublic: boolean;
@@ -48,13 +47,13 @@ interface IParagraph {
   date: string;
 }
 
-interface ISubtitle {
+export interface ISubtitle {
   title: string;
   position: number;
   paragraph?: IParagraph[];
 }
 
-interface IRessource {
+export interface IRessource {
   name: string;
   url: string;
 }

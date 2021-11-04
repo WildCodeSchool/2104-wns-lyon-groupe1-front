@@ -24,15 +24,17 @@ const flashcard: IFlashcard = {
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in pellentesque dui. Nullam molestie, nisl quis accumsan porttitor, mauris ante malesuada arcu, nec euismod magna dui sit amet arcu. Integer pulvinar neque sed orci ornare, in interdum metus tristique. Phasellus nisl eros, feugiat et dui non, consequat semper ligula. Mauris vulputate nunc sed maximus auctor. Aliquam porttitor diam a tempus tincidunt. Aenean vel sapien nec massa bibendum congue non eu risus. Duis placerat eleifend tempus. Donec libero ligula, vehicula a pharetra a, cursus sed nisi. Ut id dictum ante. Etiam ultricies arcu sit amet urna auctor consectetur. Proin placerat erat at porta laoreet. Aliquam eget odio id ante volutpat feugiat. Duis rutrum sem eu commodo efficitur. Nam rutrum volutpat consequat. Proin pellentesque faucibus mauris, id accumsan ex aliquam nec.',
           isValidate: true,
           isPublic: true,
-          author: 'Jonathan',
+          author: '1',
           date: '1970-01-19T21:07:33.352Z',
+          id: '48445',
         },
         {
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in pellentesque dui. Nullam molestie, nisl quis accumsan porttitor, mauris ante malesuada arcu, nec euismod magna dui sit amet arcu. Integer pulvinar neque sed orci ornare, in interdum metus tristique. Phasellus nisl eros, feugiat et dui non, consequat semper ligula. Mauris vulputate nunc sed maximus auctor. Aliquam porttitor diam a tempus tincidunt. Aenean vel sapien nec massa bibendum congue non eu risus. Duis placerat eleifend tempus. Donec libero ligula, vehicula a pharetra a, cursus sed nisi. Ut id dictum ante. Etiam ultricies arcu sit amet urna auctor consectetur. Proin placerat erat at porta laoreet. Aliquam eget odio id ante volutpat feugiat. Duis rutrum sem eu commodo efficitur. Nam rutrum volutpat consequat. Proin pellentesque faucibus mauris, id accumsan ex aliquam nec.',
           isValidate: true,
           isPublic: false,
-          author: 'Jonathan',
+          author: '1',
           date: '1970-05-19T21:07:33.352Z',
+          id: '8745',
         },
       ],
     },
@@ -42,17 +44,19 @@ const flashcard: IFlashcard = {
       paragraph: [
         {
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in pellentesque dui. Nullam molestie, nisl quis accumsan porttitor, mauris ante malesuada arcu, nec euismod magna dui sit amet arcu. Integer pulvinar neque sed orci ornare, in interdum metus tristique. Phasellus nisl eros, feugiat et dui non, consequat semper ligula. Mauris vulputate nunc sed maximus auctor. Aliquam porttitor diam a tempus tincidunt. Aenean vel sapien nec massa bibendum congue non eu risus. Duis placerat eleifend tempus. Donec libero ligula, vehicula a pharetra a, cursus sed nisi. Ut id dictum ante. Etiam ultricies arcu sit amet urna auctor consectetur. Proin placerat erat at porta laoreet. Aliquam eget odio id ante volutpat feugiat. Duis rutrum sem eu commodo efficitur. Nam rutrum volutpat consequat. Proin pellentesque faucibus mauris, id accumsan ex aliquam nec.',
-          isValidate: true,
+          isValidate: false,
           isPublic: true,
-          author: 'Jonathan',
+          author: '1',
           date: '1970-01-19T21:07:33.352Z',
+          id: '632',
         },
         {
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in pellentesque dui. Nullam molestie, nisl quis accumsan porttitor, mauris ante malesuada arcu, nec euismod magna dui sit amet arcu. Integer pulvinar neque sed orci ornare, in interdum metus tristique. Phasellus nisl eros, feugiat et dui non, consequat semper ligula. Mauris vulputate nunc sed maximus auctor. Aliquam porttitor diam a tempus tincidunt. Aenean vel sapien nec massa bibendum congue non eu risus. Duis placerat eleifend tempus. Donec libero ligula, vehicula a pharetra a, cursus sed nisi. Ut id dictum ante. Etiam ultricies arcu sit amet urna auctor consectetur. Proin placerat erat at porta laoreet. Aliquam eget odio id ante volutpat feugiat. Duis rutrum sem eu commodo efficitur. Nam rutrum volutpat consequat. Proin pellentesque faucibus mauris, id accumsan ex aliquam nec.',
           isValidate: true,
           isPublic: true,
-          author: 'Jonathan',
+          author: '1',
           date: '1970-05-19T21:07:33.352Z',
+          id: '124',
         },
       ],
     },
@@ -64,14 +68,14 @@ export default function Flashcard() {
   // const { state } = useLocation();
   // console.log(state);
   const history = useHistory();
-  const [mode, setMode] = useState(false);
+  const [writingMode, setWritingMode] = useState(true);
 
   return (
     <div className="flashcard">
       <div className="flashcard-header">
         <p className="flashcard-tags">
           {flashcard.tag?.map((tag) => (
-            <Link to={`/forum?tag=${tag}`}>
+            <Link to={`/forum?tag=${tag}`} key={tag}>
               <span>{`#${tag}`}</span>
             </Link>
           ))}
@@ -85,12 +89,12 @@ export default function Flashcard() {
                 offColor="#000000"
                 uncheckedIcon={false}
                 checkedIcon={false}
-                onChange={() => setMode((prev) => !prev)}
-                checked={mode}
+                onChange={() => setWritingMode((prev) => !prev)}
+                checked={writingMode}
                 width={32}
                 height={20}
               />
-              <span>{mode ? 'Ecriture' : 'Lecture'}</span>
+              <span>{writingMode ? 'Ecriture' : 'Lecture'}</span>
             </>
           )}
           <button
@@ -109,9 +113,19 @@ export default function Flashcard() {
         showLock
       */}
       {flashcard.subtitle?.map((subtitle) => (
-        <Block title={subtitle.title} paragraph={subtitle.paragraph} />
+        <Block
+          edit={writingMode}
+          title={subtitle.title}
+          paragraph={subtitle.paragraph}
+          key={subtitle.title}
+          position={subtitle.position}
+        />
       ))}
-      <Block title="Ressources" ressource={flashcard.ressource} />
+      <Block
+        title="Ressources"
+        ressource={flashcard.ressource}
+        edit={writingMode}
+      />
     </div>
   );
 }
