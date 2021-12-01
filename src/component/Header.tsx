@@ -104,10 +104,14 @@ export default function Header() {
   return (
     <>
       <div className="Header">
-        <img src={logo} alt="logo Study Notes" />
-        <h1>
-          <span>Study</span>Notes
-        </h1>
+        <Link to={{ pathname: '/', state: { hide: true } }}>
+          <img src={logo} alt="logo Study Notes" />
+        </Link>
+        <Link to={{ pathname: '/', state: { hide: true } }}>
+          <h1>
+            <span>Study</span>Notes
+          </h1>
+        </Link>
         <div className="button-burger-menu">
           <button onClick={() => setOpen(true)} type="button">
             <img src={burgerMenu} alt="burgermenu" />
