@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './Block.scss';
+import { UserContext } from '../utils/UserContext';
 import { IParagraph, IRessource } from '../utils/interface';
 import EditBlock from './EditBlock';
 import up from '../assets/arrowup.svg';
@@ -33,15 +34,15 @@ export default function Block({
   const [paragraphUpdate, setParagraphUpdate] = useState<null | IParagraph>(
     null,
   );
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (paragraph?.every((p) => p.isValidate)) {
       setValidate(true);
     }
   }, []);
-
   return (
-    <div className={`block ${show && 'anim-paragraph'}`}>
+    <div className={`block ${(edit || show) && 'anim-paragraph'}`}>
       <div className="block-header">
         <button
           className="btn-header"
@@ -83,7 +84,7 @@ export default function Block({
             )}
             {p.text}
           </p>
-          {edit && !p.isValidate && (
+          {edit && !p.isValidate && p.author !== user.id && (
             <button
               type="button"
               onClick={() => console.log('valider le paragraph')}

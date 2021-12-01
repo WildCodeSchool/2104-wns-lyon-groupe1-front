@@ -22,6 +22,13 @@ export default function EditBlock({
     }
   }, [paragraphUpdate]);
 
+  const clearForm = (): void => {
+    setText('');
+    setUrl('');
+    setPublic(true);
+    setIdParagraphUpdate(null);
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isRessource) {
@@ -36,10 +43,7 @@ export default function EditBlock({
         id,
       });
     }
-    setText('');
-    setUrl('');
-    setPublic(true);
-    setIdParagraphUpdate(null);
+    clearForm();
   };
   return (
     <form className="block-edit" onSubmit={handleSubmit}>
@@ -70,7 +74,7 @@ export default function EditBlock({
         />
       )}
       <div className="edit-button-action">
-        <button type="button" className="red">
+        <button type="button" onClick={() => clearForm()} className="red">
           Annuler
         </button>
         <button type="submit" className="green">
