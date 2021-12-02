@@ -91,3 +91,28 @@ export const ALL_FLASHCARDS_BY_SUBJECTS = gql`
     }
   }
 `;
+
+export const GET_FLASHCARD_BY_ID = gql`
+  query getFlashcard($flashcardId: String!, $classroomId: String!) {
+    getFlashcard(flashcardId: $flashcardId, classroomId: $classroomId) {
+      id
+      title
+      tag
+      ressource {
+        name
+        url
+      }
+      subtitle {
+        title
+        position
+        paragraph {
+          text
+          isValidate
+          isPublic
+          author
+          date
+        }
+      }
+    }
+  }
+`;
