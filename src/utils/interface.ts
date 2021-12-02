@@ -25,6 +25,9 @@ export interface IClassroom {
   student: IStudent[];
   subject: ISubject[];
 }
+export interface IClassroomSubject extends IClassroom {
+  subject: ISubject[];
+}
 
 export interface IUser {
   id?: string;
@@ -59,6 +62,38 @@ export interface ISubtitle {
 
 export interface IRessource {
   id: string;
+  name: string;
+  url: string;
+}
+
+export interface IFlashcard {
+  id: string;
+  title: string;
+  tag?: string[];
+  subtitle?: ISubtitle[];
+  ressource?: IRessource[];
+}
+
+export interface ISubject {
+  id?: string;
+  imageUrl?: string;
+  name?: string;
+}
+interface IParagraph {
+  text: string;
+  isValidate: boolean;
+  isPublic: boolean;
+  author: string;
+  date: string;
+}
+
+interface ISubtitle {
+  title: string;
+  position: number;
+  paragraph?: IParagraph[];
+}
+
+interface IRessource {
   name: string;
   url: string;
 }

@@ -16,6 +16,7 @@ import AddStudent from './route/AddStudent';
 import Connect from './route/Connect';
 import AddPromotion from './route/addPromotion';
 import Flashcards from './route/FlashCards';
+import AddFlashcard from './route/AddFlashcard';
 
 function App() {
   const { addUser, removeUser } = useContext(UserContext);
@@ -25,7 +26,7 @@ function App() {
       <Header />
       <Body>
         <Switch>
-          <Route path="/mes-fiches-de-revisions" component={File} />
+          <Route path="/mes-fiches-de-revisions" component={Flashcards} />
           <Route
             path="/nous-contacter"
             render={() => <h2>Nous contacter</h2>}
@@ -54,10 +55,7 @@ function App() {
           <Route path="/ma-promotion" component={MyClassroom} />
           <Route path="/ajouter-un-élève" component={AddStudent} />
           {/* <Route path="/ma-promotion" render={() => <h2>Mes promotions</h2>} /> */}
-          <Route
-            path="/ajouter-une-fiche"
-            render={() => <h2>Ajouter une fiche</h2>}
-          />
+          <Route path="/ajouter-une-fiche" component={AddFlashcard} />
           <Route
             path="/me-deconnecter"
             render={() => {
