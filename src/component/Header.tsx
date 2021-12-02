@@ -15,6 +15,7 @@ import { UserContext } from '../utils/UserContext';
 type PropsMenu = {
   teacher: boolean | undefined;
   menuOpen: Dispatch<SetStateAction<boolean>>;
+  disconnect: () => void;
 };
 
 type TLocation = {
@@ -22,7 +23,7 @@ type TLocation = {
   state: { hide: boolean };
 };
 
-const Menu = ({ teacher, menuOpen }: PropsMenu) => {
+const Menu = ({ teacher, menuOpen, disconnect }: PropsMenu) => {
   return (
     <div className="menu dislay-block">
       <div>
@@ -73,21 +74,24 @@ const Menu = ({ teacher, menuOpen }: PropsMenu) => {
           Rechercher
         </Link>
       </h2>
-      <h2>
-        <Link to={{ pathname: '/me-deconnecter', state: { hide: true } }}>
-          Me déconnecter
-        </Link>
-      </h2>
+      <button type="button" onClick={() => disconnect()}>
+        <h2>Me déconnecter</h2>
+      </button>
     </div>
   );
 };
 
 export default function Header() {
-  const { user } = useContext(UserContext);
+  const { user, removeUser } = useContext(UserContext);
   const history = useHistory();
   const { pathname, state }: TLocation = useLocation();
 
   const [open, setOpen] = useState(false);
+
+  const disconnect = (): void => {
+    localStorage.removeItem('wikitoken');
+    removeUser();
+  };
 
   useEffect(() => {
     if (!user.id) history.push('/me-connecter');
@@ -118,7 +122,13 @@ export default function Header() {
           </button>
         </div>
       </div>
-      {open && <Menu teacher={user?.isTeacher} menuOpen={setOpen} />}
+      {open && (
+        <Menu
+          disconnect={disconnect}
+          teacher={user?.isTeacher}
+          menuOpen={setOpen}
+        />
+      )}
     </>
   );
 }
