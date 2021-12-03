@@ -15,7 +15,8 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const httpLink = new HttpLink({ uri: process.env.REACT_APP_API_URL });
+
+const httpLink = new HttpLink({ uri: "http://localhost:5000/graphql" });
 
 const authMidlw = new ApolloLink((operation, next) => {
   operation.setContext(({ headers = {} }) => ({
