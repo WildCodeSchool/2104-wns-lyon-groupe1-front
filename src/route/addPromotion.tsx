@@ -8,18 +8,27 @@ type AddPromotionProps = {
   handleClassroom: Function;
 };
 
+interface iInputError {
+  errorText: string;
+}
+
 export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
-  const [promotionName, setPromotionName] = useState('');
-  const [beginningYear, setBeginningYear] = useState('');
-  const [finishingYear, setFinishingYear] = useState('');
+  const [promotionName, setPromotionName] = useState<string>('');
+  const [beginningYear, setBeginningYear] = useState<string>('');
+  const [finishingYear, setFinishingYear] = useState<string>('');
   const [promotionNameError, setPromotionNameError] = useState(false);
   const [beginningYearError, setBeginningYearError] = useState(false);
   const [finishingYearError, setFinishingYearError] = useState(false);
   const [emailAdressesError, setEmailAdressesError] = useState<Array<number>>(
     [],
   );
+  const [scholarYearOrderError, setScholarYearOrderError] =
+    useState<boolean>(false);
+
   const [createClassroom] = useMutation(CREATE_CLASSROOM, {
     onCompleted: (value) => {
+      window.alert('submit');
+      console.log(value);
       handleClassroom(value.classroom);
     },
     onError: () => {
@@ -30,6 +39,7 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
   const [emailAdresses, setEmailAdresses] = useState<Array<string>>([]);
 
   // Je vérifie le nom de la promo
+  // =========================================================
   const verifyTextAndNumbersOnly = (thePromotionName: string): boolean => {
     const regex = /^[a-zA-ZÀ-ÿ0-9\s\-\\/ ]*$/;
 
@@ -40,9 +50,9 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
   };
 
   // Je vérifie Les adresses mails des étudiants
+  // =========================================================
   const verifyEmail = (studentEmailAdress: string): boolean => {
     const regex =
-      // eslint-disable-next-line no-control-regex
       /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
     if (regex.test(studentEmailAdress) && studentEmailAdress !== '') {
@@ -52,16 +62,29 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
   };
 
   // Je vérifie qu'il y ait une date d'année scolaire
+  // =========================================================
   const verifyScholarYearInput = (myBeginningYear: string): boolean => {
     const regex = /^(20)\d{2}$/;
-
     if (regex.test(myBeginningYear) && myBeginningYear !== '') {
       return true;
     }
     return false;
   };
 
+  // show error if beginngin year is bigger than finishing year
+  // =========================================================
+  const verifyScholarYearsOrders = (
+    beginningYearValue: string,
+    finishingYearValue: string,
+  ): void => {
+    if (beginningYearValue > finishingYearValue) {
+      setScholarYearOrderError(true);
+    }
+    setScholarYearOrderError(false);
+  };
+
   // Je crée les dates de mes années scolaire en partant de l'année actuelle + 20 ans
+  // =========================================================
   const buildOptions = () => {
     const arr = [];
     const actualYear = new Date().getFullYear();
@@ -79,13 +102,15 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
   };
 
   // Lorsque je soumets mon formulaire, je vérifie mes champs un par un
+  // =========================================================
   const submitForm = (event: any) => {
     setPromotionNameError(false);
     setBeginningYearError(false);
     setFinishingYearError(false);
     setEmailAdressesError([]);
-    event.preventDefault();
+    verifyScholarYearsOrders(beginningYear, finishingYear);
     let error: boolean = false;
+    event.preventDefault();
     if (!verifyTextAndNumbersOnly(promotionName)) {
       setPromotionNameError(true);
       error = true;
@@ -111,31 +136,43 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
       setEmailAdressesError(errorEmail);
       error = true;
     }
-    if (error) return false;
-    createClassroom({
-      variables: {
-        name: promotionName,
-        year: `${beginningYear}/${finishingYear}`,
-        mails: emailAdresses || ['lolo'],
-      },
-    });
-    return true;
+
+    if (!error) {
+      createClassroom({
+        variables: {
+          name: promotionName,
+          year: `${beginningYear}/${finishingYear}`,
+          mails: emailAdresses,
+        },
+      });
+      error = false;
+    }
   };
 
+  // =========================================================
   const handleCsv = (data: any) => {
     setEmailAdresses(data.map((element: string[]) => element[0]));
   };
 
+  // =========================================================
   const handleChange = (e: any, index: number) => {
     const email: string[] = [...emailAdresses];
     email[index] = e.target.value;
     setEmailAdresses(email);
+  };
+  // =========================================================
+
+  const InputError = ({ errorText }: iInputError) => {
+    return <span className="form-error">{errorText}</span>;
   };
 
   return (
     <div className="add-promotion">
       <h1>Ajouter une promotion</h1>
       <form className="form-add-promotion" onSubmit={submitForm}>
+        {promotionNameError && (
+          <InputError errorText={"Ce champ n'est pas valide"} />
+        )}
         <input
           type="text"
           className="overlayInput promotion-name text-align-left"
@@ -143,10 +180,18 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
           value={promotionName}
           onChange={(e) => setPromotionName(e.target.value)}
         />
-        <span className="form-error">
-          {promotionNameError ? "Ce champ n'est pas valide" : ''}
-        </span>
+
         <div className="promotion-year">
+          <span className="form-error">
+            {beginningYearError && (
+              <InputError errorText={"Ce champ n'est pas valide"} />
+            )}
+          </span>
+          {scholarYearOrderError && (
+            <InputError
+              errorText={"L'année de début est supérieure à l'année de fin"}
+            />
+          )}
           <select
             className="overlayInput promotion-beginning-year"
             onChange={(e) => setBeginningYear(e.target.value)}
@@ -154,9 +199,9 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
             <option value="">Début de formation</option>
             {buildOptions()}
           </select>
-          <span className="form-error">
-            {beginningYearError ? "Ce champ n'est pas valide" : ''}
-          </span>
+          {finishingYearError && (
+            <InputError errorText={"Ce champ n'est pas valide"} />
+          )}
           <select
             className="overlayInput promotion-finishing-year"
             onChange={(e) => setFinishingYear(e.target.value)}
@@ -164,23 +209,20 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
             <option value="">Fin de formation</option>
             {buildOptions()}
           </select>
-          <span className="form-error">
-            {finishingYearError ? "Ce champ n'est pas valide" : ''}
-          </span>
         </div>
         <CSVReader
           onFileLoaded={(data) => handleCsv(data)}
           inputId="csv-reader"
           inputName="csvReader"
           cssClass="csv-reader-input"
-          label="Importer un fichier csv *"
+          label="Importer un fichier csv"
         />
 
         <div className="student-emails">
-          {emailAdresses.map((element, index) => (
-            <>
+          {emailAdresses.map((element: string, index: number) => (
+            <div>
               <input
-                key={element}
+                key={index}
                 id="student-email"
                 type="text"
                 className="overlayInput promotion-name"
@@ -190,13 +232,14 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
               />
 
               {emailAdressesError.includes(index) ? (
-                <span key={`${element}-${element}`} className="form-error">
+                <span key={`${element}-${element}`}>
+                  {/* <InputError errorText={'Ce champ n&apos;est pas valide'} /> */}
                   Ce champ n&apos;est pas valide
                 </span>
               ) : (
                 ''
               )}
-            </>
+            </div>
           ))}
         </div>
 
