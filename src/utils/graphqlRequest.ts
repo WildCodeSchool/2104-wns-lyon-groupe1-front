@@ -37,8 +37,12 @@ export const CHECK_LOGIN = gql`
 `;
 
 export const CREATE_CLASSROOM = gql`
-  mutation CreateClassroom($name: String!, $year: String!, $mails: [String!]!) {
-    addClassroom(name: $name, year: $year, mails: $mails) {
+  mutation addClassroom($name: String!, $year: String!, $mails: [String!]!) {
+    addClassroom(
+      classroomName: $name
+      academicYear: $year
+      studentMails: $mails
+    ) {
       id
       name
       year

@@ -1,0 +1,20 @@
+@import "../globalColors.scss";
+.errorModalContainer {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: $colorRedError;
+    color: $colorWhite;
+    padding: 10px 10px;
+}
+
+.errorModalButton {
+    margin-top: 10px;
+    padding: 2px 20px;
+    background-color: $colorWhite;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
