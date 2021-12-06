@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client';
 import CSVReader from 'react-csv-reader';
 import { CREATE_CLASSROOM } from '../utils/graphqlRequest';
 import './addPromotion.scss';
+import ErrorModal from '../component/ErrorModal';
 
 type AddPromotionProps = {
   handleClassroom: Function;
@@ -15,7 +16,7 @@ interface iInputError {
 export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
   const [promotionName, setPromotionName] = useState<string>('');
   const [beginningYear, setBeginningYear] = useState<string>('');
-  const [finishingYear, setFinishingYear] = useState<string>('2022');
+  const [finishingYear, setFinishingYear] = useState<string>('');
   const [promotionNameError, setPromotionNameError] = useState(false);
   const [beginningYearError, setBeginningYearError] = useState(false);
   const [finishingYearError, setFinishingYearError] = useState(false);
@@ -24,18 +25,29 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
   const [emailAdressesError, setEmailAdressesError] = useState<Array<number>>(
     [],
   );
+
   const [scholarYearOrderError, setScholarYearOrderError] =
     useState<boolean>(false);
+  const [emailAdresses, setEmailAdresses] = useState<Array<string>>([]);
+
+  const [studentsNumberInput, setStudentsNumberInput] = useState<number>(0); // state used for the controller input
+  const [studentsNumber, setStudentsNumber] = useState<number>(0);
+
+  // state used to swap between manually entering students emails or automatically via a csv
+  const [manualStudentsEntry, setManualStudentsEntry] =
+    useState<boolean>(false);
+
+  const [isVisibleErrorModal, setIsVisibleErrorModal] = useState(true);
+  // ======================================
 
   const [createClassroom] = useMutation(CREATE_CLASSROOM, {
     onCompleted: (value) => {
       handleClassroom(value.classroom);
     },
     onError: (error) => {
-      window.alert('Handle error properly');
+      setIsVisibleErrorModal(true);
     },
   });
-  const [emailAdresses, setEmailAdresses] = useState<Array<string>>([]);
 
   // Je vérifie le nom de la promo
   // =========================================================
@@ -69,18 +81,6 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
     return false;
   };
 
-  // show error if beginngin year is bigger than finishing year
-  // =========================================================
-  const verifyScholarYearsOrders = (
-    beginningYearValue: string,
-    finishingYearValue: string,
-  ): void => {
-    if (Number(beginningYearValue) >= Number(finishingYearValue)) {
-      setScholarYearOrderError(true);
-    }
-    setScholarYearOrderError(false);
-  };
-
   // Je crée les dates de mes années scolaire en partant de l'année actuelle + 20 ans
   // =========================================================
   const buildOptions = () => {
@@ -106,7 +106,6 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
     setBeginningYearError(false);
     setFinishingYearError(false);
     setEmailAdressesRequiredError(false);
-    // verifyScholarYearsOrders(beginningYear, finishingYear);
     setEmailAdressesError([]);
     event.preventDefault();
     let error = false;
@@ -160,6 +159,7 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
 
   // =========================================================
   const handleCsv = (data: any) => {
+    setManualStudentsEntry(false);
     setEmailAdresses(data.map((element: string[]) => element[0]));
   };
 
@@ -175,8 +175,22 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
     return <span className="form-error">{errorText}</span>;
   };
 
+  // =========================================================
+
+  const confirmWantedStudentsNumber = () => {
+    setManualStudentsEntry(true); // set manual mode to true
+    setEmailAdresses([]); // reset all email adresses when starting manual mode
+    setStudentsNumber(studentsNumberInput);
+  };
+
   return (
     <div className="add-promotion">
+      <ErrorModal
+        buttonText="ok"
+        isVisible={isVisibleErrorModal}
+        text={"Une erreur s'est produite, veuillez réessayer plus tard"}
+        onConfirmCallback={() => setIsVisibleErrorModal(false)}
+      />
       <h1>Ajouter une promotion</h1>
       <form className="form-add-promotion" onSubmit={submitForm}>
         {promotionNameError && (
@@ -189,7 +203,6 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
           value={promotionName}
           onChange={(e) => setPromotionName(e.target.value)}
         />
-
         <div className="promotion-year">
           {beginningYearError && (
             <InputError errorText={"Ce champ n'est pas valide"} />
@@ -230,27 +243,67 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
           cssClass="csv-reader-input"
           label="Importer un fichier csv"
         />
+        Ou
         <div className="student-emails">
-          {emailAdresses.map((element: string, index: number) => (
-            <div key={index}>
-              {emailAdressesError.includes(index) && (
-                <span key={`${element}-${element}`}>
-                  <InputError errorText="Ce mail n'est pas valide" />
-                </span>
-              )}
-              <input
-                key={index}
-                id="student-email"
-                type="text"
-                className="overlayInput promotion-name"
-                placeholder="Mail étudiant"
-                value={element}
-                onChange={(e) => handleChange(e, index)}
-              />
-            </div>
-          ))}
+          {!manualStudentsEntry &&
+            emailAdresses.map((element: string, index: number) => (
+              <div key={index}>
+                {emailAdressesError.includes(index) && (
+                  <span key={`${element}-${element}`}>
+                    <InputError errorText="Ce mail n'est pas valide" />
+                  </span>
+                )}
+                <input
+                  key={index}
+                  id="student-email"
+                  type="text"
+                  className="overlayInput promotion-name"
+                  placeholder="Mail étudiant"
+                  value={element}
+                  onChange={(e) => handleChange(e, index)}
+                />
+              </div>
+            ))}
         </div>
-
+        <div className="studentsNumberWrapper">
+          <div>Nombre d&apos;étudiants</div>
+          <div className="studentsNumberContainer">
+            <input
+              type="number"
+              value={studentsNumberInput}
+              onChange={(e) => setStudentsNumberInput(Number(e.target.value))}
+              min="0"
+              max="100"
+              className="studentsNumberInput"
+            />
+            <button type="button" onClick={confirmWantedStudentsNumber}>
+              OK
+            </button>
+          </div>
+        </div>
+        <div className="student-emails">
+          {manualStudentsEntry &&
+            [...Array(studentsNumber)].map((element, index: number) => {
+              return (
+                <div key={index}>
+                  {emailAdressesError.includes(index) && (
+                    <span key={`${element}-${element}`}>
+                      <InputError errorText="Ce mail n'est pas valide" />
+                    </span>
+                  )}
+                  <input
+                    key={index}
+                    id="student-email"
+                    type="text"
+                    className="overlayInput promotion-name"
+                    placeholder="Mail étudiant"
+                    value={element}
+                    onChange={(e) => handleChange(e, index)}
+                  />
+                </div>
+              );
+            })}
+        </div>
         <input className="overlaySubmitButton" type="submit" value="Ajouter" />
       </form>
     </div>

@@ -16,7 +16,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 
-const httpLink = new HttpLink({ uri: "http://localhost:5000/graphql" });
+
+const httpLink = new HttpLink({ uri: "http://localhost:5000/" });
 
 const authMidlw = new ApolloLink((operation, next) => {
   operation.setContext(({ headers = {} }) => ({
@@ -32,6 +33,9 @@ const client = new ApolloClient({
   link: concat(authMidlw, httpLink),
   cache: new InMemoryCache(),
 });
+
+console.log(process.env);
+
 
 const CtxProvider = ({ children }: any) => {
   // PROD
