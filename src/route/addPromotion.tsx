@@ -44,7 +44,7 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
     onCompleted: (value) => {
       handleClassroom(value.classroom);
     },
-    onError: (error) => {
+    onError: () => {
       setIsVisibleErrorModal(true);
     },
   });

@@ -1,4 +1,3 @@
-import React from 'react';
 import './ErrorModal.scss';
 
 interface IErrorModalProps {
