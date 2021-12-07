@@ -7,8 +7,8 @@
 
     .flashcardInput {
         display: block;
-        background-color: $colorYellow;
-        border: none;
+        background-color: $colorWhite;
+        border: 3px solid $colorYellow;
         cursor: pointer;
         margin: 10px auto;
         padding: 4px 12px;
@@ -32,4 +32,123 @@
     .buttons.btn-submit {
         background-color: $colorGreen;
     }
+
+    .addTag button {
+        background-color: $colorGreen;
+        border: none;
+        border-radius: 5px;
+        padding: 4px 12px;
+        margin: 10px auto;
+    }
+}
+
+.ressources {
+    border: 3px solid $colorBrightGrey;
+    border-radius: 5px;
+
+    h3 {
+        background-color: $colorBrightGrey;
+    }
+
+    .allRessources {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        a {
+            text-decoration: underline;
+            text-align: left;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.removeButton {
+    background-color: $colorRed;
+    margin-right: 5px;
+}
+
+.addButton {
+    background-color: $colorGreen;
+    margin-left: 5px;
+}
+
+.validationButtons {
+    display: flex
+}
+
+.ressources-input {
+    background-color: $colorBrightGrey;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 15px;
+
+    .flashcardInput-grey {
+        border: none;
+    }
+
+
+
+}
+
+#flashcard-title {
+    background-color: $colorYellow;
+    border-radius: 5px;
+    border: 3px solid $colorYellow;
+    margin: 10px auto;
+    padding: 4px 12px;
+    font-size: 1rem;
+    width: 40%;
+    min-width: 250px;
+    text-align: left;
+}
+
+.allTags-list {
+    display: flex;
+    margin: 10px auto;
+    min-width: 250px;
+    width: 41%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.subtitle-list {
+    button {
+        border: none;
+        background-color: none;
+    }
+
+    .subtitle-detail {
+        border: 1px solid $colorBrightGrey;
+        border-radius: 5px;
+        margin-top: 5%;
+        height: auto;
+        overflow-y: hidden;
+        max-height: 40px;
+        transition: max-height 250ms ease-in;
+
+        @media (min-width: 1200px) {
+            max-height: max-content;
+        }
+
+    }
+
+    .subtitle-detail:first-of-type {
+        .upward-button {
+            display: none;
+        }
+    }
+
+    .subtitle-detail:last-of-type {
+        .downward-button {
+            display: none;
+        }
+    }
+
+
+
 }

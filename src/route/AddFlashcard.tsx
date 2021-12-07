@@ -1,38 +1,44 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import './AddFlashcard.scss';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
 import TagsOrganizer from '../component/TagsOrganizer';
 import Ressource from '../component/Ressource';
-/* import CreatableSelect from '../component/CreatableSelect'; */
-import Block from '../component/Block';
-import Flashcard from './Flashcard';
-
-type PropsSubtitle = {
-  title: string;
-  order: number;
-};
-
-type PropsFlashcard = {
-  subject: string;
-  title: string;
-  /*   subtitle?: PropsSubtitle[] | undefined; */
-};
-/* const defaultProps: Partial<PropsFlashcard> = {
-  subtitle: [],
-}; */
+import BlockSubTitle from '../component/BlockSubTitle';
+import { UserContext } from '../utils/UserContext';
+import { CREATE_FLASHCARD } from '../utils/graphqlRequest';
 
 export default function AddFlashcard() {
+  const { user } = useContext(UserContext);
   const [singleTag, setSingleTag] = useState<string>('');
   const [tags, setTags] = useState<string[]>([]);
+  const [position, setPosition] = useState(0);
   const ressource: any[] = [];
+  const subtitle: any[] = [];
   const [flashcard, setFlashcard] = useState({
     subject: '',
     title: '',
     tag: tags,
     ressource,
-    subtitles: {
-      subtitle: '',
-      order: '',
+    subtitle,
+  });
+  /* 
+    const [createFlashcard] = useMutation(CREATE_FLASHCARD, {
+      onCompleted: (value) => {
+        handleClassroom(value.classroom);
+      },
+      onError: () => {
+        // a changer, gerer les erreurs de retours créations classroom
+        setPromotionNameError(true);
+      },
+    }); */
+
+  const [createFlashcard] = useMutation(CREATE_FLASHCARD, {
+    onCompleted: () => {
+      window.alert('Created flashcard');
+    },
+    onError: () => {
+      // a changer, gerer les erreurs de retours créations classroom
+      window.alert('Error creating flashcard');
     },
   });
 
@@ -41,11 +47,20 @@ export default function AddFlashcard() {
     const flashcardTitle = document.getElementById(
       'flashcard-title',
     ) as HTMLSelectElement;
-    const flashcardValue = flashcardTitle?.value;
-    console.log(flashcardValue);
+
     setFlashcard({
       ...flashcard,
       subject: flashcardTitle.dataset.id as string,
+    });
+    createFlashcard({
+      variables: {
+        classroomId: user.classroom?.classroomId,
+        subjectId: flashcard.subject,
+        title: flashcard.title,
+        ressource: flashcard.ressource,
+        tag: flashcard.tag,
+        subtitle: flashcard.subtitle,
+      },
     });
   };
 
@@ -88,11 +103,6 @@ export default function AddFlashcard() {
       },
     ],
   };
-  /*   const handleKeyDown = (event: any) => {
-      if (event.key === 'Enter') {
-        console.log(tags);
-      }
-    }; */
 
   // add tag callbacck
   //= ==================================================
@@ -136,6 +146,45 @@ export default function AddFlashcard() {
     /*  console.log(flashcard.ressource); */
   };
 
+  // add sous-titre callbacck
+  //= ==================================================
+  const addTitle = () => {
+    setPosition(position + 1);
+    const sousTitreTitle = document.getElementById(
+      'sous-titre',
+    ) as HTMLInputElement;
+    const title = sousTitreTitle?.value;
+    const flashcardCopy = { ...flashcard };
+    flashcardCopy.subtitle = [...flashcardCopy.subtitle, { title, position }];
+    setFlashcard(flashcardCopy);
+    sousTitreTitle.value = '';
+    /*  console.log(flashcard.ressource); */
+  };
+
+  const positionChange = (sousTitrePosition: string, direction: string) => {
+    const allSubtitles = flashcard.subtitle;
+    const index = allSubtitles.findIndex(
+      (positionIndex: any) => positionIndex.position === sousTitrePosition,
+    );
+    if (direction === 'downward') {
+      const sliceSubtitle: any = allSubtitles.slice(index, index + 2);
+      sliceSubtitle[0].position += 1;
+      sliceSubtitle[1].position -= 1;
+      allSubtitles.splice(sliceSubtitle[1].position, 1, sliceSubtitle[1]);
+      allSubtitles.splice(sliceSubtitle[0].position, 1, sliceSubtitle[0]);
+    }
+    if (direction === 'upward') {
+      const sliceSubtitle: any = allSubtitles.slice(index - 1, index + 1);
+      sliceSubtitle[0].position += 1;
+      sliceSubtitle[1].position -= 1;
+      allSubtitles.splice(sliceSubtitle[1].position, 1, sliceSubtitle[1]);
+      allSubtitles.splice(sliceSubtitle[0].position, 1, sliceSubtitle[0]);
+    }
+    const flashcardCopy = { ...flashcard };
+    flashcardCopy.subtitle = allSubtitles;
+    setFlashcard(flashcardCopy);
+  };
+
   return (
     <>
       <h1>Créer une fiche</h1>
@@ -165,62 +214,92 @@ export default function AddFlashcard() {
             }
           />
           <div>
-            <h3>Tags</h3>
+            <div className="addTag">
+              <input
+                className="flashcardInput"
+                value={singleTag}
+                onChange={(event) => setSingleTag(event.target.value)}
+                type="text"
+                placeholder="Ajouter un tag"
+              />
+              <button className="button" type="button" onClick={addTag}>
+                Ajouter
+              </button>
+            </div>
+            <TagsOrganizer removeTagCallback={removeTag} tags={flashcard.tag} />
           </div>
-          <TagsOrganizer removeTagCallback={removeTag} tags={flashcard.tag} />
-          <div>
-            <input
-              value={singleTag}
-              onChange={(event) => setSingleTag(event.target.value)}
-              type="text"
-            />
-            <button type="button" onClick={addTag}>
-              Ajouter un tag
-            </button>
-          </div>
-          <div>
+          <div className="ressources">
             <h3>Ressources</h3>
-            <div>
+            <div className="allRessources">
               {flashcard.ressource?.map((ress, i) => (
-                <div key={i}>
-                  <Ressource name={ress.name} url={ress.url} />
-                </div>
+                <Ressource key={i} name={ress.name} url={ress.url} />
               ))}
             </div>
-            {/*       <Ressource ressources={flashcard.ressource} /> */}
+          </div>
+          <div className="ressources-input">
             <input
               id="ressource-name"
+              className="flashcardInput-grey flashcardInput"
               type="text"
               placeholder="Ajouter le titre de ressource"
             />
             <input
               id="ressource-url"
+              className="flashcardInput-grey flashcardInput"
               type="text"
               placeholder="Ajouter l'url de ressource"
             />
-            <button type="button" onClick={addRessource}>
-              Ajouter une ressource
-            </button>
+            <div className="validationButtons">
+              <button
+                className=" button removeButton"
+                type="button"
+                onClick={addRessource}
+              >
+                Annuler
+              </button>
+              <button
+                className="addButton button"
+                type="button"
+                onClick={addRessource}
+              >
+                Ajouter
+              </button>
+            </div>
           </div>
-          {/*   <input
-            type="texte"
-            className="flashcardInput"
-            placeholder="Ajouter un tag"
-            name="tags"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
-            onKeyUp={handleKeyDown}
-          /> */}
-          {/*  <p>{tags}</p> */}
-          {/*           <Block title={soustitre} />
+          <div className="subtitle-list">
+            {flashcard.subtitle?.map((sub, i) => (
+              <div key={i} className="subtitle-detail">
+                <BlockSubTitle
+                  title={sub.title}
+                  position={sub.position}
+                  positionChangeCallback={positionChange}
+                />
+              </div>
+            ))}
+          </div>
           <input
+            id="sous-titre"
             type="textarea"
-            className="flashcardInput"
+            className="flashcardInput flashcardInput-grey"
             placeholder="Insérer un sous-titre"
             name="soustitre"
-            value={soustitre}
-            onChange={(e) => setSoustitre(e.target.value)}
-          /> */}
+          />
+          <div className="validationButtons">
+            <button
+              type="button"
+              onClick={addTitle}
+              className="removeButton button"
+            >
+              Annuler
+            </button>
+            <button
+              type="button"
+              onClick={addTitle}
+              className="addButton button"
+            >
+              Ajouter
+            </button>
+          </div>
           <div className="submit-cancel">
             <button
               type="submit"
