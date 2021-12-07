@@ -1,4 +1,6 @@
 import React from 'react';
+import cross from '../assets/cross.svg';
+import './TagsOrganizer.scss';
 
 interface ITagsOrganizerProps {
   tags: string[];
@@ -11,19 +13,20 @@ export default function TagsOrganizer({
 }: ITagsOrganizerProps) {
   const Tag = ({ text }: any) => {
     return (
-      <div>
-        <div>
-          <div>{text}</div>
-          <button type="button" onClick={() => removeTagCallback(text)}>
-            Supprimer un tag
-          </button>
-        </div>
+      <div className="singleTag">
+        <p>#{text}</p>
+        <img
+          src={cross}
+          alt="supprimer le tag"
+          onClick={() => removeTagCallback(text)}
+          aria-hidden="true"
+        />
       </div>
     );
   };
 
   return (
-    <div>
+    <div className="allTags-list">
       {tags.map((tag: string, i) => {
         return <Tag key={i} text={tag} />;
       })}
