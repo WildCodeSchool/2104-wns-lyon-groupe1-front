@@ -28,7 +28,7 @@ export default function Flashcard() {
       classroomId: user.classroom?.classroomId,
     },
     onError: () => {
-      window.alert('Erreur lors de la récupération de la fiche !');
+      // voir comment on gere les erreurs ?
       history.goBack();
     },
     skip: user.classroom?.classroomId === undefined,
