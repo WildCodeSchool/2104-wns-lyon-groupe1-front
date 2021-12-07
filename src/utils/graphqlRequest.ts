@@ -94,6 +94,16 @@ export const ALL_SUBJECTS = gql`
   }
 `;
 
+export const GET_ALL_SUBJECTS = gql`
+query getAllSubjects() {
+    subject {
+      id
+      name
+      imageUrl
+    }
+}
+`;
+
 export const ALL_SUBJECTS_BY_CLASSROOM = gql`
   query getAllSubjectsByClassroom($classroomId: String!) {
     getAllSubjectsByClassroom(classroomId: $classroomId) {
@@ -199,3 +209,36 @@ export const RESET_PASSWORD = gql`
     resetPassword(mail: $mail)
   }
 `;
+export const CREATE_FLASHCARD = gql`
+  mutation createFlashcard(
+    $classroomId: ID!
+    $subjectId: ID!
+    $title: String!
+    $ressource: [RessourceInput!]
+    $tag: [String]
+    $subtitle: [SubtitleInput!]
+  ) {
+    classroom(
+      classroomId: $classroomId
+      subjectId: $subjectId
+      title: $title
+      ressource: $ressource
+      tag: $tag
+      subtitle: $subtitle
+    ) {
+      id
+      title
+      subtitle {
+        title
+        position
+      }
+      tag
+      ressource {
+        name
+        url
+      }
+    }
+  }
+`;
+
+export const UPDATE_FLASHCARD = gql``;
