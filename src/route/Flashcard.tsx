@@ -1,8 +1,11 @@
 import { useState, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import Switch from 'react-switch';
-import { GET_FLASHCARD_BY_ID } from '../utils/graphqlRequest';
+import {
+  GET_FLASHCARD_BY_ID,
+  UPDATE_FLASHCARD_STUDENT,
+} from '../utils/graphqlRequest';
 import Block from '../component/Block';
 import bubbleMessage from '../assets/bubblemessage.svg';
 import './Flashcard.scss';
@@ -28,7 +31,67 @@ export default function Flashcard() {
       window.alert('Erreur lors de la récupération de la fiche !');
       history.goBack();
     },
+    skip: user.classroom?.classroomId === undefined,
   });
+  // Subject Id a recupérer dans le state du routeur
+  const [flashcardMutation] = useMutation<{
+    updateFlashcardParagraph: IFlashcard;
+  }>(UPDATE_FLASHCARD_STUDENT, {
+    variables: {
+      classroomId: user.classroom?.classroomId || '',
+      flashcardId: data?.getFlashcard?.id || '',
+      subjectId: '613afd9b58d5994584d87b45',
+      subtitleId: '',
+      paragraph: null,
+      ressource: null,
+    },
+  });
+
+  const handleChangeVisibility = (subtitleId: string, paragraphId: string) => {
+    flashcardMutation({
+      variables: {
+        subtitleId,
+        paragraph: {
+          paragraphId,
+          isPublic: true,
+        },
+      },
+    });
+  };
+
+  const handleEditParagraph = (
+    subtitleId: string,
+    paragraphId: string | null,
+    isPublic: boolean,
+    text: string,
+  ) => {
+    flashcardMutation({
+      variables: {
+        subtitleId,
+        paragraph: {
+          paragraphId,
+          isPublic,
+          text,
+        },
+      },
+    });
+  };
+
+  const handleEditRessource = (name: string, url: string) => {
+    flashcardMutation({ variables: { ressource: { name, url } } });
+  };
+
+  const handleValidation = (subtitleId: string, paragraphId: string) => {
+    flashcardMutation({
+      variables: {
+        subtitleId,
+        paragraph: {
+          paragraphId,
+          isValidate: true,
+        },
+      },
+    });
+  };
 
   if (loading || !data) return <p>Loading...</p>;
   const flashcard = data.getFlashcard;
@@ -81,12 +144,17 @@ export default function Flashcard() {
           paragraph={subtitle.paragraph}
           key={subtitle.title}
           position={subtitle.position}
+          actionVisibility={handleChangeVisibility}
+          actionValidation={handleValidation}
+          subtitleId={subtitle.id}
+          handleEdit={handleEditParagraph}
         />
       ))}
       <Block
         title="Ressources"
         ressource={flashcard.ressource}
         edit={writingMode}
+        handleEditRessource={handleEditRessource}
       />
     </div>
   );

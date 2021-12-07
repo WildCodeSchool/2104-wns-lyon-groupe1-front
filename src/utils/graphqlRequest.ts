@@ -103,9 +103,52 @@ export const GET_FLASHCARD_BY_ID = gql`
         url
       }
       subtitle {
+        id
         title
         position
         paragraph {
+          id
+          text
+          isValidate
+          isPublic
+          author
+          date
+        }
+      }
+    }
+  }
+`;
+
+export const UPDATE_FLASHCARD_STUDENT = gql`
+  mutation UpdateFlashcardParagraph(
+    $classroomId: ID!
+    $subjectId: ID!
+    $flashcardId: ID!
+    $subtitleId: ID!
+    $paragraph: ParagraphInput
+    $ressource: RessourceInput
+  ) {
+    updateFlashcardStudent(
+      classroomId: $classroomId
+      subjectId: $subjectId
+      flashcardId: $flashcardId
+      subtitleId: $subtitleId
+      paragraph: $paragraph
+      ressource: $ressource
+    ) {
+      id
+      title
+      tag
+      ressource {
+        name
+        url
+      }
+      subtitle {
+        id
+        title
+        position
+        paragraph {
+          id
           text
           isValidate
           isPublic

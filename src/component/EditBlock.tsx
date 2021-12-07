@@ -5,20 +5,26 @@ export default function EditBlock({
   isRessource,
   pos,
   paragraphUpdate,
+  handleParagraphUpdate,
+  handleEdit,
+  subId,
 }: {
   isRessource: boolean;
   pos: number;
   paragraphUpdate: IParagraph | null;
+  handleParagraphUpdate: Function;
+  handleEdit: Function;
+  subId: string;
 }) {
   const [text, setText] = useState('');
   const [id, setIdParagraphUpdate] = useState<null | string>(null);
   const [url, setUrl] = useState('');
   const [isPublic, setPublic] = useState(true);
-
   useEffect(() => {
     if (paragraphUpdate) {
       setText(paragraphUpdate.text);
       setIdParagraphUpdate(paragraphUpdate.id);
+      setPublic(paragraphUpdate.isPublic);
     }
   }, [paragraphUpdate]);
 
@@ -32,16 +38,10 @@ export default function EditBlock({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isRessource) {
-      console.log({
-        url,
-        text,
-      });
+      handleEdit(text, url);
     } else {
-      console.log({
-        text,
-        isPublic,
-        id,
-      });
+      handleEdit(subId, id, isPublic, text);
+      handleParagraphUpdate(null);
     }
     clearForm();
   };

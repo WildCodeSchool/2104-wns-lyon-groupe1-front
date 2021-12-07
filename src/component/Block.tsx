@@ -15,6 +15,11 @@ type PropsBlock = {
   ressource?: IRessource[] | undefined;
   edit: boolean;
   position: number;
+  actionVisibility: Function;
+  actionValidation: Function;
+  handleEdit: Function;
+  handleEditRessource: Function;
+  subtitleId: string;
 };
 
 const defaultProps: Partial<PropsBlock> = {
@@ -28,6 +33,11 @@ export default function Block({
   ressource,
   edit,
   position,
+  actionVisibility,
+  actionValidation,
+  handleEdit,
+  subtitleId,
+  handleEditRessource,
 }: PropsBlock) {
   const [show, setShow] = useState(false);
   const [isValidate, setValidate] = useState(false);
@@ -76,18 +86,24 @@ export default function Block({
               </button>
             )}
             {!p.isPublic && (
-              <img
-                src={lock}
-                className="icon-start"
-                alt="Visible que par moi"
-              />
+              <button
+                type="button"
+                disabled={!edit}
+                onClick={() => actionVisibility(subtitleId, p.id)}
+              >
+                <img
+                  src={lock}
+                  className="icon-start"
+                  alt="Visible que par moi"
+                />
+              </button>
             )}
             {p.text}
           </p>
           {edit && !p.isValidate && p.author !== user.id && (
             <button
               type="button"
-              onClick={() => console.log('valider le paragraph')}
+              onClick={() => actionValidation(subtitleId, p.id)}
             >
               <img src={confirm} className="icon-end" alt="Validé" />
             </button>
@@ -107,6 +123,9 @@ export default function Block({
           pos={position}
           isRessource={ressource !== undefined}
           paragraphUpdate={paragraphUpdate}
+          handleParagraphUpdate={setParagraphUpdate}
+          handleEdit={ressource ? handleEditRessource : handleEdit}
+          subId={subtitleId}
         />
       )}
     </div>

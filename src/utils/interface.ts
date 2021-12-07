@@ -48,6 +48,7 @@ export interface IParagraph {
 }
 
 export interface ISubtitle {
+  id: string;
   title: string;
   position: number;
   paragraph?: IParagraph[];
