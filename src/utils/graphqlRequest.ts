@@ -84,24 +84,14 @@ export const GET_CLASSROOM_STUDENTS = gql`
   }
 `;
 
-export const ALL_SUBJECTS = gql`
-  query getSubjects {
+export const GET_ALL_SUBJECTS = gql`
+  query getAllSubjects {
     subject {
       id
       name
       imageUrl
     }
   }
-`;
-
-export const GET_ALL_SUBJECTS = gql`
-query getAllSubjects() {
-    subject {
-      id
-      name
-      imageUrl
-    }
-}
 `;
 
 export const ALL_SUBJECTS_BY_CLASSROOM = gql`
@@ -240,5 +230,3 @@ export const CREATE_FLASHCARD = gql`
     }
   }
 `;
-
-export const UPDATE_FLASHCARD = gql``;
