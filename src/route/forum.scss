@@ -1,0 +1,18 @@
+@import "../globalColors.scss";
+.forumSearchInputContainer {
+    display: flex;
+    align-items: center;
+    border: 1px solid $colorBrightGrey;
+    padding: 15px 8px;
+    margin-bottom: 20px;
+    >input {
+        font-family: inherit;
+        border: none;
+        width: 100%;
+        margin-right: 10px;
+    }
+}
+
+.Header {}
+
+.forumGreetings {}
