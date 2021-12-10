@@ -1,3 +1,4 @@
+<<<<<<< HEAD
     @import "../globalColors.scss";
     .forumPageContainer {
         width: 95%;
@@ -24,3 +25,23 @@
     .forumEditorWrapper {
         margin-top: 15px;
     }
+=======
+@import "../globalColors.scss";
+.forumSearchInputContainer {
+    display: flex;
+    align-items: center;
+    border: 1px solid $colorBrightGrey;
+    padding: 15px 8px;
+    margin-bottom: 20px;
+    >input {
+        font-family: inherit;
+        border: none;
+        width: 100%;
+        margin-right: 10px;
+    }
+}
+
+.Header {}
+
+.forumGreetings {}
+>>>>>>> 84243bc (+ forum page styles)
