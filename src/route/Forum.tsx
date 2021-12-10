@@ -12,46 +12,55 @@ interface IForumResponse {
   tag: string[];
   flashcardId: string;
   question: any;
+  subjectId: string;
 }
 
 const mockAllForums: IForumResponse[] = [
   {
+    subjectId: '1',
     flashcardId: '1',
     question: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
     tag: ['javascript', 'react'],
     title: 'title1',
   },
   {
+    subjectId: '1',
+
     flashcardId: '2',
     question: ['a', 'a', 'a', 'a', 'a'],
     tag: ['javascript', 'react'],
     title: 'title2',
   },
   {
+    subjectId: '1',
     flashcardId: '3',
     question: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
     tag: ['devops', 'typescript'],
     title: 'title3',
   },
   {
+    subjectId: '1',
     flashcardId: '4',
     question: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
     tag: ['javascript', 'devops'],
     title: 'title4',
   },
   {
+    subjectId: '1',
     flashcardId: '5',
     question: ['a', 'a'],
     tag: ['python', 'react'],
     title: 'title5',
   },
   {
+    subjectId: '1',
     flashcardId: '6',
     question: ['a', 'a', 'a'],
     tag: ['javascript', 'django'],
     title: 'title6',
   },
   {
+    subjectId: '1',
     flashcardId: '7',
     question: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
     tag: ['flask', 'python'],
