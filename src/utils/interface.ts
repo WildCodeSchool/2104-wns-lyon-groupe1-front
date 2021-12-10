@@ -66,6 +66,10 @@ export interface IRessource {
 export interface IAnswer {
   id: string;
   text: string;
+<<<<<<< HEAD
+=======
+  author: string;
+>>>>>>> 5441c27 (+ forum)
   date: Date;
 }
 
@@ -74,6 +78,11 @@ export interface IQuestion {
   text: string;
   answer: IAnswer[];
   date: Date;
+<<<<<<< HEAD
+=======
+  author: string;
+  isPublic: boolean;
+>>>>>>> 5441c27 (+ forum)
 }
 
 export interface IFlashcard {
