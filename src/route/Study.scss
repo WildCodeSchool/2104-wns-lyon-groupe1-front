@@ -1,9 +1,8 @@
 @import '../globalColors.scss';
-
 h1 {
     color: $colorYellow;
     font-weight: bold;
-    font-size: 50px;
+    font-size: 40px;
 }
 
 .subject-list {
@@ -17,7 +16,6 @@ h1 {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 5%;
     justify-items: center;
-
     .subject-element {
         width: 100%;
         margin: 10% 0%;
@@ -27,17 +25,14 @@ h1 {
         justify-content: space-between;
         align-items: center;
     }
-
     img {
         width: 100%;
         max-width: 15vh;
         margin-bottom: 10%;
     }
-
     .link-button {
         display: contents
     }
-
     .subject-buttons {
         background-color: $colorYellow;
         border-color: $colorYellow;
@@ -46,7 +41,6 @@ h1 {
         margin: 0;
         width: 100%;
         justify-content: center;
-
         &:hover {
             background-color: $colorWhite;
             color: $colorYellow;
