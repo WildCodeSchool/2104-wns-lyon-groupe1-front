@@ -112,7 +112,7 @@ export default function Block({
       ))}
 
       {ressource?.map((p) => (
-        <div key={`${title}-${p.name}-${p.url}`} className="block-paragraph">
+        <div key={`${p.id}`} className="block-paragraph">
           <a href={p.url} target="_blank" rel="noreferrer">
             {p.name}
           </a>

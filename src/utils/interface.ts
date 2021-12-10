@@ -55,6 +55,7 @@ export interface ISubtitle {
 }
 
 export interface IRessource {
+  id: string;
   name: string;
   url: string;
 }
