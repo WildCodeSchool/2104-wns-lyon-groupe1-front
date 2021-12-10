@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useLocation } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import Switch from 'react-switch';
 import {
@@ -13,34 +13,36 @@ import { IFlashcard } from '../utils/interface';
 import { UserContext } from '../utils/UserContext';
 
 export default function Flashcard() {
-  // const { state } = useLocation();
-  // console.log(state);
+  const { state } = useLocation<{ flashcardId: string; subjectId: string }>();
+
   const history = useHistory();
   const [writingMode, setWritingMode] = useState(false);
   const { user } = useContext(UserContext);
 
   const { loading, data } = useQuery<
     { getFlashcard: IFlashcard },
-    { flashcardId: string; classroomId: string | undefined }
+    { flashcardId: string; classroomId: string }
   >(GET_FLASHCARD_BY_ID, {
     variables: {
-      flashcardId: '613afe5a2e3b7348540024f0',
-      classroomId: user.classroom?.classroomId,
+      flashcardId: state.flashcardId || '',
+      classroomId: user.classroom?.classroomId || '',
     },
     onError: () => {
       // voir comment on gere les erreurs ?
       history.goBack();
     },
-    skip: user.classroom?.classroomId === undefined,
+    skip:
+      user.classroom?.classroomId === undefined ||
+      state.flashcardId === undefined,
   });
-  // Subject Id a recupérer dans le state du routeur
+
   const [flashcardMutation] = useMutation<{
     updateFlashcardParagraph: IFlashcard;
   }>(UPDATE_FLASHCARD_STUDENT, {
     variables: {
       classroomId: user.classroom?.classroomId || '',
       flashcardId: data?.getFlashcard?.id || '',
-      subjectId: '613afd9b58d5994584d87b45',
+      subjectId: state.subjectId || '',
       subtitleId: '',
       paragraph: null,
       ressource: null,
