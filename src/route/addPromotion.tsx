@@ -37,7 +37,7 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
   const [manualStudentsEntry, setManualStudentsEntry] =
     useState<boolean>(false);
 
-  const [isVisibleErrorModal, setIsVisibleErrorModal] = useState(true);
+  const [isVisibleErrorModal, setIsVisibleErrorModal] = useState(false);
   // ======================================
 
   const [createClassroom] = useMutation(CREATE_CLASSROOM, {

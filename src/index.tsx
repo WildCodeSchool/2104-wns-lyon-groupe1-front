@@ -39,9 +39,9 @@ console.log(process.env);
 
 const CtxProvider = ({ children }: any) => {
   // PROD
-  // const [user, addUser, removeUser] = useUserContext();
+  const [user, addUser, removeUser] = useUserContext();
   // DEV
-  const [user, addUser, removeUser] = useUserContext({
+/*   const [user, addUser, removeUser] = useUserContext({
      id: '1',
      firstname: 'John',
      lastname: 'Doe',
@@ -52,7 +52,7 @@ const CtxProvider = ({ children }: any) => {
        year: '2021/2022',
        classroomId: '1',
      },
-   });
+   }); */
   return (
     <UserContext.Provider value={{ user, addUser, removeUser }}>
       {children}
