@@ -88,13 +88,15 @@ export default function Connect({ setUser }: ConnectProps) {
               </span>
             </button>
           ))}
-          <button
-            type="button"
-            onClick={() => setAddClassroom(true)}
-            className="buttons"
-          >
-            Ajouter une promotion
-          </button>
+          {user.isTeacher && (
+            <button
+              type="button"
+              onClick={() => setAddClassroom(true)}
+              className="buttons"
+            >
+              Ajouter une promotion
+            </button>
+          )}
         </div>
       </>
     );
