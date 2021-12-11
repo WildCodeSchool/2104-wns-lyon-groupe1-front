@@ -60,6 +60,19 @@ export const GET_CLASSROOM_BY_ID = gql`
   }
 `;
 
+export const GET_CLASSROOM_STUDENTS = gql`
+  query getClassroom($classroomId: String!) {
+    getClassroom(id: $classroomId) {
+      student {
+        userId
+        firstname
+        lastname
+        mail
+      }
+    }
+  }
+`;
+
 export const ALL_SUBJECTS = gql`
   query getSubjects {
     subject {
