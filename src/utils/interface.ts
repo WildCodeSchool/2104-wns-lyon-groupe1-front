@@ -5,12 +5,6 @@ export interface IStudent {
   mail: string;
 }
 
-export interface IClassroom {
-  name: string;
-  year: string;
-  classroomId: string;
-}
-
 export interface ISubject {
   id?: string;
   imageUrl?: string;
@@ -66,4 +60,12 @@ export interface IFlashcard {
   tag?: string[];
   subtitle?: ISubtitle[];
   ressource?: IRessource[];
+}
+
+export interface IClassroom {
+  name: string;
+  year: string;
+  classroomId: string;
+  student: IStudent[];
+  subject: ISubject[];
 }
