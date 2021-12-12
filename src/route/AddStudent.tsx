@@ -1,5 +1,8 @@
+import { useMutation } from '@apollo/client';
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import ErrorModal from '../component/ErrorModal';
+import { ADD_STUDENT_TO_CLASSROOM } from '../utils/graphqlRequest';
 import { UserContext } from '../utils/UserContext';
 import './AddStudent.scss';
 
@@ -7,7 +10,20 @@ export default function AddStudent() {
   const { user } = useContext(UserContext);
   const [error, setError] = useState(false);
   const [mail, setMail] = useState('');
+  const [isVisibleErrorModal, setIsVisibleErrorModal] = useState(false);
   const history = useHistory();
+  const [addStudentToClassroom] = useMutation(ADD_STUDENT_TO_CLASSROOM, {
+    variables: {
+      classroomId: user.classroom?.classroomId || '',
+      studentMail: mail,
+    },
+    onCompleted: () => {
+      history.push('/ma-promotion');
+    },
+    onError: () => {
+      setIsVisibleErrorModal(true);
+    },
+  });
 
   const handleSumbit = (e: any) => {
     e.preventDefault();
@@ -22,13 +38,17 @@ export default function AddStudent() {
       setError(true);
       return;
     }
-    // ajout en bdd
-    history.push('/ma-promotion');
-    setMail('');
+    addStudentToClassroom();
   };
 
   return (
     <div className="add-student">
+      <ErrorModal
+        buttonText="Ok"
+        isVisible={isVisibleErrorModal}
+        onConfirmCallback={() => setIsVisibleErrorModal(false)}
+        text="Impossible d'ajouter un élève, ressayer plus tard"
+      />
       <h2 className="title greetings">Ajouter un élève</h2>
       <div className="greetings">
         {user.classroom?.name} {user.classroom?.year}

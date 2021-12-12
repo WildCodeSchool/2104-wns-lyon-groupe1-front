@@ -50,6 +50,17 @@ export const CREATE_CLASSROOM = gql`
   }
 `;
 
+export const ADD_STUDENT_TO_CLASSROOM = gql`
+  mutation addStudentToClassroom($classroomId: String!, $studentMail: String!) {
+    addStudentToClassroom(id: $classroomId, studentMail: $studentMail) {
+      id
+      student {
+        mail
+      }
+    }
+  }
+`;
+
 export const GET_CLASSROOM_BY_ID = gql`
   query getClassroomById($classroomId: ID!) {
     classroom(classroomId: $classroomId) {
