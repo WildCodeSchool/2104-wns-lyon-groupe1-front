@@ -30,7 +30,6 @@ export default function AddStudent() {
   return (
     <div className="add-student">
       <h2 className="title greetings">Ajouter un élève</h2>
-      <div className="greetings">Wild Code School</div>
       <div className="greetings">
         {user.classroom?.name} {user.classroom?.year}
       </div>

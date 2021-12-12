@@ -243,7 +243,6 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
           cssClass="csv-reader-input"
           label="Importer un fichier csv"
         />
-        Ou
         <div className="student-emails">
           {!manualStudentsEntry &&
             emailAdresses.map((element: string, index: number) => (
@@ -265,6 +264,7 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
               </div>
             ))}
         </div>
+        Ou
         <div className="studentsNumberWrapper">
           <div>Nombre d&apos;étudiants</div>
           <div className="studentsNumberContainer">
