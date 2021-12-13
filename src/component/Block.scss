@@ -13,13 +13,32 @@
         max-height: max-content;
     }
 
-    button {
+    div:last-child {
+        margin-bottom: 0;
+    }
+
+    .btn-header {
         background: none;
         border: none;
         display: flex;
-        justify-content: space-between;
         align-items: center;
         width: 100%;
+
+        p {
+            margin-left: 0.5rem;
+            font-size: 0.7rem;
+            background-color: $colorGreenOpacity;
+            border-radius: 5px;
+            padding : 2px 8px;
+            font-weight: bold;
+            &.yellow {
+                background-color: $colorOrange;
+            }
+        }
+
+        img {
+            margin-left: auto;
+        }
     }
 
     .block-header {
@@ -39,6 +58,9 @@
         font-size: 12px;
         line-height: 16px;
         padding: 1em;
+        margin-bottom: 5px;
+        display: flex;
+        flex-direction: column;
 
         @media (min-width: 1200px) {
             font-size: 14px;
@@ -50,13 +72,88 @@
             line-height: 24px;
         }
 
+        & > button {
+            align-self: flex-end;
+        }
+
         img {
+            width: 12px;
+        }
+
+        .icon-end {
+            width: 16px;
+            
+        }
+
+        .icon-start {
             margin-right: 5px;
         }
 
         a {
             margin-left: 1em;
             text-decoration: underline;
+        }
+
+        &.orange {
+            background-color: $colorOrange;
+        }
+
+        &.green {
+            background-color: $colorGreenOpacity;
+        }
+    }
+
+    .block-edit {
+        background-color: $colorBrightGrey;
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        textarea, input[type="text"] {
+            border: none;
+            resize: none;
+            width: 100%;
+            min-height: 15em;
+            padding: 10px;
+        }
+        .edit-button-action {
+            padding-top: 1em;
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+
+            button {
+                border-radius: 5px;
+                padding: 4px;
+                font-weight: bold;
+                margin-right: 0.5em;
+
+                &.red {
+                    background-color: $colorRedOpacity;
+                }
+
+                &.green {
+                    background-color: $colorGreenOpacity;
+                }
+            }
+            .checkbox {
+                display: flex;
+                align-items: center;
+                margin-left: auto;
+                min-width: 79px;
+                input {
+                    margin-right: 5px;
+                }
+            }
+        }
+        .ressource_edit {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            input {
+                min-height: 2em;
+                margin-bottom: 0.5em;
+            }
         }
     }
 }

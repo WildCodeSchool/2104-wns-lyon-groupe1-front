@@ -67,26 +67,94 @@ export const ALL_SUBJECTS = gql`
 `;
 
 export const ALL_SUBJECTS_BY_CLASSROOM = gql`
-  query getAllSubjectsByClassroom($classroomId: ID!) {
-    classroom(classroomId: $classroomId) {
-      classroomId
-      subject {
-        subjectId
-        name
-        imageUrl
-      }
+  query getAllSubjectsByClassroom($classroomId: String!) {
+    getAllSubjectsByClassroom(classroomId: $classroomId) {
+      id
+      name
+      imageUrl
     }
   }
 `;
 
 export const ALL_FLASHCARDS_BY_SUBJECTS = gql`
-  query getAllFlashcardsBySubject($classroomId: ID!, $subjecId: ID!) {
-    classroom(classroomId: $classroomId, subjectId: $subjecId) {
-      classroomId
-      subject {
-        subjectId
+  query getAllFlashcardsBySubject($classroomId: String!, $subjectId: String!) {
+    getAllFlashcardsBySubject(
+      classroomId: $classroomId
+      subjectId: $subjectId
+    ) {
+      id
+      flashcard {
+        id
+        title
+      }
+    }
+  }
+`;
+
+export const GET_FLASHCARD_BY_ID = gql`
+  query getFlashcard($flashcardId: String!, $classroomId: String!) {
+    getFlashcard(flashcardId: $flashcardId, classroomId: $classroomId) {
+      id
+      title
+      tag
+      ressource {
+        id
         name
-        imageUrl
+        url
+      }
+      subtitle {
+        id
+        title
+        position
+        paragraph {
+          id
+          text
+          isValidate
+          isPublic
+          author
+          date
+        }
+      }
+    }
+  }
+`;
+
+export const UPDATE_FLASHCARD_STUDENT = gql`
+  mutation UpdateFlashcardParagraph(
+    $classroomId: ID!
+    $subjectId: ID!
+    $flashcardId: ID!
+    $subtitleId: ID!
+    $paragraph: ParagraphInput
+    $ressource: RessourceInput
+  ) {
+    updateFlashcardStudent(
+      classroomId: $classroomId
+      subjectId: $subjectId
+      flashcardId: $flashcardId
+      subtitleId: $subtitleId
+      paragraph: $paragraph
+      ressource: $ressource
+    ) {
+      id
+      title
+      tag
+      ressource {
+        name
+        url
+      }
+      subtitle {
+        id
+        title
+        position
+        paragraph {
+          id
+          text
+          isValidate
+          isPublic
+          author
+          date
+        }
       }
     }
   }

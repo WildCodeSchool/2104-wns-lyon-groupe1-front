@@ -14,37 +14,37 @@ const mockData = {
   year: '2021/2022',
   subject: [
     {
-      subjectId: '1',
+      id: '1',
       imageUrl: '/images/Node.js_logo.svg',
       name: 'NodeJS',
     },
     {
-      subjectId: '2',
+      id: '2',
       imageUrl: '/images/logo-react-blue-1.svg',
       name: 'React',
     },
     {
-      subjectId: '3',
+      id: '3',
       imageUrl: '/images/GraphQL_Logo.svg',
       name: 'GraphQL',
     },
     {
-      subjectId: '4',
+      id: '4',
       imageUrl: '/images/javascript-logo.svg',
       name: 'Javascript',
     },
     {
-      subjectId: '5',
+      id: '5',
       imageUrl: '/images/Angular_full_color_logo.svg',
       name: 'Angular',
     },
     {
-      subjectId: '6',
+      id: '6',
       imageUrl: '/images/PHP-logo.svg',
       name: 'PHP',
     },
     {
-      subjectId: '7',
+      id: '7',
       imageUrl: '/images/HTML5_logo_and_wordmark.svg',
       name: 'HTML5',
     },
@@ -60,7 +60,9 @@ const mocks = [
       },
     },
     result: {
-      data: mockData,
+      data: {
+        getAllSubjectsByClassroom: mockData.subject,
+      },
     },
   },
 ];
@@ -94,11 +96,10 @@ test('Il y a bien des matières affichées', async () => {
     fireEvent.click(screen.getByTestId('yellow-btn'));
     await new Promise((resolve) => setTimeout(resolve, 0));
   });
-  console.log(testLocation);
   await new Promise((resolve) => setTimeout(resolve, 0));
 
   mockData.subject.forEach((subject) => {
-    const element = screen.getByTestId(subject.subjectId);
+    const element = screen.getByTestId(subject.id);
     expect(element).toBeInTheDocument();
   });
 });
@@ -134,7 +135,7 @@ test('Si pas connecté alors pas de matière affichée', async () => {
 
   // eslint-disable-next-line no-restricted-syntax
   for (const subject of mockData.subject) {
-    const element = screen.queryByTestId(subject.subjectId);
+    const element = screen.queryByTestId(subject.id);
     expect(element).not.toBeInTheDocument();
   }
 });
