@@ -1,18 +1,30 @@
 import { createContext, useState } from 'react';
-import { IUser, IUserContext } from './interface';
+import { IClassroom, IUser, IUserContext } from './interface';
 
-export function useUserContext(data: IUser = {}): [IUser, any, any] {
+export function useUserContext(data: IUser = {}): [IUser, any, any, any] {
   const [user, setUser] = useState<IUser>(data || {});
 
   const addUser = (inputUser: IUser) => {
     setUser(inputUser);
   };
 
+  const addUserClassroom = (newClassroom: IClassroom) => {
+    const userClone = { ...user };
+    setUser({
+      ...userClone.classroom,
+      classroom: {
+        classroomId: newClassroom.id || '',
+        year: newClassroom.year || '',
+        name: newClassroom.name || '',
+      },
+    });
+  };
+
   const removeUser = () => {
     setUser({});
   };
 
-  return [user, addUser, removeUser];
+  return [user, addUser, removeUser, addUserClassroom];
 }
 
 export const UserContext = createContext<IUserContext>({
@@ -22,5 +34,8 @@ export const UserContext = createContext<IUserContext>({
   },
   removeUser: () => {
     throw new Error('SetUser is not implemented');
+  },
+  addUserClassroom: () => {
+    throw new Error('addUserClassroom is not implemented');
   },
 });

@@ -10,8 +10,8 @@ export const connectUserStudent: IUser = {
     name: 'Développement web Lyon',
     year: '2021/2022',
     classroomId: '1',
-    student: [],
-    subject: [],
+    // student: [],
+    // subject: [],
   },
 };
 
@@ -25,7 +25,7 @@ export const connectUserTeacher: IUser = {
     name: 'Développement web Lyon',
     year: '2021/2022',
     classroomId: '1',
-    student: [],
-    subject: [],
+    // student: [],
+    // subject: [],
   },
 };

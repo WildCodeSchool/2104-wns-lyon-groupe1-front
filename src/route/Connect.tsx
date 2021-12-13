@@ -16,6 +16,9 @@ export default function Connect({ setUser }: ConnectProps) {
   const [error, setError] = useState(false);
   const [classrooms, setClassrooms] = useState<Array<IClassroom>>([]);
   const [user, setUserConnect] = useState<IUser>({});
+  const [addClassroom, setAddClassroom] = useState(false);
+  const history = useHistory();
+
   const [connect] = useMutation(LOGIN, {
     onCompleted: (value) => {
       localStorage.setItem('wikitoken', value.login.token);
@@ -40,9 +43,7 @@ export default function Connect({ setUser }: ConnectProps) {
     checkUser();
   }, []);
 
-  const [addClassroom, setAddClassroom] = useState(false);
-  const history = useHistory();
-
+  // ==========================================================================
   const handleForm = (e: any) => {
     e.preventDefault();
     if (!formInput.mail.length || !formInput.password.length) {
@@ -53,6 +54,7 @@ export default function Connect({ setUser }: ConnectProps) {
       });
     }
   };
+  // ==========================================================================
 
   const handleChoice = (classroom: IClassroom) => {
     setUser({
@@ -61,6 +63,7 @@ export default function Connect({ setUser }: ConnectProps) {
     });
     history.push('/');
   };
+  // ==========================================================================
 
   if (addClassroom) {
     return <AddPromotion handleClassroom={handleChoice} />;
@@ -70,7 +73,7 @@ export default function Connect({ setUser }: ConnectProps) {
     return (
       <>
         <h2 className="title greetings">Mes promotions</h2>
-        <div className="greetings">Wild Code School</div>
+        <div className="greetings">{classrooms[0].name}</div>
         <div className="list-classrooms">
           {classrooms.map((c) => (
             <button

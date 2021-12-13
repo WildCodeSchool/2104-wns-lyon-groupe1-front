@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
@@ -27,6 +27,7 @@ export default function MyClassroom() {
       setIsVisibleErrorModal(true);
     },
   });
+  console.log(user);
 
   // useEffect(() => {
   //   setClassroom({
@@ -124,8 +125,8 @@ export default function MyClassroom() {
       >
         Ajouter un élève
       </button>
-      {classroom?.student.map((student) => (
-        <div className="student-block">
+      {classroom?.student.map((student, index: number) => (
+        <div key={index} className="student-block">
           <span>
             {!student.firstname && !student.lastname
               ? student.mail
@@ -139,71 +140,3 @@ export default function MyClassroom() {
     </div>
   );
 }
-
-// useEffect(() => {
-//   setClassroom({
-//     classroomId: '1',
-//     name: 'Oclck',
-//     year: '2021/2022',
-//     student: [
-//       {
-//         firstname: 'John',
-//         lastname: 'Francois',
-//         mail: 'irf@fi',
-//         userId: '5',
-//       },
-//       {
-//         firstname: 'fezfezfezfzefzf',
-//         lastname: 'Francois',
-//         mail: 'irf@fi',
-//         userId: '5',
-//       },
-//       {
-//         firstname: 'John',
-//         lastname: 'Francois',
-//         mail: 'irf@fi',
-//         userId: '5',
-//       },
-//       {
-//         firstname: 'John',
-//         lastname: 'Francdzezefzefezefois',
-//         mail: 'irf@fi',
-//         userId: '5',
-//       },
-//       {
-//         mail: 'irf@fi',
-//         userId: '5',
-//       },
-//       {
-//         firstname: 'John',
-//         lastname: 'Francois',
-//         mail: 'irf@fi',
-//         userId: '5',
-//       },
-//       {
-//         firstname: 'John',
-//         lastname: 'Francois',
-//         mail: 'irf@fi',
-//         userId: '5',
-//       },
-//       {
-//         firstname: 'John',
-//         lastname: 'Francois',
-//         mail: 'irf@fi',
-//         userId: '5',
-//       },
-//       {
-//         firstname: 'John',
-//         lastname: 'Francois',
-//         mail: 'irf@fi',
-//         userId: '5',
-//       },
-//       {
-//         firstname: 'John',
-//         lastname: 'Francois',
-//         mail: 'irf@fi',
-//         userId: '5',
-//       },
-//     ],
-//   });
-// }, []);

@@ -42,7 +42,13 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
 
   const [createClassroom] = useMutation(CREATE_CLASSROOM, {
     onCompleted: (value) => {
-      handleClassroom(value.classroom);
+      const newClassroom = {
+        classroomId: value.addClassroom.id,
+        name: value.addClassroom.name,
+        year: value.addClassroom.year,
+      };
+
+      handleClassroom(newClassroom);
     },
     onError: () => {
       setIsVisibleErrorModal(true);
