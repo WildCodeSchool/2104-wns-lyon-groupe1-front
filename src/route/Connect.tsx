@@ -73,7 +73,7 @@ export default function Connect({ setUser }: ConnectProps) {
     return (
       <>
         <h2 className="title greetings">Mes promotions</h2>
-        <div className="greetings">{classrooms[0].name}</div>
+        <div className="greetings">{user.classroom?.name}</div>
         <div className="list-classrooms">
           {classrooms.map((c) => (
             <button

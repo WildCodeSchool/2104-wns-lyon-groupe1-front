@@ -21,6 +21,8 @@ const removeUser = () => {
   user = {};
 };
 
+const addUserClassroom = () => {};
+
 const mocks = [
   {
     request: {
@@ -72,7 +74,9 @@ describe('Connexion', () => {
     const { rerender } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter initialEntries={['/']}>
-          <UserContext.Provider value={{ user, addUser, removeUser }}>
+          <UserContext.Provider
+            value={{ user, addUser, removeUser, addUserClassroom }}
+          >
             <App />
             <Route
               path="*"
@@ -109,7 +113,9 @@ describe('Connexion', () => {
     rerender(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter initialEntries={['/']}>
-          <UserContext.Provider value={{ user, addUser, removeUser }}>
+          <UserContext.Provider
+            value={{ user, addUser, removeUser, addUserClassroom }}
+          >
             <App />
             <Route
               path="*"
@@ -130,7 +136,9 @@ describe('Connexion', () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter initialEntries={['/']}>
-          <UserContext.Provider value={{ user, addUser, removeUser }}>
+          <UserContext.Provider
+            value={{ user, addUser, removeUser, addUserClassroom }}
+          >
             <App />
           </UserContext.Provider>
         </MemoryRouter>
@@ -152,7 +160,9 @@ describe('Connexion', () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter initialEntries={['/']}>
-          <UserContext.Provider value={{ user, addUser, removeUser }}>
+          <UserContext.Provider
+            value={{ user, addUser, removeUser, addUserClassroom }}
+          >
             <App />
           </UserContext.Provider>
         </MemoryRouter>

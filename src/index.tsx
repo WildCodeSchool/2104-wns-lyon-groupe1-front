@@ -32,9 +32,16 @@ const authMidlw = new ApolloLink((operation, next) => {
 const client = new ApolloClient({
   link: concat(authMidlw, httpLink),
   cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: "network-only",
+    },
+    query: {
+      fetchPolicy: "network-only",
+    },
+  },
 });
 
-console.log(process.env);
 
 
 const CtxProvider = ({ children }: any) => {
