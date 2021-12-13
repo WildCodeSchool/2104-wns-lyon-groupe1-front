@@ -1,10 +1,10 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
 import { UserContext } from '../utils/UserContext';
 import OverLay from '../component/OverLay';
-import { IClassroom, IStudent } from '../utils/interface';
+import { IClassroom } from '../utils/interface';
 import './MyClassroom.scss';
 import pencil from '../assets/pencil.svg';
 import { GET_CLASSROOM_STUDENTS } from '../utils/graphqlRequest';
@@ -13,7 +13,6 @@ import ErrorModal from '../component/ErrorModal';
 export default function MyClassroom() {
   const { user } = useContext(UserContext);
   const [modal, openModal] = useState(false);
-  const [classroomStudents, setClassroomStudents] = useState<IStudent[]>([]);
   const [isVisibleErrorModal, setIsVisibleErrorModal] =
     useState<boolean>(false);
   const history = useHistory();
@@ -23,9 +22,6 @@ export default function MyClassroom() {
   >(GET_CLASSROOM_STUDENTS, {
     variables: {
       classroomId: user.classroom?.classroomId || '',
-    },
-    onCompleted: (getData) => {
-      setClassroomStudents(getData.getClassroom.student);
     },
     onError: () => {
       setIsVisibleErrorModal(true);
@@ -128,7 +124,7 @@ export default function MyClassroom() {
       >
         Ajouter un élève
       </button>
-      {classroomStudents.map((student, index: number) => (
+      {classroom.student.map((student, index: number) => (
         <div key={index} className="student-block">
           <span>
             {!student.firstname && !student.lastname
