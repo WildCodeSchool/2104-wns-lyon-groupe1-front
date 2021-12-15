@@ -5,13 +5,20 @@ import TagsOrganizer from '../component/TagsOrganizer';
 import Ressource from '../component/Ressource';
 import BlockSubTitle from '../component/BlockSubTitle';
 import { UserContext } from '../utils/UserContext';
-import { CREATE_FLASHCARD } from '../utils/graphqlRequest';
+import {
+  CREATE_FLASHCARD,
+  GET_ALL_SUBJECTS,
+  GET_SUBJECTNAME_BY_ID,
+  MODIFY_FLASHCARD,
+} from '../utils/graphqlRequest';
 
 export default function AddFlashcard() {
   const { user } = useContext(UserContext);
   const [singleTag, setSingleTag] = useState<string>('');
   const [tags, setTags] = useState<string[]>([]);
   const [position, setPosition] = useState(0);
+  const [flashcardId, setFlashcardId] = useState<any>(null);
+  const [subjectId, setSubjectId] = useState();
   const ressource: any[] = [];
   const subtitle: any[] = [];
   const [flashcard, setFlashcard] = useState({
@@ -21,24 +28,48 @@ export default function AddFlashcard() {
     ressource,
     subtitle,
   });
-  /* 
-    const [createFlashcard] = useMutation(CREATE_FLASHCARD, {
-      onCompleted: (value) => {
-        handleClassroom(value.classroom);
-      },
-      onError: () => {
-        // a changer, gerer les erreurs de retours créations classroom
-        setPromotionNameError(true);
-      },
-    }); */
+  // Je récupère toutes les matières pour boucler dessus dans mon select
+  // A décommenter lorsque cablage avec le back
+  /* const { loading, error, data } = useQuery(GET_ALL_SUBJECTS, {
+    skip: flashcardId === null,
+  });
+  if (loading) return <div>Nous cherchons les matières de votre promo...</div>;
+  if (error)
+    return <div>Oups! Une erreur s&apos;est produite {error.message}</div>; */
 
+  // Si modification d'une fiche alors on utilise la query GET_SUBJECTNAME_BY_ID
+  // pour récupérer le titre d'une matière selon l'id qu'on a récupéré après la mutation
+  /* const { loading, error, data } = useQuery(GET_SUBJECTNAME_BY_ID, {
+skip: flashcardId != null,
+variables: {flashcardSubjectId: subjectId}
+});
+if (loading) return <div>Nous cherchons les matières de votre promo...</div>;
+if (error)
+return <div>Oups! Une erreur s&apos;est produite {error.message}</div>; */
+
+  // CREER UNE FLASHCARD
   const [createFlashcard] = useMutation(CREATE_FLASHCARD, {
-    onCompleted: () => {
+    onCompleted: (data) => {
       window.alert('Created flashcard');
+      setFlashcardId(data.createFlashcard.id || null);
+      setSubjectId(data.createFlashcard.subjectId || null);
     },
     onError: () => {
       // a changer, gerer les erreurs de retours créations classroom
       window.alert('Error creating flashcard');
+    },
+  });
+
+  // MODIFIER UNE FLASHCARD
+  const [modifyFlashcard] = useMutation(MODIFY_FLASHCARD, {
+    onCompleted: (data) => {
+      window.alert('Modified flashcard');
+      setFlashcardId(data.createFlashcard.id || null);
+      setSubjectId(data.createFlashcard.subjectId || null);
+    },
+    onError: () => {
+      // a changer, gerer les erreurs de retours créations classroom
+      window.alert('Error modifying flashcard');
     },
   });
 
@@ -47,12 +78,32 @@ export default function AddFlashcard() {
     const flashcardTitle = document.getElementById(
       'flashcard-title',
     ) as HTMLSelectElement;
-
     setFlashcard({
       ...flashcard,
       subject: flashcardTitle.dataset.id as string,
     });
     createFlashcard({
+      variables: {
+        classroomId: user.classroom?.classroomId,
+        subjectId: flashcard.subject,
+        title: flashcard.title,
+        ressource: flashcard.ressource,
+        tag: flashcard.tag,
+        subtitle: flashcard.subtitle,
+      },
+    });
+  };
+
+  const modifyForm = (event: any) => {
+    event.preventDefault();
+    const flashcardTitle = document.getElementById(
+      'flashcard-title',
+    ) as HTMLSelectElement;
+    setFlashcard({
+      ...flashcard,
+    });
+    console.log(flashcard);
+    modifyFlashcard({
       variables: {
         classroomId: user.classroom?.classroomId,
         subjectId: flashcard.subject,
@@ -185,25 +236,48 @@ export default function AddFlashcard() {
     setFlashcard(flashcardCopy);
   };
 
+  const modifyTitle = (title: string, positionSubtitle: string) => {
+    const newSousTitreTitle = document.getElementById(
+      'new-sous-titre',
+    ) as HTMLInputElement;
+    const newTitle = newSousTitreTitle?.value;
+    const allSubtitles = flashcard.subtitle;
+    const index = allSubtitles.findIndex(
+      (positionIndex: any) => positionIndex.position === positionSubtitle,
+    );
+    const newSubtitle = {
+      title: newTitle,
+      position: allSubtitles[index].position,
+    };
+    allSubtitles.splice(allSubtitles[index], 1, newSubtitle);
+    const flashcardCopy = { ...flashcard };
+    flashcardCopy.subtitle = allSubtitles;
+    setFlashcard(flashcardCopy);
+  };
+
   return (
     <>
-      <h1>Créer une fiche</h1>
+      <h1>{flashcardId !== null ? 'Modifier ma fiche' : 'Créer une fiche'}</h1>
       <div className="create-flashcard">
-        <form className="formContainer">
-          <select data-id="2" id="flashcard-title">
-            <option key="default">Choisir une matière</option>
-            {mockDataMatieres?.subject.map((element: any) => (
-              <option
-                data-id={element.subjectId}
-                id={element.subjectId}
-                key={element.subjectId}
-              >
-                {element.name}
-              </option>
-            ))}
-          </select>
-
+        <form className="formContainer" onSubmit={submitForm}>
+          {flashcardId !== null ? (
+            <h2> FLashcard </h2>
+          ) : (
+            <select data-id="2" id="flashcard-title" required>
+              <option key="default">Choisir une matière</option>
+              {mockDataMatieres?.subject.map((element: any) => (
+                <option
+                  data-id={element.subjectId}
+                  id={element.subjectId}
+                  key={element.subjectId}
+                >
+                  {element.name}
+                </option>
+              ))}
+            </select>
+          )}
           <input
+            required
             type="texte"
             className="flashcardInput"
             name="title"
@@ -227,6 +301,18 @@ export default function AddFlashcard() {
               </button>
             </div>
             <TagsOrganizer removeTagCallback={removeTag} tags={flashcard.tag} />
+          </div>
+          <div className="subtitle-list">
+            {flashcard.subtitle?.map((sub, i) => (
+              <div key={i} className="subtitle-detail">
+                <BlockSubTitle
+                  title={sub.title}
+                  position={sub.position}
+                  positionChangeCallback={positionChange}
+                  modifyTitleCallback={modifyTitle}
+                />
+              </div>
+            ))}
           </div>
           <div className="ressources">
             <h3>Ressources</h3>
@@ -266,17 +352,6 @@ export default function AddFlashcard() {
               </button>
             </div>
           </div>
-          <div className="subtitle-list">
-            {flashcard.subtitle?.map((sub, i) => (
-              <div key={i} className="subtitle-detail">
-                <BlockSubTitle
-                  title={sub.title}
-                  position={sub.position}
-                  positionChangeCallback={positionChange}
-                />
-              </div>
-            ))}
-          </div>
           <input
             id="sous-titre"
             type="textarea"
@@ -301,12 +376,8 @@ export default function AddFlashcard() {
             </button>
           </div>
           <div className="submit-cancel">
-            <button
-              type="submit"
-              className="buttons btn-flashcard btn-submit"
-              onClick={submitForm}
-            >
-              Ajouter
+            <button type="submit" className="buttons btn-flashcard btn-submit">
+              {flashcardId !== null ? 'Modifier ma fiche' : 'Créer une fiche'}
             </button>
           </div>
         </form>

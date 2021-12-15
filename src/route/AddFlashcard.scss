@@ -42,9 +42,22 @@
     }
 }
 
+.b-subtitle {
+    .wrapper {
+        left: 0;
+
+        .container {
+            width: 35%;
+            min-width: 290px;
+            padding: 20px;
+        }
+    }
+}
+
 .ressources {
     border: 3px solid $colorBrightGrey;
     border-radius: 5px;
+    margin-top: 20px;
 
     h3 {
         background-color: $colorBrightGrey;
