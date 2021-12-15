@@ -48,9 +48,9 @@ export default function FlashCards() {
               className="buttons flashcard-buttons"
               onClick={() => {
                 history.push({
-                  pathname: `/mes-matières/matiere/${slugify(
+                  pathname: `/mes-matières/${matiere}/${slugify(
                     flashcard.title,
-                  )}}`,
+                  )}`,
                   state: {
                     flashcardId: flashcard.id,
                     subjectId: data.getAllFlashcardsBySubject.id,
