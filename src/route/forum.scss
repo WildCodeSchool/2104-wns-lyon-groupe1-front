@@ -27,6 +27,10 @@
     }
 =======
 @import "../globalColors.scss";
+.forumSearchPageContainer {
+    text-align: left;
+}
+
 .forumSearchInputContainer {
     display: flex;
     align-items: center;
@@ -43,5 +47,75 @@
 
 .Header {}
 
+<<<<<<< HEAD
 .forumGreetings {}
 >>>>>>> 84243bc (+ forum page styles)
+=======
+.forumGreetings {
+    text-align: center;
+}
+
+.singleTagContainer {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.singleTag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid $colorTurquoise;
+    background-color: rgba($colorTurquoise, 0.65);
+    padding: 4px 4px;
+    border-radius: 5px;
+}
+
+.tagText {
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+.tagCloseButton {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    >img {
+        max-width: 10px;
+    }
+}
+
+//forum cell
+// =====================================
+.forumCellContainer {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: $colorTurquoise;
+    border: 3px solid $colorTurquoise;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+        background-color: $colorWhite;
+    }
+}
+
+.forumCellTitleContainer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.forumCellTitle {
+    font-weight: bold;
+}
+
+.forumCellIcon {
+    max-width: 30px;
+}
+
+.forumCellDetailedinfoContianer {
+    margin-top: 10px;
+     :nth-child(1) {
+        margin-right: 30px;
+    }
+}
+>>>>>>> f19e55f (+ forum cells structure and search control)

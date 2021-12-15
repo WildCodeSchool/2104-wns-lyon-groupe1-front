@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* eslint-disable react/no-unescaped-entities */
 import { useState, useRef, FormEvent, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -113,83 +114,92 @@ export default function FlashcardForum() {
 =======
 import { useCallback, useState } from 'react';
 import { conformsTo, debounce, remove } from 'lodash';
+=======
+import { useCallback, useState, useEffect } from 'react';
+import { debounce } from 'lodash';
+>>>>>>> f19e55f (+ forum cells structure and search control)
 import search from '../assets/search.svg';
 import './forum.scss';
 import PageTitle from '../component/PageTitle';
-import forumIcon from '../assets/forumIcon.svg';
-import { IFlashcard, IQuestion } from '../utils/interface';
+import forumIcon from '../assets/forumCellIcon.svg';
 import closeIcon from '../assets/close.svg';
+import formattedDate from '../utils/dateFormatted';
 
 interface IForumResponse {
   title: string;
-  tag: string[];
   flashcardId: string;
-  question: any;
+  question: any[];
   subjectId: string;
+  date: Date;
 }
 
-const mockAllForums: IForumResponse[] = [
+interface IForumCellProps {
+  title: string;
+  flashcardId: string;
+  question: any[];
+  subjectId: string;
+  date: Date;
+}
+
+const apiResponse: IForumResponse[] = [
   {
     subjectId: '1',
     flashcardId: '1',
     question: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-    tag: ['javascript', 'react'],
-    title: 'title1',
+    title: 'Introduction à GraphQL',
+    date: new Date(),
   },
   {
     subjectId: '1',
-
     flashcardId: '2',
     question: ['a', 'a', 'a', 'a', 'a'],
-    tag: ['javascript', 'react'],
     title: 'title2',
+    date: new Date(),
   },
   {
     subjectId: '1',
     flashcardId: '3',
     question: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-    tag: ['devops', 'typescript'],
-    title: 'title3',
+    title: 'Introduction à GraphQL Introduction',
+    date: new Date(),
   },
   {
     subjectId: '1',
     flashcardId: '4',
     question: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-    tag: ['javascript', 'devops'],
     title: 'title4',
+    date: new Date(),
   },
   {
     subjectId: '1',
     flashcardId: '5',
     question: ['a', 'a'],
-    tag: ['python', 'react'],
     title: 'title5',
+    date: new Date(),
   },
   {
     subjectId: '1',
     flashcardId: '6',
     question: ['a', 'a', 'a'],
-    tag: ['javascript', 'django'],
     title: 'title6',
+    date: new Date(),
   },
   {
     subjectId: '1',
     flashcardId: '7',
     question: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-    tag: ['flask', 'python'],
     title: 'title7',
+    date: new Date(),
   },
 ];
 
 export default function Forum() {
   const [searchInput, setSearchInput] = useState<string>('');
   const [searchInputDelayed, setSearchInputDelayed] = useState<string>('');
-  const [hiddenFoundInput, setHiddenFoundInput] = useState<string[]>();
-  const [forumsResponse, setForumsResponse] =
-    useState<IForumResponse[]>(mockAllForums);
-  const [searchResults, setSearchResults] = useState<IForumResponse[]>([]);
+  useState<IForumResponse[]>(apiResponse);
+  const [searchResults, setSearchResults] =
+    useState<IForumResponse[]>(apiResponse);
   const [tags, setTags] = useState<string[]>([]);
-  // const [filteredResults, setFilteredResults] = useState<IForumResponse[]>([]);
 
   // TAGS controller
   // ======================================================================
@@ -207,17 +217,11 @@ export default function Forum() {
   // debouncing search input
   // ======================================================================
   const filter = (text: string) => {
-    const filteredResults = [];
     setSearchInputDelayed(text);
-    for (let i = 0; i < forumsResponse.length; i += 1) {
-      for (let j = 0; j < forumsResponse[i].tag.length; j += 1) {
-        if (forumsResponse[i].tag[j] === text) {
-          filteredResults.push(forumsResponse[i]);
-          addTag(text);
-        }
-      }
+    if (searchResults) {
+      addTag(text);
+      setSearchInput('');
     }
-    setSearchResults(filteredResults);
   };
 
   const debounceSearchInput = useCallback(
@@ -229,10 +233,34 @@ export default function Forum() {
     setSearchInput(text);
     debounceSearchInput(text);
   };
-
   // ======================================================================
+
+  const ForumCell = ({
+    flashcardId,
+    question,
+    subjectId,
+    title,
+    date,
+  }: IForumCellProps) => {
+    const questionsNumber = question.length;
+    const dateFormatted = formattedDate(date);
+
+    return (
+      <div className="forumCellContainer">
+        <div className="forumCellTitleContainer">
+          <div className="forumCellTitle">{title}</div>
+          <img className="forumCellIcon" src={forumIcon} alt="forumIcon" />
+        </div>
+        <div className="forumCellDetailedinfoContianer">
+          <span>{questionsNumber} Questions</span>
+          <span>{dateFormatted}</span>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div>
+    <div className="forumSearchPageContainer">
       <PageTitle textColor="#0998C0" title="Forums" />
       <div className="forumSearchInputContainer">
         <input
@@ -242,6 +270,7 @@ export default function Forum() {
         />
         <img src={search} alt="chercher un tag" />
       </div>
+
       {searchInputDelayed.length === 0 ? (
         <div className="forumGreetings">
           Taper les mots clefs qui correspondent à vos recherches
@@ -250,21 +279,42 @@ export default function Forum() {
         <div>
           {tags.map((singleTag: string, index: number) => {
             return (
-              <div key={index}>
-                <div>{singleTag}</div>
-                <button type="button" onClick={() => removeTag(singleTag)}>
-                  <img src={closeIcon} alt="close icon" />
-                </button>
+              <div className="singleTagContainer" key={index}>
+                <div className="singleTag">
+                  <div className="tagText">{singleTag}</div>
+                  <button
+                    className="tagCloseButton"
+                    type="button"
+                    onClick={() => removeTag(singleTag)}
+                  >
+                    <img src={closeIcon} alt="close icon" />
+                  </button>
+                </div>
               </div>
             );
           })}
           <div>
-            {searchResults && searchResults.length === 0
-              ? 'no results'
-              : searchResults &&
-                searchResults.map((singleForum) => {
-                  return <div>{singleForum.title}</div>;
-                })}
+            {searchResults && searchResults.length === 0 ? (
+              <div className="forumGreetings">
+                Aucun resultat n&apos;a été trouvé
+              </div>
+            ) : (
+              searchResults &&
+              searchResults.map(
+                (singleForum: IForumResponse, index: number) => {
+                  return (
+                    <ForumCell
+                      key={index}
+                      title={singleForum.title}
+                      date={singleForum.date}
+                      flashcardId={singleForum.flashcardId}
+                      subjectId={singleForum.subjectId}
+                      question={singleForum.question}
+                    />
+                  );
+                },
+              )
+            )}
           </div>
         </div>
       )}
