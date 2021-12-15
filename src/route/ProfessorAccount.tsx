@@ -95,7 +95,7 @@ export default function ProfessorAccount() {
       </Overlay>
       <h2 className="title greetings">Mon Espace</h2>
       <div className="greetings">Bienvenue {user.firstname} !</div>
-      <div className="greetings">Wild Code School</div>
+      <div className="greetings">{user.classroom?.name}</div>
 
       <div className="readOnlyButton">{user.mail}</div>
 

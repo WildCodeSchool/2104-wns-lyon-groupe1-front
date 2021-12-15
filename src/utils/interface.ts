@@ -5,12 +5,6 @@ export interface IStudent {
   mail: string;
 }
 
-export interface IClassroom {
-  name: string;
-  year: string;
-  classroomId: string;
-}
-
 export interface ISubject {
   id?: string;
   imageUrl?: string;
@@ -23,6 +17,14 @@ export interface IClassroomStudent extends IClassroom {
 export interface IClassroomSubject extends IClassroom {
   subject: ISubject[];
 }
+export interface IClassroom {
+  id?: string; // received as a response when a classroom is added, // we are getting {id, name, year} not {classroomId, name, year}
+  name: string;
+  year: string;
+  classroomId: string;
+  student: IStudent[];
+  subject: ISubject[];
+}
 
 export interface IUser {
   id?: string;
@@ -30,13 +32,14 @@ export interface IUser {
   lastname?: string;
   isTeacher?: boolean;
   mail?: string;
-  classroom?: IClassroom;
+  classroom?: Omit<IClassroom, 'subject' | 'student'>;
 }
 
 export interface IUserContext {
   user: IUser;
   addUser: (user: IUser) => void;
   removeUser: () => void;
+  addUserClassroom: (newClassroom: IClassroom) => void;
 }
 export interface IParagraph {
   id: string;

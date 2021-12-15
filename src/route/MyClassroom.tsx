@@ -1,87 +1,112 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+
 import { UserContext } from '../utils/UserContext';
 import OverLay from '../component/OverLay';
-import { IClassroomStudent } from '../utils/interface';
+import { IClassroom } from '../utils/interface';
 import './MyClassroom.scss';
 import pencil from '../assets/pencil.svg';
+import { GET_CLASSROOM_STUDENTS } from '../utils/graphqlRequest';
+import ErrorModal from '../component/ErrorModal';
 
 export default function MyClassroom() {
   const { user } = useContext(UserContext);
   const [modal, openModal] = useState(false);
+  const [isVisibleErrorModal, setIsVisibleErrorModal] =
+    useState<boolean>(false);
   const history = useHistory();
-  const [classroom, setClassroom] = useState<IClassroomStudent>();
+  const { loading, data } = useQuery<
+    { getClassroom: IClassroom },
+    { classroomId: string }
+  >(GET_CLASSROOM_STUDENTS, {
+    variables: {
+      classroomId: user.classroom?.classroomId || '',
+    },
+    onError: () => {
+      setIsVisibleErrorModal(true);
+    },
+  });
 
-  useEffect(() => {
-    setClassroom({
-      classroomId: '1',
-      name: 'Oclck',
-      year: '2021/2022',
-      student: [
-        {
-          firstname: 'John',
-          lastname: 'Francois',
-          mail: 'irf@fi',
-          userId: '5',
-        },
-        {
-          firstname: 'fezfezfezfzefzf',
-          lastname: 'Francois',
-          mail: 'irf@fi',
-          userId: '5',
-        },
-        {
-          firstname: 'John',
-          lastname: 'Francois',
-          mail: 'irf@fi',
-          userId: '5',
-        },
-        {
-          firstname: 'John',
-          lastname: 'Francdzezefzefezefois',
-          mail: 'irf@fi',
-          userId: '5',
-        },
-        {
-          mail: 'irf@fi',
-          userId: '5',
-        },
-        {
-          firstname: 'John',
-          lastname: 'Francois',
-          mail: 'irf@fi',
-          userId: '5',
-        },
-        {
-          firstname: 'John',
-          lastname: 'Francois',
-          mail: 'irf@fi',
-          userId: '5',
-        },
-        {
-          firstname: 'John',
-          lastname: 'Francois',
-          mail: 'irf@fi',
-          userId: '5',
-        },
-        {
-          firstname: 'John',
-          lastname: 'Francois',
-          mail: 'irf@fi',
-          userId: '5',
-        },
-        {
-          firstname: 'John',
-          lastname: 'Francois',
-          mail: 'irf@fi',
-          userId: '5',
-        },
-      ],
-    });
-  }, []);
+  // useEffect(() => {
+  //   setClassroom({
+  //     classroomId: '1',
+  //     name: 'Oclck',
+  //     year: '2021/2022',
+  //     student: [
+  //       {
+  //         firstname: 'John',
+  //         lastname: 'Francois',
+  //         mail: 'irf@fi',
+  //         userId: '5',
+  //       },
+  //       {
+  //         firstname: 'fezfezfezfzefzf',
+  //         lastname: 'Francois',
+  //         mail: 'irf@fi',
+  //         userId: '5',
+  //       },
+  //       {
+  //         firstname: 'John',
+  //         lastname: 'Francois',
+  //         mail: 'irf@fi',
+  //         userId: '5',
+  //       },
+  //       {
+  //         firstname: 'John',
+  //         lastname: 'Francdzezefzefezefois',
+  //         mail: 'irf@fi',
+  //         userId: '5',
+  //       },
+  //       {
+  //         mail: 'irf@fi',
+  //         userId: '5',
+  //       },
+  //       {
+  //         firstname: 'John',
+  //         lastname: 'Francois',
+  //         mail: 'irf@fi',
+  //         userId: '5',
+  //       },
+  //       {
+  //         firstname: 'John',
+  //         lastname: 'Francois',
+  //         mail: 'irf@fi',
+  //         userId: '5',
+  //       },
+  //       {
+  //         firstname: 'John',
+  //         lastname: 'Francois',
+  //         mail: 'irf@fi',
+  //         userId: '5',
+  //       },
+  //       {
+  //         firstname: 'John',
+  //         lastname: 'Francois',
+  //         mail: 'irf@fi',
+  //         userId: '5',
+  //       },
+  //       {
+  //         firstname: 'John',
+  //         lastname: 'Francois',
+  //         mail: 'irf@fi',
+  //         userId: '5',
+  //       },
+  //     ],
+  //   });
+  // }, []);
+
+  if (loading || !data) return <p>Loading...</p>;
+  const classroom = data.getClassroom;
 
   return (
     <div className="classroom-student">
+      <ErrorModal
+        buttonText="ok"
+        isVisible={isVisibleErrorModal}
+        text="Une erreur s'est produite, ressayer plus tard"
+        onConfirmCallback={() => setIsVisibleErrorModal(false)}
+      />
       <OverLay getIsOpen={openModal} isOpen={modal}>
         <h2 className="title greetings">Paramètres</h2>
         <button type="button" className="buttons">
@@ -99,8 +124,8 @@ export default function MyClassroom() {
       >
         Ajouter un élève
       </button>
-      {classroom?.student.map((student) => (
-        <div className="student-block">
+      {classroom.student.map((student, index: number) => (
+        <div key={index} className="student-block">
           <span>
             {!student.firstname && !student.lastname
               ? student.mail

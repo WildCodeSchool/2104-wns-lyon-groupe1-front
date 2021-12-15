@@ -37,11 +37,26 @@ export const CHECK_LOGIN = gql`
 `;
 
 export const CREATE_CLASSROOM = gql`
-  mutation CreateClassroom($name: String!, $year: String!, $mails: [String!]!) {
-    addClassroom(name: $name, year: $year, mails: $mails) {
+  mutation addClassroom($name: String!, $year: String!, $mails: [String!]!) {
+    addClassroom(
+      classroomName: $name
+      academicYear: $year
+      studentMails: $mails
+    ) {
       id
       name
       year
+    }
+  }
+`;
+
+export const ADD_STUDENT_TO_CLASSROOM = gql`
+  mutation addStudentToClassroom($classroomId: String!, $studentMail: String!) {
+    addStudentToClassroom(id: $classroomId, studentMail: $studentMail) {
+      id
+      student {
+        mail
+      }
     }
   }
 `;
@@ -52,6 +67,19 @@ export const GET_CLASSROOM_BY_ID = gql`
       classroomId
       name
       year
+    }
+  }
+`;
+
+export const GET_CLASSROOM_STUDENTS = gql`
+  query getClassroom($classroomId: String!) {
+    getClassroom(id: $classroomId) {
+      student {
+        userId
+        firstname
+        lastname
+        mail
+      }
     }
   }
 `;
