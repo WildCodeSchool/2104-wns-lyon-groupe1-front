@@ -12,62 +12,6 @@ import './Flashcard.scss';
 import { IFlashcard } from '../utils/interface';
 import { UserContext } from '../utils/UserContext';
 
-<<<<<<< HEAD
-=======
-const flashcard: IFlashcard = {
-  id: '51541',
-  title: 'Introduction à GraphQL',
-  tag: ['react', 'js', 'mutation'],
-  ressource: [
-    { name: 'ressource1', url: 'urlres1' },
-    { name: 'ressource2', url: 'urlres2' },
-  ],
-  question: [],
-  subtitle: [
-    {
-      title: 'Définition',
-      position: 0,
-      paragraph: [
-        {
-          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in pellentesque dui. Nullam molestie, nisl quis accumsan porttitor, mauris ante malesuada arcu, nec euismod magna dui sit amet arcu. Integer pulvinar neque sed orci ornare, in interdum metus tristique. Phasellus nisl eros, feugiat et dui non, consequat semper ligula. Mauris vulputate nunc sed maximus auctor. Aliquam porttitor diam a tempus tincidunt. Aenean vel sapien nec massa bibendum congue non eu risus. Duis placerat eleifend tempus. Donec libero ligula, vehicula a pharetra a, cursus sed nisi. Ut id dictum ante. Etiam ultricies arcu sit amet urna auctor consectetur. Proin placerat erat at porta laoreet. Aliquam eget odio id ante volutpat feugiat. Duis rutrum sem eu commodo efficitur. Nam rutrum volutpat consequat. Proin pellentesque faucibus mauris, id accumsan ex aliquam nec.',
-          isValidate: true,
-          isPublic: true,
-          author: 'Jonathan',
-          date: '1970-01-19T21:07:33.352Z',
-        },
-        {
-          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in pellentesque dui. Nullam molestie, nisl quis accumsan porttitor, mauris ante malesuada arcu, nec euismod magna dui sit amet arcu. Integer pulvinar neque sed orci ornare, in interdum metus tristique. Phasellus nisl eros, feugiat et dui non, consequat semper ligula. Mauris vulputate nunc sed maximus auctor. Aliquam porttitor diam a tempus tincidunt. Aenean vel sapien nec massa bibendum congue non eu risus. Duis placerat eleifend tempus. Donec libero ligula, vehicula a pharetra a, cursus sed nisi. Ut id dictum ante. Etiam ultricies arcu sit amet urna auctor consectetur. Proin placerat erat at porta laoreet. Aliquam eget odio id ante volutpat feugiat. Duis rutrum sem eu commodo efficitur. Nam rutrum volutpat consequat. Proin pellentesque faucibus mauris, id accumsan ex aliquam nec.',
-          isValidate: true,
-          isPublic: false,
-          author: 'Jonathan',
-          date: '1970-05-19T21:07:33.352Z',
-        },
-      ],
-    },
-    {
-      title: 'Developpement',
-      position: 1,
-      paragraph: [
-        {
-          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in pellentesque dui. Nullam molestie, nisl quis accumsan porttitor, mauris ante malesuada arcu, nec euismod magna dui sit amet arcu. Integer pulvinar neque sed orci ornare, in interdum metus tristique. Phasellus nisl eros, feugiat et dui non, consequat semper ligula. Mauris vulputate nunc sed maximus auctor. Aliquam porttitor diam a tempus tincidunt. Aenean vel sapien nec massa bibendum congue non eu risus. Duis placerat eleifend tempus. Donec libero ligula, vehicula a pharetra a, cursus sed nisi. Ut id dictum ante. Etiam ultricies arcu sit amet urna auctor consectetur. Proin placerat erat at porta laoreet. Aliquam eget odio id ante volutpat feugiat. Duis rutrum sem eu commodo efficitur. Nam rutrum volutpat consequat. Proin pellentesque faucibus mauris, id accumsan ex aliquam nec.',
-          isValidate: true,
-          isPublic: true,
-          author: 'Jonathan',
-          date: '1970-01-19T21:07:33.352Z',
-        },
-        {
-          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in pellentesque dui. Nullam molestie, nisl quis accumsan porttitor, mauris ante malesuada arcu, nec euismod magna dui sit amet arcu. Integer pulvinar neque sed orci ornare, in interdum metus tristique. Phasellus nisl eros, feugiat et dui non, consequat semper ligula. Mauris vulputate nunc sed maximus auctor. Aliquam porttitor diam a tempus tincidunt. Aenean vel sapien nec massa bibendum congue non eu risus. Duis placerat eleifend tempus. Donec libero ligula, vehicula a pharetra a, cursus sed nisi. Ut id dictum ante. Etiam ultricies arcu sit amet urna auctor consectetur. Proin placerat erat at porta laoreet. Aliquam eget odio id ante volutpat feugiat. Duis rutrum sem eu commodo efficitur. Nam rutrum volutpat consequat. Proin pellentesque faucibus mauris, id accumsan ex aliquam nec.',
-          isValidate: true,
-          isPublic: true,
-          author: 'Jonathan',
-          date: '1970-05-19T21:07:33.352Z',
-        },
-      ],
-    },
-  ],
-};
-
->>>>>>> e7f429f (+ forum)
 export default function Flashcard() {
   const { state } = useLocation<{ flashcardId: string; subjectId: string }>();
 
