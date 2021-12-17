@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import Header from './component/Header';
 import Body from './component/Body';
 import Home from './route/Home';
-import Forum from './route/Forum';
+import Forums from './route/Forums';
 import Study from './route/Study';
 import Flashcard from './route/Flashcard';
 import File from './route/File';
@@ -16,6 +16,7 @@ import AddStudent from './route/AddStudent';
 import Connect from './route/Connect';
 import AddPromotion from './route/addPromotion';
 import Flashcards from './route/FlashCards';
+import Forum from './route/Forum';
 
 function App() {
   const { addUser, removeUser } = useContext(UserContext);
@@ -46,14 +47,14 @@ function App() {
             path="/mes-matières/:matiere/:flashcardSlug"
             component={Flashcard}
           />
-          <Route path="/forum" component={Forum} />
+          <Route exact path="/forums/:tag?" component={Forums} />
+          <Route exact path="/forum/:flashcardSlug" component={Forum} />
           <Route
             path="/me-connecter"
             render={() => <Connect setUser={addUser} />}
           />
           <Route path="/ma-promotion" component={MyClassroom} />
           <Route path="/ajouter-un-élève" component={AddStudent} />
-          {/* <Route path="/ma-promotion" render={() => <h2>Mes promotions</h2>} /> */}
           <Route
             path="/ajouter-une-fiche"
             render={() => <h2>Ajouter une fiche</h2>}
