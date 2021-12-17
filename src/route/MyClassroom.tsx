@@ -1,18 +1,22 @@
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 
 import { UserContext } from '../utils/UserContext';
 import OverLay from '../component/OverLay';
 import { IClassroom } from '../utils/interface';
 import './MyClassroom.scss';
 import pencil from '../assets/pencil.svg';
-import { GET_CLASSROOM_STUDENTS } from '../utils/graphqlRequest';
+import {
+  GET_CLASSROOM_STUDENTS,
+  RESET_PASSWORD,
+} from '../utils/graphqlRequest';
 import ErrorModal from '../component/ErrorModal';
 
 export default function MyClassroom() {
   const { user } = useContext(UserContext);
   const [modal, openModal] = useState(false);
+  const [mail, setMailModalReset] = useState('');
   const [isVisibleErrorModal, setIsVisibleErrorModal] =
     useState<boolean>(false);
   const history = useHistory();
@@ -25,6 +29,13 @@ export default function MyClassroom() {
     },
     onError: () => {
       setIsVisibleErrorModal(true);
+    },
+  });
+
+  const [resetPassword] = useMutation(RESET_PASSWORD, {
+    onCompleted: (result) => {
+      openModal(false);
+      window.alert(`Nouveau Mot de Passe : ${result.resetPassword}`);
     },
   });
 
@@ -41,7 +52,13 @@ export default function MyClassroom() {
       />
       <OverLay getIsOpen={openModal} isOpen={modal}>
         <h2 className="title greetings">Paramètres</h2>
-        <button type="button" className="buttons">
+        <button
+          type="button"
+          className="buttons"
+          onClick={() => {
+            resetPassword({ variables: { mail } });
+          }}
+        >
           Réinitialiser le mot de passe
         </button>
       </OverLay>
@@ -63,7 +80,13 @@ export default function MyClassroom() {
               ? student.mail
               : `${student.firstname || ''} ${student.lastname || ''}`}
           </span>
-          <button onClick={() => openModal(!modal)} type="button">
+          <button
+            onClick={() => {
+              openModal(!modal);
+              setMailModalReset(student.mail);
+            }}
+            type="button"
+          >
             <img src={pencil} alt="modifier mot de passe" />
           </button>
         </div>

@@ -193,3 +193,9 @@ export const CHANGE_PASSWORD_STUDENT = gql`
     changePassword(newPassword: $newPassword, oldPassword: $oldPassword)
   }
 `;
+
+export const RESET_PASSWORD = gql`
+  mutation resetPassword($mail: String!) {
+    resetPassword(mail: $mail)
+  }
+`;
