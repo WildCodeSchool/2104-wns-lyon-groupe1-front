@@ -1,0 +1,16 @@
+@import "../globalColors.scss";
+.asnwerContainer {
+    border-top: 2px solid $colorBrightGrey;
+    padding: 10px;
+}
+
+.answerHeading {
+    font-weight: bold;
+     :nth-child(1) {
+        margin-right: 10px;
+    }
+}
+
+.answerText {
+    margin-top: 15px;
+}
