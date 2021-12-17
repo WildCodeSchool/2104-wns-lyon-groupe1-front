@@ -72,7 +72,8 @@ export default function FlashCards() {
                 {flashcard.title}
                 <div
                   aria-hidden="true"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     history.push({
                       pathname: `/modifier-une-fiche`,
                       state: { flashcardId: flashcard.id },

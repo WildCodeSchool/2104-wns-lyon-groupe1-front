@@ -1,7 +1,6 @@
-/* eslint-disable prettier/prettier */
 import './AddFlashcard.scss';
-import { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import TagsOrganizer from '../component/TagsOrganizer';
 import Ressource from '../component/Ressource';
@@ -16,13 +15,12 @@ import {
 } from '../utils/graphqlRequest';
 
 export default function AddFlashcard() {
-  const historyFlashcardId = useHistory().location.state;
-  console.log(historyFlashcardId);
+  const { state } = useLocation<{ flashcardId: string }>();
   const { user } = useContext(UserContext);
   const [singleTag, setSingleTag] = useState<string>('');
   const [tags, setTags] = useState<string[]>([]);
   const [position, setPosition] = useState(0);
-  const [flashcardId, setFlashcardId] = useState<any>(historyFlashcardId || null);
+  const [flashcardId, setFlashcardId] = useState<any>(state.flashcardId || null);
   const [subjectId, setSubjectId] = useState<any>();
   const ressource: any[] = [];
   const subtitle: any[] = [];
@@ -33,7 +31,11 @@ export default function AddFlashcard() {
     ressource,
     subtitle,
   });
-  
+  useEffect(() => {
+    if (!state.flashcardId && flashcardId) {
+      setFlashcardId(null);
+    }
+  }, [state]);
   // Je récupère la flashcard que je souhaite modifier selon son id 
   /* const {
     loading: loadingFlashcardById,
@@ -85,24 +87,20 @@ export default function AddFlashcard() {
   // CREER UNE FLASHCARD
   const [createFlashcard] = useMutation(CREATE_FLASHCARD, {
     onCompleted: (data) => {
-      window.alert('Created flashcard');
       setFlashcardId(data.createFlashcard.id || null);
       setSubjectId(data.createFlashcard.subjectId || null);
     },
     onError: () => {
       // a changer, gerer les erreurs de retours créations classroom
-      window.alert('Error creating flashcard');
     },
   });
 
   // MODIFIER UNE FLASHCARD
   const [modifyFlashcard] = useMutation(MODIFY_FLASHCARD, {
     onCompleted: (data) => {
-      window.alert('Modified flashcard');
     },
     onError: () => {
       // a changer, gerer les erreurs de retours créations classroom
-      window.alert('Error modifying flashcard');
     },
   });
 
@@ -116,7 +114,6 @@ export default function AddFlashcard() {
         ...flashcard,
         subject: flashcardTitle.dataset.id as string,
       });
-      console.log(flashcard)
       setFlashcardId('2');
       setSubjectId('3');
       /*  createFlashcard({
@@ -133,8 +130,6 @@ export default function AddFlashcard() {
       event.preventDefault();
       setFlashcardId('2');
       setSubjectId('3');
-      console.log(flashcard);
-      console.log('flashcard should be updated');
       /*  modifyFlashcard({
          variables: {
            classroomId: user.classroom?.classroomId,
@@ -272,25 +267,15 @@ export default function AddFlashcard() {
   };
 
   const modifyTitle = (input: string, positionSubtitle: string) => {
-    console.log(input);
-    console.log(positionSubtitle);
-    /*     const newSousTitreTitle = document.getElementById(
-          'new-sous-titre',
-        ) as HTMLInputElement; */
-    /*     console.log(newSousTitreTitle); */
-    /*     const newTitle = newSousTitreTitle?.value; */
-    /*     console.log(newTitle); */
     const allSubtitles = flashcard.subtitle;
     const index = allSubtitles.findIndex(
       (positionIndex: any) => positionIndex.position === positionSubtitle,
     );
-    console.log(index);
     const newSubtitle = {
       title: input,
       position: positionSubtitle,
     };
     allSubtitles.splice(index, 1, newSubtitle);
-    console.log(allSubtitles);
     const flashcardCopy = { ...flashcard };
     flashcardCopy.subtitle = allSubtitles;
     setFlashcard(flashcardCopy);
