@@ -13,20 +13,12 @@ import { UserContext } from '../utils/UserContext';
 import { SEARCH_FORUMS } from '../utils/graphqlRequest';
 import ErrorModal from '../component/ErrorModal';
 
-interface IForumResponse {
-  title: string;
-  id: string;
-  question: any[];
-  subjectId: string;
-  date: Date;
-}
-
 interface IForumCellProps {
   title: string;
   id: string;
   question: any[];
   subjectId: string;
-  date: Date;
+  dateLastAnswer: string;
 }
 
 export default function Forums() {
@@ -38,7 +30,7 @@ export default function Forums() {
   const [isVisibleError, setIsVisibleError] = useState<boolean>(false);
 
   const { data } = useQuery<
-    { getAllFlashcards: IForumResponse[] },
+    { getAllFlashcards: IForumCellProps[] },
     { tags: string[]; classroomId: string }
   >(SEARCH_FORUMS, {
     variables: {
@@ -73,7 +65,7 @@ export default function Forums() {
   };
 
   const debounceSearchInput = useCallback(
-    debounce((text: string) => filter(text), 600),
+    debounce((text: string) => filter(text), 800),
     [tags],
   );
 
@@ -88,10 +80,11 @@ export default function Forums() {
     question,
     subjectId,
     title,
-    date,
+    dateLastAnswer,
   }: IForumCellProps) => {
     const questionsNumber = question.length;
-    const dateFormatted = formattedDate(new Date(date));
+    const dateFormatted =
+      dateLastAnswer && formattedDate(new Date(dateLastAnswer));
 
     const goToForum = () => {
       history.push({
@@ -175,12 +168,12 @@ export default function Forums() {
             ) : (
               data?.getAllFlashcards &&
               data.getAllFlashcards.map(
-                (singleForum: IForumResponse, index: number) => {
+                (singleForum: IForumCellProps, index: number) => {
                   return (
                     <ForumCell
                       key={index}
                       title={singleForum.title}
-                      date={singleForum.date}
+                      dateLastAnswer={singleForum.dateLastAnswer}
                       id={singleForum.id}
                       subjectId={singleForum.subjectId}
                       question={singleForum.question}

@@ -11,20 +11,22 @@ import AnswerBlock from './AnswerBlock';
 import ForumEditorBlock from './ForumEditorBlock';
 // ==========================================
 
-export default function QuestionBlock({ id, date, text, answer }: IQuestion) {
+interface IQuestionBlockProps extends IQuestion {
+  submitAnswerCallback: Function;
+}
+
+export default function QuestionBlock({
+  id,
+  date,
+  text,
+  answer,
+  submitAnswerCallback,
+}: IQuestionBlockProps) {
   // ============================================
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const showQuestionAnswers = () => {
     setIsOpen(!isOpen);
-  };
-
-  const sbmitAnswer = (
-    event: FormEvent<HTMLFormElement>,
-    questionId: string,
-  ) => {
-    event.preventDefault();
-    window.alert(questionId);
   };
 
   // ============================================
@@ -65,9 +67,8 @@ export default function QuestionBlock({ id, date, text, answer }: IQuestion) {
           );
         })}
         <ForumEditorBlock
-          onSubmitCallback={(e: FormEvent<HTMLFormElement>) =>
-            sbmitAnswer(e, id)
-          }
+          questionId={id}
+          onSubmitCallback={submitAnswerCallback}
           placeHolderText="Ecrire ma réponse"
         />
       </div>

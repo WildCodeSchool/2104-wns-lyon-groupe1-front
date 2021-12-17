@@ -9,7 +9,7 @@ import QuestionBlock from '../component/QuestionBlock';
 import ForumEditorBlock from '../component/ForumEditorBlock';
 import {
   GET_FLASHCARD_FORUM,
-  UPDATE_FLASHCARD_STUDENT,
+  UPDATE_FLASHCARD_FORUM,
 } from '../utils/graphqlRequest';
 import { UserContext } from '../utils/UserContext';
 
@@ -34,7 +34,7 @@ export default function FlashcardForum() {
   });
 
   const [flashcardMutation] = useMutation<{ updateForum: IFlashcard }>(
-    UPDATE_FLASHCARD_STUDENT,
+    UPDATE_FLASHCARD_FORUM,
     {
       variables: {
         classroomId: user.classroom?.classroomId || '',
@@ -54,7 +54,7 @@ export default function FlashcardForum() {
     });
   };
 
-  const handlePostAnswer = (questionId: string, text: string) => {
+  const handlePostAnswer = (text: string, questionId: string) => {
     flashcardMutation({
       variables: {
         answer: {
@@ -69,11 +69,6 @@ export default function FlashcardForum() {
   const takeMeToQuestionEditor = () => {
     const node = questionEditorRef.current;
     node?.scrollIntoView();
-  };
-
-  const submitQuestion = (event: FormEvent<HTMLFormElement>) => {
-    event?.preventDefault();
-    window.alert('inputText');
   };
   // ============================================
   return (
@@ -96,15 +91,14 @@ export default function FlashcardForum() {
             date={question.date}
             text={question.text}
             key={question.id}
+            submitAnswerCallback={handlePostAnswer}
           />
         );
       })}
       <div className="forumEditorWrapper" ref={questionEditorRef}>
         <ForumEditorBlock
           placeHolderText="Ecrire ma question"
-          onSubmitCallback={(event: FormEvent<HTMLFormElement>) =>
-            submitQuestion(event)
-          }
+          onSubmitCallback={handlePostQuestion}
         />
       </div>
     </div>
