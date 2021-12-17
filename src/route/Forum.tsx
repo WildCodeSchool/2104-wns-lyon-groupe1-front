@@ -73,7 +73,7 @@ export default function FlashcardForum() {
 
   const submitQuestion = (event: FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
-    window.alert(editorInputText);
+    window.alert('inputText');
   };
   // ============================================
   return (
