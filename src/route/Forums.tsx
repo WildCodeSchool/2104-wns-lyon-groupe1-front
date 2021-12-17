@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { debounce } from 'lodash';
 import { useHistory } from 'react-router-dom';
 import './forums.scss';
@@ -11,6 +11,7 @@ import closeIcon from '../assets/close.svg';
 import search from '../assets/search.svg';
 import { UserContext } from '../utils/UserContext';
 import { SEARCH_FORUMS } from '../utils/graphqlRequest';
+import ErrorModal from '../component/ErrorModal';
 
 interface IForumResponse {
   title: string;
@@ -34,8 +35,9 @@ export default function Forums() {
   const [tags, setTags] = useState<string[]>([]);
   const history = useHistory();
   const { user } = useContext(UserContext);
+  const [isVisibleError, setIsVisibleError] = useState<boolean>(false);
 
-  const { loading, data } = useQuery<
+  const { data } = useQuery<
     { getAllFlashcards: IForumResponse[] },
     { tags: string[]; classroomId: string }
   >(SEARCH_FORUMS, {
@@ -43,8 +45,8 @@ export default function Forums() {
       tags,
       classroomId: user.classroom?.classroomId || '',
     },
-    onError: (error) => {
-      window.alert('Could not get anything');
+    onError: () => {
+      setIsVisibleError(true);
     },
   });
 
@@ -61,7 +63,6 @@ export default function Forums() {
   // ======================================================================
   const filter = (text: string) => {
     setSearchInputDelayed(text);
-
     if (data?.getAllFlashcards) {
       setTags([...tags, text]);
     } else if (!data?.getAllFlashcards) {
@@ -120,10 +121,20 @@ export default function Forums() {
     );
   };
   // ======================================================================
+  const handleErrorConfirmation = () => {
+    setIsVisibleError(false);
+    history.goBack();
+  };
+  // ======================================================================
 
-  if (loading || !data) return <p>Loading...</p>;
   return (
     <div className="forumSearchPageContainer">
+      <ErrorModal
+        buttonText="Retourner à la page d'acceuil"
+        isVisible={isVisibleError}
+        onConfirmCallback={() => handleErrorConfirmation()}
+        text="Une erreur s'est produite"
+      />
       <PageTitle textColor="#0998C0" title="Forums" />
       <div className="forumSearchInputContainer">
         <input
