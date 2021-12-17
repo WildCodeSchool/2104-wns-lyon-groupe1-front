@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { IQuestion } from '../utils/interface';
 import formattedDate from '../utils/dateFormatted';
 import './questionBlock.scss';
