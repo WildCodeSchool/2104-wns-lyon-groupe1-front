@@ -19,20 +19,24 @@ export default function BlockSubTitle({
   modifyTitleCallback,
 }: IBlockSubTitle) {
   const [modal, openModal] = useState(false);
+  const [input, setInput] = useState(title);
+
   return (
     <div className="b-subtitle">
       <OverLay getIsOpen={openModal} isOpen={modal}>
         <input
           id="new-sous-titre"
-          type="textarea"
+          type="text"
           className="flashcardInput flashcardInput-grey"
           name="soustitre"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           placeholder={title}
         />
         <button
           type="button"
           className="buttons"
-          onClick={() => modifyTitleCallback(title, position)}
+          onClick={() => modifyTitleCallback(input, position)}
         >
           Ajouter
         </button>

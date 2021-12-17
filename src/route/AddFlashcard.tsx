@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import './AddFlashcard.scss';
 import { useState, useContext } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
@@ -18,7 +19,7 @@ export default function AddFlashcard() {
   const [tags, setTags] = useState<string[]>([]);
   const [position, setPosition] = useState(0);
   const [flashcardId, setFlashcardId] = useState<any>(null);
-  const [subjectId, setSubjectId] = useState();
+  const [subjectId, setSubjectId] = useState<any>();
   const ressource: any[] = [];
   const subtitle: any[] = [];
   const [flashcard, setFlashcard] = useState({
@@ -30,22 +31,36 @@ export default function AddFlashcard() {
   });
   // Je récupère toutes les matières pour boucler dessus dans mon select
   // A décommenter lorsque cablage avec le back
-  /* const { loading, error, data } = useQuery(GET_ALL_SUBJECTS, {
+  /* const {
+    loading: loadingAllSubjects,
+    error: errorAllSubjects,
+    data: dataAllSubjects,
+  } = useQuery(GET_ALL_SUBJECTS, {
     skip: flashcardId === null,
   });
-  if (loading) return <div>Nous cherchons les matières de votre promo...</div>;
-  if (error)
-    return <div>Oups! Une erreur s&apos;est produite {error.message}</div>; */
+  if (loadingAllSubjects)
+    return <div>Nous cherchons les matières de votre promo...</div>;
+  if (errorAllSubjects)
+    return (
+      <div>Oups! Une erreur s&apos;est produite {errorAllSubjects.message}</div>
+    ); */
 
   // Si modification d'une fiche alors on utilise la query GET_SUBJECTNAME_BY_ID
   // pour récupérer le titre d'une matière selon l'id qu'on a récupéré après la mutation
-  /* const { loading, error, data } = useQuery(GET_SUBJECTNAME_BY_ID, {
-skip: flashcardId != null,
-variables: {flashcardSubjectId: subjectId}
-});
-if (loading) return <div>Nous cherchons les matières de votre promo...</div>;
-if (error)
-return <div>Oups! Une erreur s&apos;est produite {error.message}</div>; */
+  /*   const {
+      loading: loadingSubjectById,
+      error: errorSubjectById,
+      data: subjectName,
+    } = useQuery(GET_SUBJECTNAME_BY_ID, {
+      skip: flashcardId != null,
+      variables: { flashcardSubjectId: subjectId },
+    });
+    if (loadingSubjectById)
+      return <div>Nous cherchons les matières de votre promo...</div>;
+    if (errorSubjectById)
+      return (
+        <div>Oups! Une erreur s&apos;est produite {errorSubjectById.message}</div>
+      ); */
 
   // CREER UNE FLASHCARD
   const [createFlashcard] = useMutation(CREATE_FLASHCARD, {
@@ -64,8 +79,6 @@ return <div>Oups! Une erreur s&apos;est produite {error.message}</div>; */
   const [modifyFlashcard] = useMutation(MODIFY_FLASHCARD, {
     onCompleted: (data) => {
       window.alert('Modified flashcard');
-      setFlashcardId(data.createFlashcard.id || null);
-      setSubjectId(data.createFlashcard.subjectId || null);
     },
     onError: () => {
       // a changer, gerer les erreurs de retours créations classroom
@@ -74,45 +87,46 @@ return <div>Oups! Une erreur s&apos;est produite {error.message}</div>; */
   });
 
   const submitForm = (event: any) => {
-    event.preventDefault();
-    const flashcardTitle = document.getElementById(
-      'flashcard-title',
-    ) as HTMLSelectElement;
-    setFlashcard({
-      ...flashcard,
-      subject: flashcardTitle.dataset.id as string,
-    });
-    createFlashcard({
-      variables: {
-        classroomId: user.classroom?.classroomId,
-        subjectId: flashcard.subject,
-        title: flashcard.title,
-        ressource: flashcard.ressource,
-        tag: flashcard.tag,
-        subtitle: flashcard.subtitle,
-      },
-    });
-  };
-
-  const modifyForm = (event: any) => {
-    event.preventDefault();
-    const flashcardTitle = document.getElementById(
-      'flashcard-title',
-    ) as HTMLSelectElement;
-    setFlashcard({
-      ...flashcard,
-    });
-    console.log(flashcard);
-    modifyFlashcard({
-      variables: {
-        classroomId: user.classroom?.classroomId,
-        subjectId: flashcard.subject,
-        title: flashcard.title,
-        ressource: flashcard.ressource,
-        tag: flashcard.tag,
-        subtitle: flashcard.subtitle,
-      },
-    });
+    if (flashcardId === null) {
+      event.preventDefault();
+      const flashcardTitle = document.getElementById(
+        'flashcard-title',
+      ) as HTMLSelectElement;
+      setFlashcard({
+        ...flashcard,
+        subject: flashcardTitle.dataset.id as string,
+      });
+      console.log(flashcard)
+      setFlashcardId('2');
+      setSubjectId('3');
+      /*  createFlashcard({
+         variables: {
+           classroomId: user.classroom?.classroomId,
+           subjectId: flashcard.subject,
+           title: flashcard.title,
+           ressource: flashcard.ressource,
+           tag: flashcard.tag,
+           subtitle: flashcard.subtitle,
+         },
+       }); */
+    } else {
+      event.preventDefault();
+      setFlashcardId('2');
+      setSubjectId('3');
+      console.log(flashcard);
+      console.log('flashcard should be updated');
+      /*  modifyFlashcard({
+         variables: {
+           classroomId: user.classroom?.classroomId,
+           flashcardId: flashcardId,
+           subjectId: subjectIdId,
+           title: flashcard.title,
+           ressource: flashcard.ressource,
+           tag: flashcard.tag,
+           subtitle: flashcard.subtitle,
+         },
+       }); */
+    }
   };
 
   const mockDataMatieres = {
@@ -200,6 +214,7 @@ return <div>Oups! Une erreur s&apos;est produite {error.message}</div>; */
   // add sous-titre callbacck
   //= ==================================================
   const addTitle = () => {
+    console.log('ajouter un titre');
     setPosition(position + 1);
     const sousTitreTitle = document.getElementById(
       'sous-titre',
@@ -236,20 +251,26 @@ return <div>Oups! Une erreur s&apos;est produite {error.message}</div>; */
     setFlashcard(flashcardCopy);
   };
 
-  const modifyTitle = (title: string, positionSubtitle: string) => {
-    const newSousTitreTitle = document.getElementById(
-      'new-sous-titre',
-    ) as HTMLInputElement;
-    const newTitle = newSousTitreTitle?.value;
+  const modifyTitle = (input: string, positionSubtitle: string) => {
+    console.log(input);
+    console.log(positionSubtitle);
+    /*     const newSousTitreTitle = document.getElementById(
+          'new-sous-titre',
+        ) as HTMLInputElement; */
+    /*     console.log(newSousTitreTitle); */
+    /*     const newTitle = newSousTitreTitle?.value; */
+    /*     console.log(newTitle); */
     const allSubtitles = flashcard.subtitle;
     const index = allSubtitles.findIndex(
       (positionIndex: any) => positionIndex.position === positionSubtitle,
     );
+    console.log(index);
     const newSubtitle = {
-      title: newTitle,
-      position: allSubtitles[index].position,
+      title: input,
+      position: positionSubtitle,
     };
-    allSubtitles.splice(allSubtitles[index], 1, newSubtitle);
+    allSubtitles.splice(index, 1, newSubtitle);
+    console.log(allSubtitles);
     const flashcardCopy = { ...flashcard };
     flashcardCopy.subtitle = allSubtitles;
     setFlashcard(flashcardCopy);
@@ -257,25 +278,32 @@ return <div>Oups! Une erreur s&apos;est produite {error.message}</div>; */
 
   return (
     <>
+      {flashcardId !== null ? (
+        <h3>Votre fiche a bien été créée ! Vous pouvez désormais la modifier</h3>
+      ) : (
+          ''
+        )}
       <h1>{flashcardId !== null ? 'Modifier ma fiche' : 'Créer une fiche'}</h1>
       <div className="create-flashcard">
         <form className="formContainer" onSubmit={submitForm}>
           {flashcardId !== null ? (
-            <h2> FLashcard </h2>
+            // <h2> {subjectName} </h2>
+            <h2>Nom de la matière</h2>
           ) : (
-            <select data-id="2" id="flashcard-title" required>
-              <option key="default">Choisir une matière</option>
-              {mockDataMatieres?.subject.map((element: any) => (
-                <option
-                  data-id={element.subjectId}
-                  id={element.subjectId}
-                  key={element.subjectId}
-                >
-                  {element.name}
-                </option>
-              ))}
-            </select>
-          )}
+              <select data-id="2" id="flashcard-title" required>
+                <option key="default">Choisir une matière</option>
+                {mockDataMatieres?.subject.map((element: any) => (
+                  <option
+                    data-id={element.subjectId}
+                    id={element.subjectId}
+                    key={element.subjectId}
+                  >
+                    {element.name}
+                  </option>
+                ))}
+              </select>
+            )}
+
           <input
             required
             type="texte"
@@ -287,6 +315,7 @@ return <div>Oups! Une erreur s&apos;est produite {error.message}</div>; */
               setFlashcard({ ...flashcard, title: e.target.value })
             }
           />
+
           <div>
             <div className="addTag">
               <input
