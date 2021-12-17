@@ -73,7 +73,6 @@ export interface IQuestion {
   answer: IAnswer[];
   date: Date;
   author: string;
-  isPublic: boolean;
 }
 
 export interface IFlashcard {
