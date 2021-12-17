@@ -33,7 +33,7 @@ export default function FlashcardForum() {
     },
   });
 
-  const date = data?.getFlashcard.question[0].date;
+  console.log(data);
 
   const [flashcardMutation] = useMutation<{ updateForum: IFlashcard }>(
     UPDATE_FLASHCARD_STUDENT,
@@ -95,7 +95,6 @@ export default function FlashcardForum() {
           <QuestionBlock
             answer={question.answer}
             id={question.id}
-            author={question.author}
             date={question.date}
             text={question.text}
             key={question.id}

@@ -66,7 +66,6 @@ export interface IRessource {
 export interface IAnswer {
   id: string;
   text: string;
-  author: string;
   date: Date;
 }
 
@@ -75,7 +74,6 @@ export interface IQuestion {
   text: string;
   answer: IAnswer[];
   date: Date;
-  author: string;
 }
 
 export interface IFlashcard {
