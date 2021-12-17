@@ -53,7 +53,7 @@ const Menu = ({ teacher, menuOpen }: PropsMenu) => {
       </div>
       <div className="menu-section blue-border-color">
         <h2> Forums</h2>
-        <Link to={{ pathname: '/forum', state: { hide: true } }}>
+        <Link to={{ pathname: '/forums', state: { hide: true } }}>
           Rechercher un topic
         </Link>
       </div>

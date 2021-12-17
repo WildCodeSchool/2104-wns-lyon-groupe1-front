@@ -63,10 +63,24 @@ export interface IRessource {
   url: string;
 }
 
+export interface IAnswer {
+  id: string;
+  text: string;
+  date: Date;
+}
+
+export interface IQuestion {
+  id: string;
+  text: string;
+  answer: IAnswer[];
+  date: Date;
+}
+
 export interface IFlashcard {
   id: string;
   title: string;
   tag?: string[];
   subtitle?: ISubtitle[];
   ressource?: IRessource[];
+  question: IQuestion[];
 }

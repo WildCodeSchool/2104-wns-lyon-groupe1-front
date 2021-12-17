@@ -20,7 +20,7 @@ export default function Home() {
       title: 'Forums',
       icon: bubbleMessage,
       classname: 'blue-btn',
-      slug: '/forum',
+      slug: '/forums',
     },
     {
       title: 'Mon espace',

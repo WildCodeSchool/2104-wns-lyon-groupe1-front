@@ -1,0 +1,26 @@
+    @import "../globalColors.scss";
+    .forumPageContainer {
+        width: 95%;
+        margin: auto;
+        * {
+            text-align: left;
+        }
+        max-width: 1000px;
+    }
+    
+    .forumHeadingContainer {
+        text-align: right;
+    }
+    
+    // ===========================================================
+    .writeAQuestionButton {
+        border: none;
+        background-color: $colorTurquoise;
+        border-radius: 5px;
+        padding: 2px 5px;
+    }
+    
+    // ===========================================================
+    .forumEditorWrapper {
+        margin-top: 15px;
+    }

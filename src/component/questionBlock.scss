@@ -1,0 +1,37 @@
+@import "../globalColors.scss";
+.questionBlockWrappaer {
+    margin-top: 15px;
+    border: 2px solid $colorBrightGrey;
+    border-radius: 5px;
+}
+
+.questionBlockContainer {
+    display: block;
+    border: none;
+    width: 100%;
+    background-color: $colorBrightGrey;
+    padding: 10px;
+}
+
+.questionHeadingContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+     :nth-child(1) {
+        font-weight: bold;
+    }
+}
+
+.questionSecondaryDataContainer {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    div:nth-child(2) {
+        display: flex;
+        align-items: center;
+        margin-left: 15px;
+        >div {
+            margin-right: 5px;
+        }
+    }
+}

@@ -11,6 +11,7 @@ import bubbleMessage from '../assets/bubblemessage.svg';
 import './Flashcard.scss';
 import { IFlashcard } from '../utils/interface';
 import { UserContext } from '../utils/UserContext';
+import PageTitleSmall from '../component/PageTitleSmall';
 
 export default function Flashcard() {
   const { state } = useLocation<{ flashcardId: string; subjectId: string }>();
@@ -102,12 +103,15 @@ export default function Flashcard() {
       <div className="flashcard-header">
         <p className="flashcard-tags">
           {flashcard.tag?.map((tag) => (
-            <Link to={`/forum?tag=${tag}`} key={tag}>
+            /*             <Link to={`/forums?tag=${tag}`} key={tag}>
+              <span>{`#${tag}`}</span>
+            </Link> */
+            <Link to={`/forums/${tag}`} key={tag}>
               <span>{`#${tag}`}</span>
             </Link>
           ))}
         </p>
-        <h2>{flashcard.title}</h2>
+        <PageTitleSmall title={flashcard.title} textColor="#FCC300" />
         <div className="flashcard-header-action">
           {!user.isTeacher && (
             <>

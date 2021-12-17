@@ -7,7 +7,7 @@ import App from '../App';
 
 const allRoutes = [
   {
-    uri: '/forum',
+    uri: '/forums',
     testid: 'blue-btn',
   },
   {
