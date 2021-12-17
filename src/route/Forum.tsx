@@ -33,8 +33,6 @@ export default function FlashcardForum() {
     },
   });
 
-  console.log(data);
-
   const [flashcardMutation] = useMutation<{ updateForum: IFlashcard }>(
     UPDATE_FLASHCARD_STUDENT,
     {

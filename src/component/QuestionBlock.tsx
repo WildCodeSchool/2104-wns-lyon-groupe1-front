@@ -53,10 +53,6 @@ export default function QuestionBlock({
           />
         </div>
         <div className="questionSecondaryDataContainer">
-<<<<<<< HEAD
-=======
-          <div>{author}</div>
->>>>>>> 9bacc58 (+ question Block reusable component)
           <div>{formattedDate(date)}</div>
           <div>
             <div>{answer.length}</div>
@@ -74,10 +70,6 @@ export default function QuestionBlock({
               key={singleAnswer.id}
               text={singleAnswer.text}
               id={singleAnswer.id}
-<<<<<<< HEAD
-=======
-              author={singleAnswer.author}
->>>>>>> 9bacc58 (+ question Block reusable component)
               date={singleAnswer.date}
             />
           );
