@@ -103,7 +103,10 @@ export default function Flashcard() {
       <div className="flashcard-header">
         <p className="flashcard-tags">
           {flashcard.tag?.map((tag) => (
-            <Link to={`/forums?tag=${tag}`} key={tag}>
+            /*             <Link to={`/forums?tag=${tag}`} key={tag}>
+              <span>{`#${tag}`}</span>
+            </Link> */
+            <Link to={`/forums/${tag}`} key={tag}>
               <span>{`#${tag}`}</span>
             </Link>
           ))}

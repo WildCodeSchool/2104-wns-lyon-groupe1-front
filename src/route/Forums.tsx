@@ -1,6 +1,6 @@
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useState, useEffect } from 'react';
 import { debounce } from 'lodash';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import './forums.scss';
 import slugify from 'react-slugify';
 import { useQuery } from '@apollo/client';
@@ -29,6 +29,8 @@ export default function Forums() {
   const { user } = useContext(UserContext);
   const [isVisibleError, setIsVisibleError] = useState<boolean>(false);
 
+  const params = useParams<{ tag: string }>();
+
   const { data } = useQuery<
     { getAllFlashcards: IForumCellProps[] },
     { tags: string[]; classroomId: string }
@@ -41,6 +43,13 @@ export default function Forums() {
       setIsVisibleError(true);
     },
   });
+
+  useEffect(() => {
+    if (params.tag) {
+      setSearchInputDelayed(params.tag);
+      setTags([params.tag]);
+    }
+  }, []);
 
   // TAGS controller
   // ======================================================================
