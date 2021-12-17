@@ -11,7 +11,17 @@ import AnswerBlock from './AnswerBlock';
 import ForumEditorBlock from './ForumEditorBlock';
 // ==========================================
 
+<<<<<<< HEAD
 export default function QuestionBlock({ id, date, text, answer }: IQuestion) {
+=======
+export default function QuestionBlock({
+  id,
+  author,
+  date,
+  text,
+  answer,
+}: IQuestion) {
+>>>>>>> 9bacc58 (+ question Block reusable component)
   // ============================================
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -43,6 +53,10 @@ export default function QuestionBlock({ id, date, text, answer }: IQuestion) {
           />
         </div>
         <div className="questionSecondaryDataContainer">
+<<<<<<< HEAD
+=======
+          <div>{author}</div>
+>>>>>>> 9bacc58 (+ question Block reusable component)
           <div>{formattedDate(date)}</div>
           <div>
             <div>{answer.length}</div>
@@ -60,6 +74,10 @@ export default function QuestionBlock({ id, date, text, answer }: IQuestion) {
               key={singleAnswer.id}
               text={singleAnswer.text}
               id={singleAnswer.id}
+<<<<<<< HEAD
+=======
+              author={singleAnswer.author}
+>>>>>>> 9bacc58 (+ question Block reusable component)
               date={singleAnswer.date}
             />
           );
