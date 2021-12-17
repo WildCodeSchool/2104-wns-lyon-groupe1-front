@@ -1,0 +1,35 @@
+@import "../globalColors.scss";
+.editorContainer {
+    background-color: $colorBrightGrey;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+}
+
+textarea {
+    border: none;
+    resize: none;
+    width: 100%;
+    min-height: 15em;
+    padding: 10px;
+}
+
+.forumEditorButtonsContainer {
+    margin-top: 15px;
+    * {
+        border: none;
+        padding: 5px;
+        font-size: inherit;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button {
+        background-color: $colorRedOpacity;
+        margin-right: 10px;
+    }
+    input {
+        background-color: $colorGreenOpacity;
+    }
+}
