@@ -5,7 +5,7 @@ import './answerBlock.scss';
 export default function AnswerBlock({ date, id, text }: IAnswer) {
   return (
     <div className="asnwerContainer">
-      <div className="answerHeading">{formattedDate(date)}</div>
+      <div className="answerHeading">{formattedDate(new Date(date))}</div>
       <p className="answerText">{text}</p>
     </div>
   );

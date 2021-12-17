@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 import { useHistory } from 'react-router-dom';
 import './forums.scss';
@@ -31,17 +31,16 @@ interface IForumCellProps {
 export default function Forums() {
   const [searchInput, setSearchInput] = useState<string>('');
   const [searchInputDelayed, setSearchInputDelayed] = useState<string>('');
-  const [tagsToSearch, setTagsToSearch] = useState<string[]>([]);
-  const [uiTags, setUiTags] = useState<string[]>(['graphQl']);
+  const [tags, setTags] = useState<string[]>([]);
   const history = useHistory();
   const { user } = useContext(UserContext);
 
   const { loading, data } = useQuery<
     { getAllFlashcards: IForumResponse[] },
-    { uiTags: string[]; classroomId: string }
+    { tags: string[]; classroomId: string }
   >(SEARCH_FORUMS, {
     variables: {
-      uiTags,
+      tags,
       classroomId: user.classroom?.classroomId || '',
     },
     onError: (error) => {
@@ -51,14 +50,10 @@ export default function Forums() {
 
   // TAGS controller
   // ======================================================================
-  const addUiTag = (uiTag: string) => {
-    setUiTags([...uiTags, uiTag]);
-  };
-
   const removeTag = (uiTag: string) => {
-    const index = uiTags.indexOf(uiTag);
+    const index = tags.indexOf(uiTag);
     if (index > -1) {
-      setUiTags(uiTags.filter((singleTag: string) => singleTag !== uiTag));
+      setTags(tags.filter((singleTag: string) => singleTag !== uiTag));
     }
   };
 
@@ -66,15 +61,19 @@ export default function Forums() {
   // ======================================================================
   const filter = (text: string) => {
     setSearchInputDelayed(text);
+
     if (data?.getAllFlashcards) {
-      addUiTag(text);
-      setSearchInput('');
+      setTags([...tags, text]);
+    } else if (!data?.getAllFlashcards) {
+      setTags([]);
     }
+    setSearchInput('');
+    setTags([...tags, text]);
   };
 
   const debounceSearchInput = useCallback(
     debounce((text: string) => filter(text), 600),
-    [uiTags],
+    [tags],
   );
 
   const handleSearchInputChange = (text: string) => {
@@ -91,7 +90,7 @@ export default function Forums() {
     date,
   }: IForumCellProps) => {
     const questionsNumber = question.length;
-    const dateFormatted = formattedDate(date);
+    const dateFormatted = formattedDate(new Date(date));
 
     const goToForum = () => {
       history.push({
@@ -122,8 +121,7 @@ export default function Forums() {
   };
   // ======================================================================
 
-  // if (loading || !data) return <p>Loading...</p>;
-
+  if (loading || !data) return <p>Loading...</p>;
   return (
     <div className="forumSearchPageContainer">
       <PageTitle textColor="#0998C0" title="Forums" />
@@ -142,7 +140,7 @@ export default function Forums() {
         </div>
       ) : (
         <div>
-          {uiTags.map((singleTag: string, index: number) => {
+          {tags.map((singleTag: string, index: number) => {
             return (
               <div className="singleTagContainer" key={index}>
                 <div className="singleTag">

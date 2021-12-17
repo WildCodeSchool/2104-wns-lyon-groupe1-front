@@ -24,7 +24,7 @@ export default function ForumEditorBlock({
       className="editorContainer"
       onSubmit={
         questionId
-          ? (event) => onSubmitCallback(event, questionId)
+          ? (event) => onSubmitCallback(event, questionId, inputText)
           : (event) => onSubmitCallback(event)
       }
     >
@@ -32,7 +32,7 @@ export default function ForumEditorBlock({
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
         placeholder={placeHolderText}
-        required
+        // required
       />
       <div className="forumEditorButtonsContainer">
         <button type="button" onClick={() => setInputText('')}>

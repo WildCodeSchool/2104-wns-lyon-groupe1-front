@@ -43,7 +43,7 @@ export default function QuestionBlock({ id, date, text, answer }: IQuestion) {
           />
         </div>
         <div className="questionSecondaryDataContainer">
-          <div>{formattedDate(date)}</div>
+          <div>{formattedDate(new Date(date))}</div>
           <div>
             <div>{answer.length}</div>
             <img src={answerIcon} alt="nombre de réponses" />
