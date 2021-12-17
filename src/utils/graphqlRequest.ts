@@ -91,6 +91,36 @@ export const ALL_FLASHCARDS_BY_SUBJECTS = gql`
   }
 `;
 
+export const SEARCH_FORUMS = gql`
+  query getAllFlashcards($classroomId: String!, $tags: [String!]) {
+    getAllFlashcards(classroomId: $classroomId, tag: $tags) {
+      id
+      subjectId
+      title
+      tag
+      question {
+        id
+        text
+        date
+      }
+    }
+  }
+`;
+
+export const GET_FLASHCARD_FORUM = gql`
+  query getFlashcard($flashcardId: String!, $classroomId: String!) {
+    getFlashcard(flashcardId: $flashcardId, classroomId: $classroomId) {
+      id
+      title
+      question {
+        id
+        text
+        date
+      }
+    }
+  }
+`;
+
 export const GET_FLASHCARD_BY_ID = gql`
   query getFlashcard($flashcardId: String!, $classroomId: String!) {
     getFlashcard(flashcardId: $flashcardId, classroomId: $classroomId) {
@@ -119,6 +149,40 @@ export const GET_FLASHCARD_BY_ID = gql`
   }
 `;
 
+// post answer by passing only answer OR post question by only passing the question
+export const UPDATE_FLASHCARD_FORUM = gql`
+  mutation updateFlashcardForum(
+    $classroomId: ID!
+    $subjectId: ID!
+    $flashcardId: ID!
+    $answer: AnswerInput
+    $question: QuestionInput
+  ) {
+    updateFlashcardStudent(
+      classroomId: $classroomId
+      subjectId: $subjectId
+      flashcardId: $flashcardId
+      answer: $answer
+      question: $question
+    ) {
+      id
+      title
+      subjectId
+      question {
+        id
+        text
+        date
+        author
+        answer {
+          text
+          date
+          author
+        }
+      }
+    }
+  }
+`;
+
 export const UPDATE_FLASHCARD_STUDENT = gql`
   mutation UpdateFlashcardParagraph(
     $classroomId: ID!
@@ -127,6 +191,8 @@ export const UPDATE_FLASHCARD_STUDENT = gql`
     $subtitleId: ID!
     $paragraph: ParagraphInput
     $ressource: RessourceInput
+    $answer: AnswerInput
+    $question: QuestionInput
   ) {
     updateFlashcardStudent(
       classroomId: $classroomId
@@ -135,6 +201,8 @@ export const UPDATE_FLASHCARD_STUDENT = gql`
       subtitleId: $subtitleId
       paragraph: $paragraph
       ressource: $ressource
+      answer: $answer
+      question: $question
     ) {
       id
       title
@@ -154,6 +222,17 @@ export const UPDATE_FLASHCARD_STUDENT = gql`
           isPublic
           author
           date
+        }
+      }
+      question {
+        id
+        text
+        date
+        author
+        answer {
+          text
+          date
+          author
         }
       }
     }
