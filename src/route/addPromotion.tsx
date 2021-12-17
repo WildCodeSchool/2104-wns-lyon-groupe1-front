@@ -115,6 +115,12 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
     setEmailAdressesError([]);
     event.preventDefault();
     let error = false;
+
+    // Enlève les doublons, et les mails vide
+    const emailToSend = Array.from(
+      new Set(emailAdresses.filter((email) => email.length)),
+    );
+
     if (!verifyTextAndNumbersOnly(promotionName)) {
       setPromotionNameError(true);
       error = true;
@@ -135,16 +141,16 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
       error = true;
     }
 
-    if (emailAdresses.length === 0) {
+    if (emailToSend.length === 0) {
       setEmailAdressesRequiredError(true);
       error = true;
     }
 
-    if (emailAdresses.length > 0) {
+    if (emailToSend.length > 0) {
       const errorEmail: number[] | null = [];
-      emailAdresses.forEach((element, index) => {
+      emailToSend.forEach((element) => {
         if (!verifyEmail(element)) {
-          errorEmail.push(index);
+          errorEmail.push(emailAdresses.findIndex((mail) => mail === element));
           error = true;
         }
       });
@@ -156,7 +162,7 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
         variables: {
           name: promotionName,
           year: `${beginningYear}/${finishingYear}`,
-          mails: emailAdresses,
+          mails: emailToSend,
         },
       });
     }
@@ -188,7 +194,6 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
     setEmailAdresses([]); // reset all email adresses when starting manual mode
     setStudentsNumber(studentsNumberInput);
   };
-
   return (
     <div className="add-promotion">
       <ErrorModal
@@ -219,6 +224,7 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
             />
           )}
           <select
+            title="Année de début"
             className="overlayInput promotion-beginning-year"
             onChange={(e) => setBeginningYear(e.target.value)}
           >
@@ -232,6 +238,7 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
             <InputError errorText={"Ce champ n'est pas valide"} />
           )}
           <select
+            title="Fin de formation"
             className="overlayInput promotion-finishing-year"
             onChange={(e) => setFinishingYear(e.target.value)}
           >
@@ -259,8 +266,7 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
                   </span>
                 )}
                 <input
-                  key={index}
-                  id="student-email"
+                  key={`input-mail-${index}`}
                   type="text"
                   className="overlayInput promotion-name"
                   placeholder="Mail étudiant"
@@ -276,6 +282,7 @@ export default function AddPromotion({ handleClassroom }: AddPromotionProps) {
           <div className="studentsNumberContainer">
             <input
               type="number"
+              title="number of input to show"
               value={studentsNumberInput}
               onChange={(e) => setStudentsNumberInput(Number(e.target.value))}
               min="0"
