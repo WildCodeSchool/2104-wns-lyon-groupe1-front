@@ -144,10 +144,13 @@ export const GET_FLASHCARD_FORUM = gql`
         id
         text
         date
+<<<<<<< HEAD
         answer {
           text
           date
         }
+=======
+>>>>>>> 5f940206d53cf65d4ebd16748a5f072d8ff3b345
       }
     }
   }

@@ -11,7 +11,17 @@ import AnswerBlock from './AnswerBlock';
 import ForumEditorBlock from './ForumEditorBlock';
 // ==========================================
 
+<<<<<<< HEAD
 export default function QuestionBlock({ id, date, text, answer }: IQuestion) {
+=======
+export default function QuestionBlock({
+  id,
+  author,
+  date,
+  text,
+  answer,
+}: IQuestion) {
+>>>>>>> 5f940206d53cf65d4ebd16748a5f072d8ff3b345
   // ============================================
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
