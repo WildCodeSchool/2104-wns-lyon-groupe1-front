@@ -95,7 +95,7 @@ export default function Connect({ setUser }: ConnectProps) {
             <button
               type="button"
               onClick={() => setAddClassroom(true)}
-              className="buttons"
+              className="buttons button-add-promotion"
             >
               Ajouter une promotion
             </button>
