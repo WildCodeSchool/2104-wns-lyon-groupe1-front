@@ -18,7 +18,7 @@ import AddPromotion from './route/addPromotion';
 import Flashcards from './route/FlashCards';
 
 function App() {
-  const { addUser } = useContext(UserContext);
+  const { addUser, removeUser } = useContext(UserContext);
 
   return (
     <div className="App">
@@ -58,7 +58,14 @@ function App() {
             path="/ajouter-une-fiche"
             render={() => <h2>Ajouter une fiche</h2>}
           />
-          <Route path="/me-deconnecter" render={() => <h2>Deconnecter</h2>} />
+          <Route
+            path="/me-deconnecter"
+            render={() => {
+              localStorage.removeItem('wikitoken');
+              removeUser();
+              return <h2>Déconnection en cours</h2>;
+            }}
+          />
           <Route path="/rechercher" render={() => <h2>Rechercher</h2>} />
           <Route path="/mon-espace" component={ProfessorAccount} />
           <Route path="/ajouter-une-promotion" component={AddPromotion} />
