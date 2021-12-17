@@ -24,6 +24,7 @@
     "rules": {
         "no-console": "warn",
         "no-debugger": "warn",
+        "no-alert": "off",
         "react/jsx-filename-extension" : "off",
         "no-use-before-define": "warn",
         "no-unused-vars": "warn",

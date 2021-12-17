@@ -187,3 +187,15 @@ export const UPDATE_FLASHCARD_STUDENT = gql`
     }
   }
 `;
+
+export const CHANGE_PASSWORD_STUDENT = gql`
+  mutation changePassword($newPassword: String!, $oldPassword: String!) {
+    changePassword(newPassword: $newPassword, oldPassword: $oldPassword)
+  }
+`;
+
+export const RESET_PASSWORD = gql`
+  mutation resetPassword($mail: String!) {
+    resetPassword(mail: $mail)
+  }
+`;

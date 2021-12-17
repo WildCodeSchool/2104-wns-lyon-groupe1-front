@@ -1,16 +1,26 @@
 import { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
 import { UserContext } from '../utils/UserContext';
 import Overlay from '../component/OverLay';
 import './professorAccount.scss';
+import { CHANGE_PASSWORD_STUDENT } from '../utils/graphqlRequest';
 
 export default function ProfessorAccount() {
   const { user } = useContext(UserContext);
-
+  const history = useHistory();
   const [isOpenOverlay, setIsOpenOverlay] = useState(false);
   const [password, handlePasswordChange] = useState('');
+  const [oldPassword, handleOldPasswordChange] = useState('');
   const [confirmedPassword, handleConfirmedPasswordChange] = useState('');
   const [passwordErrored, setPasswordErrored] = useState(false);
+  const [changePassword] = useMutation(CHANGE_PASSWORD_STUDENT, {
+    onCompleted: (data) => {
+      if (data.changePassword) {
+        history.push('/me-deconnecter');
+      }
+    },
+  });
 
   // change isOpenOverlay state
   const passwordModifierOverlay = () => {
@@ -25,6 +35,7 @@ export default function ProfessorAccount() {
   };
 
   const resetFormInputs = () => {
+    handleOldPasswordChange('');
     handlePasswordChange('');
     handleConfirmedPasswordChange('');
   };
@@ -38,7 +49,6 @@ export default function ProfessorAccount() {
     const regex = new RegExp(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
     );
-
     // if regex is tester true and passwords are identical
     if (regex.test(passwordText) && passwordText === repeatedPasswordText) {
       return true;
@@ -51,6 +61,7 @@ export default function ProfessorAccount() {
     // close the overlay
     const isVerified = verifyPassword(password, confirmedPassword);
     if (isVerified) {
+      changePassword({ variables: { oldPassword, newPassword: password } });
       setIsOpenOverlay(false);
       resetFormInputs();
     }
@@ -70,7 +81,17 @@ export default function ProfessorAccount() {
           <span className="passwordError">
             {passwordErrored ? 'Les mots de passe ne sont pas identiques' : ''}
           </span>
+          <p>
+            1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial requis{' '}
+          </p>
           <form className="formContainer" onSubmit={submitForm}>
+            <input
+              type="password"
+              className="overlayInput"
+              placeholder="Ancien mot de passe"
+              value={oldPassword}
+              onChange={(e) => handleOldPasswordChange(e.target.value)}
+            />
             <input
               type="password"
               className="overlayInput"
