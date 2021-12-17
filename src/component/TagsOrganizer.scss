@@ -1,0 +1,21 @@
+@import '../globalColors.scss';
+
+.singleTag {
+    display: flex;
+    background-color: #FCD23F;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    border: solid 1px $colorYellow;
+    margin-right: 15px;
+    justify-content: space-between;
+    margin-top: 15px;
+
+    p {
+        margin-right: 15px;
+    }
+
+    img {
+        width: 10px;
+    }
+}

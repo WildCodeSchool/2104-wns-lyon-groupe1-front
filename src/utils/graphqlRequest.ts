@@ -84,9 +84,19 @@ export const GET_CLASSROOM_STUDENTS = gql`
   }
 `;
 
-export const ALL_SUBJECTS = gql`
-  query getSubjects {
+export const GET_ALL_SUBJECTS = gql`
+  query getAllSubjects {
     subject {
+      id
+      name
+      imageUrl
+    }
+  }
+`;
+
+export const GET_SUBJECTNAME_BY_ID = gql`
+  query getSubjectNameById($subjectId: ID!) {
+    subject(subjectId: $subjectId) {
       id
       name
       imageUrl
@@ -197,5 +207,68 @@ export const CHANGE_PASSWORD_STUDENT = gql`
 export const RESET_PASSWORD = gql`
   mutation resetPassword($mail: String!) {
     resetPassword(mail: $mail)
+  }
+`;
+export const CREATE_FLASHCARD = gql`
+  mutation createFlashcard(
+    $classroomId: ID!
+    $subjectId: ID!
+    $title: String!
+    $ressource: [RessourceInput!]
+    $tag: [String!]
+    $subtitle: [SubtitleInput!]
+  ) {
+    createFlashcard(
+      classroomId: $classroomId
+      subjectId: $subjectId
+      title: $title
+      ressource: $ressource
+      tag: $tag
+      subtitle: $subtitle
+    ) {
+      id
+      title
+      subtitle {
+        title
+        position
+      }
+      tag
+      ressource {
+        name
+        url
+      }
+    }
+  }
+`;
+
+export const MODIFY_FLASHCARD = gql`
+  mutation modifyFlashcard(
+    $classroomId: ID!
+    $subjectId: ID!
+    $title: String!
+    $ressource: [RessourceInput!]
+    $tag: [String!]
+    $subtitle: [SubtitleInput!]
+  ) {
+    createFlashcard(
+      classroomId: $classroomId
+      subjectId: $subjectId
+      title: $title
+      ressource: $ressource
+      tag: $tag
+      subtitle: $subtitle
+    ) {
+      id
+      title
+      subtitle {
+        title
+        position
+      }
+      tag
+      ressource {
+        name
+        url
+      }
+    }
   }
 `;

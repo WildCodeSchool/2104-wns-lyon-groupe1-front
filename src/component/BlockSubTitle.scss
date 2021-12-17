@@ -1,0 +1,19 @@
+@import '../globalColors.scss';
+
+.single-subtitle {
+    display: flex;
+    justify-content: space-between;
+    background-color: $colorBrightGrey;
+    padding: 0.5em;
+    height: 40px;
+
+    .positions-img {
+        display: flex;
+    }
+
+    img {
+        width: 15px;
+        height: 15px;
+        margin: 0 5px;
+    }
+}

@@ -1,0 +1,26 @@
+@import '../globalColors';
+
+
+.flashcard-creation-btn {
+    width: 10%;
+    min-width: 171px;
+    padding: 10px;
+    background-color: white;
+    border: 2px solid $colorYellow;
+    font-weight: bold;
+
+    &:hover {
+        background-color: $colorYellow;
+    }
+}
+
+.my-flashcards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+        margin-bottom: 1%;
+    }
+}

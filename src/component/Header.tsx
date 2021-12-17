@@ -46,7 +46,12 @@ const Menu = ({ teacher, menuOpen }: PropsMenu) => {
           Liste des fiches de révisions
         </Link>
         {teacher && (
-          <Link to={{ pathname: '/ajouter-une-fiche', state: { hide: true } }}>
+          <Link
+            to={{
+              pathname: '/ajouter-une-fiche',
+              state: { hide: true, flashcardId: undefined },
+            }}
+          >
             Ajouter des fiches
           </Link>
         )}
