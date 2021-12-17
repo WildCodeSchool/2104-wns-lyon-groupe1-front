@@ -39,6 +39,7 @@ function App() {
           <Route exact path="/mes-matières">
             <Study />
           </Route>
+          <Route path="/modifier-une-fiche" component={AddFlashcard} />
           <Route exact path="/mes-matières/:matiere">
             <Flashcards />
           </Route>

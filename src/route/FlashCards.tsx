@@ -5,6 +5,7 @@ import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { ALL_FLASHCARDS_BY_SUBJECTS } from '../utils/graphqlRequest';
 import { UserContext } from '../utils/UserContext';
+import pencil from '../assets/pencil.svg';
 
 export default function FlashCards() {
   const { user } = useContext(UserContext);
@@ -36,32 +37,56 @@ export default function FlashCards() {
     <>
       <h1>{matiere}</h1>
       <div className="flashcard-list">
-        <div
-          data-testid={data.getAllFlashcardsBySubject.id}
-          className="flashcard-element"
-          key={data.getAllFlashcardsBySubject.id}
-        >
-          {data.getAllFlashcardsBySubject.flashcard.map((flashcard: any) => (
-            <button
-              key={flashcard.id}
-              type="button"
-              className="buttons flashcard-buttons"
-              onClick={() => {
-                history.push({
-                  pathname: `/mes-matières/matiere/${slugify(
-                    flashcard.title,
-                  )}}`,
-                  state: {
-                    flashcardId: flashcard.id,
-                    subjectId: data.getAllFlashcardsBySubject.id,
-                  },
-                });
-              }}
-            >
-              {flashcard.title}
-            </button>
-          ))}
-        </div>
+        {(() => {
+          if (user.isTeacher) {
+            return (
+              <Link to="/ajouter-une-fiche">
+                <button type="button" className="button flashcard-creation-btn">
+                  Créer une fiche
+                </button>
+              </Link>
+            );
+          }
+          return '';
+        })()}
+        {flashCardsBySubjectData?.subject.map((element: any) => (
+          <div
+            data-testid={element.subjectId}
+            className="flashcard-element"
+            key={element.subjectId}
+          >
+            {element.flashcard.map((flashcard: any) => (
+              <button
+                key={flashcard.id}
+                type="button"
+                className="buttons flashcard-buttons"
+                onClick={() => {
+                  history.push({
+                    pathname: `/mes-matières/matiere/${slugify(
+                      flashcard.title,
+                    )}}`,
+                    state: { flashcardId: flashcard.id },
+                  });
+                }}
+              >
+                {flashcard.title}
+                <div
+                  aria-hidden="true"
+                  onClick={() => {
+                    history.push({
+                      pathname: `/modifier-une-fiche`,
+                      state: { flashcardId: flashcard.id },
+                    });
+                  }}
+                >
+                  <div className="modifyButton">
+                    <img src={pencil} alt="modifier mot de passe" />
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        ))}
       </div>
     </>
   );

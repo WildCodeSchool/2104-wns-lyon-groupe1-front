@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import './AddFlashcard.scss';
 import { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import TagsOrganizer from '../component/TagsOrganizer';
 import Ressource from '../component/Ressource';
@@ -11,14 +12,17 @@ import {
   GET_ALL_SUBJECTS,
   GET_SUBJECTNAME_BY_ID,
   MODIFY_FLASHCARD,
+  GET_FLASHCARD_BY_ID,
 } from '../utils/graphqlRequest';
 
 export default function AddFlashcard() {
+  const historyFlashcardId = useHistory().location.state;
+  console.log(historyFlashcardId);
   const { user } = useContext(UserContext);
   const [singleTag, setSingleTag] = useState<string>('');
   const [tags, setTags] = useState<string[]>([]);
   const [position, setPosition] = useState(0);
-  const [flashcardId, setFlashcardId] = useState<any>(null);
+  const [flashcardId, setFlashcardId] = useState<any>(historyFlashcardId || null);
   const [subjectId, setSubjectId] = useState<any>();
   const ressource: any[] = [];
   const subtitle: any[] = [];
@@ -29,6 +33,22 @@ export default function AddFlashcard() {
     ressource,
     subtitle,
   });
+  
+  // Je récupère la flashcard que je souhaite modifier selon son id 
+  /* const {
+    loading: loadingFlashcardById,
+    error: errorFlashcardById,
+    data: dataFlashcardById,
+  } = useQuery(GET_FLASHCARD_BY_ID, {
+    skip: flashcardId === null,
+  });
+  if (loadingFlashcardById)
+    return <div>Nous cherchons les matières de votre promo...</div>;
+  if (errorFlashcardById)
+    return (
+      <div>Oups! Une erreur s&apos;est produite {errorAllSubjects.message}</div>
+    ); */
+
   // Je récupère toutes les matières pour boucler dessus dans mon select
   // A décommenter lorsque cablage avec le back
   /* const {
