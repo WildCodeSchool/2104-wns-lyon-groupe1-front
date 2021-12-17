@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState, useRef, FormEvent, useContext } from 'react';
+import { useRef, useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import PageTitleSmall from '../component/PageTitleSmall';
@@ -12,15 +12,17 @@ import {
   UPDATE_FLASHCARD_FORUM,
 } from '../utils/graphqlRequest';
 import { UserContext } from '../utils/UserContext';
+import ErrorModal from '../component/ErrorModal';
 
 export default function FlashcardForum() {
-  const [editorInputText, setEditorInputText] = useState<string>('');
+  const [isVisibleErrorModal, setIsVisibleErrorModal] =
+    useState<boolean>(false);
   const { state } = useLocation<{ flashcardId: string; subjectId: string }>();
   const questionEditorRef = useRef<HTMLDivElement>(null);
   const { user } = useContext(UserContext);
   // =============================================================
 
-  const { loading, data } = useQuery<
+  const { data } = useQuery<
     { getFlashcard: IFlashcard },
     { flashcardId: string; classroomId: string }
   >(GET_FLASHCARD_FORUM, {
@@ -29,7 +31,7 @@ export default function FlashcardForum() {
       flashcardId: state.flashcardId || '',
     },
     onError: () => {
-      window.alert('Error loading flashcard forum');
+      setIsVisibleErrorModal(true);
     },
   });
 
@@ -73,6 +75,12 @@ export default function FlashcardForum() {
   // ============================================
   return (
     <div className="forumPageContainer">
+      <ErrorModal
+        buttonText="Ok"
+        isVisible={isVisibleErrorModal}
+        onConfirmCallback={() => setIsVisibleErrorModal(false)}
+        text="Une erreur s'est produite, merci de ressayer ultérieurement"
+      />
       <PageTitleSmall textColor="#0998C0" title="Introduction à GraphQl" />
       <div className="forumHeadingContainer">
         <button
