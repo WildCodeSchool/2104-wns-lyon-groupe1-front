@@ -126,6 +126,7 @@ export const SEARCH_FORUMS = gql`
       subjectId
       title
       tag
+      dateLastAnswer
       question {
         id
         text
